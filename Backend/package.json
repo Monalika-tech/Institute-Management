@@ -1,0 +1,19 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "InstituteBackend",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Monalika-tech/Institute-Management.git"
+  },
+  "author": "Mona",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Monalika-tech/Institute-Management/issues"
+  },
+  "homepage": "https://github.com/Monalika-tech/Institute-Management#readme"
+}
