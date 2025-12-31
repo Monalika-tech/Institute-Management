@@ -15,5 +15,9 @@
   "bugs": {
     "url": "https://github.com/Monalika-tech/Institute-Management/issues"
   },
-  "homepage": "https://github.com/Monalika-tech/Institute-Management#readme"
+  "homepage": "https://github.com/Monalika-tech/Institute-Management#readme",
+  "dependencies": {
+    "dotenv": "^17.2.3",
+    "express": "^5.2.1"
+  }
 }
