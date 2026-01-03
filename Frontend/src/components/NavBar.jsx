@@ -11,7 +11,7 @@ function NavBar() {
   return (
     <nav className="flex items-center justify-between px-6 py-4 font-medium">
       {/* Logo */}
-      <img src={logo} alt="Institute Logo" className="w-36" />
+      {/* <img src={logo} alt="Institute Logo" className="w-36" /> */}
 
       {/* Links */}
       <ul className="hidden sm:flex gap-6 text-sm ">
