@@ -1,12 +1,21 @@
 import React from "react";
 import logo from "../assets/logo.png";
-import { NavLink } from "react-router-dom";
+import { Link, NavLink,useNavigate } from "react-router-dom";
+import { AuthContext } from "../context/AuthContext";
 
 function NavBar() {
   const linkClass = ({ isActive }) =>
     `flex flex-col items-center gap-1 ${
       isActive ? "text-green-600" : "text-gray-700"
     }`;
+
+    const { teacher,logoutTeacher } = React.useContext(AuthContext);
+    const navigate = useNavigate();
+
+    const handleLogout =() =>{
+      logoutTeacher();
+      navigate("/login");
+    }
 
   return (
     <nav className="flex items-center justify-between px-6 py-4 font-medium">
@@ -39,12 +48,25 @@ function NavBar() {
 
       {/* Actions */}
       <div className="flex items-center gap-4">
-        <button className="rounded-md bg-green-600 px-4 py-2 text-sm text-white hover:bg-green-700 transition">
-          Login
-        </button>
-        <button className="rounded-md border border-green-600 px-4 py-2 text-sm text-green-600 hover:bg-green-50 transition">
-          Sign Up
-        </button>
+        {teacher ? (
+          <>
+            <button
+              onClick={handleLogout}
+              className="rounded-md bg-green-600 px-4 py-2 text-sm text-white hover:bg-red-700 transition"
+            >
+              LogOut
+            </button>
+          </>
+        ) : (
+          <>
+            <Link
+              to="/register"
+              className="rounded-md border border-green-600 px-4 py-2 text-sm text-green-600 hover:bg-green-50 transition"
+            >
+              Sign Up
+            </Link>
+          </>
+        )}
       </div>
     </nav>
   );
