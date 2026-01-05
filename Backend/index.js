@@ -3,7 +3,7 @@ const dotenv = require('dotenv');
 const connectDB = require('./config/db.js');
 const teacherRoutes = require('./routes/teacherRoutes.js');
 const studentRoutes = require('./routes/studentRoutes.js');
-
+const cors = require('cors');
 
 // Load environment variables
 require("dotenv").config();
@@ -11,19 +11,24 @@ require("dotenv").config();
 // Initialize Express server
 const server = express();
 
+// Enable CORS
+server.use(cors());
+
+
 // Define Port
 const PORT = process.env.PORT || 1337;
 
 // Middleware to parse JSON requests
 server.use(express.json());
 
+
 // Connect to Database
 connectDB();
 
 
 // define routes
-server.use('/teachers',teacherRoutes);
-server.use('/students',studentRoutes);
+server.use('/api/teachers', teacherRoutes);
+server.use('/api/students', studentRoutes);
 
 
 // Start the server
