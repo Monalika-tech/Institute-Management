@@ -4,23 +4,50 @@ import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
 
 function Login() {
+  const [email, setEmail] = React.useState("");
+  const [password, setPassword] = React.useState("");
+  const [error, setError] = React.useState({});
+  const [isloading, setIsLoading] = React.useState(false);
+
   const navigate = useNavigate();
   const { loginTeacher } = React.useContext(AuthContext);
 
-  const onSubmitHandler = (e) => {
+  const onSubmitHandler = async (e) => {
     e.preventDefault();
 
-    const email = e.target.email.value;
-    const password = e.target.password.value;
+    console.log(validateForm());
+    if (!validateForm()) return;
 
-    const loginSuccess = loginTeacher(email, password);
+    setIsLoading(true);
 
-    if (loginSuccess.success) {
-      console.log("Login successful");
+    console.log("Submitting form with:", { email, password });
+    const result = await loginTeacher(email, password);
+
+    setIsLoading(false);
+
+    if (result.success) {
       navigate("/");
     } else {
-      alert(loginSuccess.message);
+      setError({ form: result.message });
     }
+  };
+
+  const validateForm = () => {
+    const newErrors = {};
+    if (!email.trim()) {
+      newErrors.email = "Email is Required!!";
+    } else if (!/^\S+@\S+\.\S+$/.test(email)) {
+      newErrors.email = "Enter a Valid Email";
+    }
+
+    if (!password.trim()) {
+      newErrors.password = "Password is required!";
+    } else if (password.length < 6) {
+      newErrors.password = "Password must be at least 6 characters!";
+    }
+
+    setError(newErrors);
+    return Object.keys(newErrors).length === 0;
   };
   return (
     <div className="sm:w-1/2 flex flex-col items-center justify-center py-10 sm:py-20 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-green-500 hover:border-green-500 mx-auto my-20 px-4">
@@ -31,6 +58,7 @@ function Login() {
           Login here to access your account!
         </p>
       </div>
+
       {/* Login Form */}
       <form onSubmit={onSubmitHandler} className="w-full px-8">
         <div className="mb-4">
@@ -41,11 +69,18 @@ function Login() {
             Email
           </label>
           <input
+            disabled={isloading}
+            name="email"
             type="email"
             id="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
             required
-            className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm"
+            className="mt-1 block w-full px-4 py-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500 text-base sm:text-sm"
           />
+          {error.email && (
+            <div className="text-red-500 text-sm">{error.email}</div>
+          )}
         </div>
         <div className="mb-4">
           <label
@@ -55,18 +90,30 @@ function Login() {
             Password
           </label>
           <input
+            disabled={isloading}
+            name="password"
             type="password"
             id="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
             required
-            className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+            className="mt-1 block w-full px-4 py-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 text-base sm:text-sm"
           />
+          {error.password && (
+            <div className="text-red-500 text-sm">{error.password}</div>
+          )}
         </div>
         <div className="flex  flex-col items-center justify-center">
           <button
             type="submit"
-            className="w-1/4 bg-green-600 text-white py-2 px-4 rounded-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
+            disabled={isloading}
+            className={`w-1/4  text-white py-2 px-4 rounded-md ${
+              isloading
+                ? "bg-gray-400"
+                : "bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
+            }`}
           >
-            Login
+            {isloading ? "Logging in..." : "Login"}
           </button>
           <Link
             to="/register"
@@ -76,6 +123,9 @@ function Login() {
           </Link>
         </div>
       </form>
+      {error.form && (
+        <p className="text-red-600 text-center mb-3">{error.form}</p>
+      )}
     </div>
   );
 }

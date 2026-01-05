@@ -4,26 +4,26 @@ export const AuthContext = createContext();
 export const AuthContextProvider = ({ children }) => {
   const [teacher, setTeacher] = useState(null);
 
-  const loginTeacher = (email, password) => {
-    // dummy authentication (replace with API later)
-    const dummyTeacher = {
-      _id: 1,
-      name: "Babita Institute",
-      email: "Babita.maths@gmail.com",
-      password: "teacher123",
-      experiencedYears: 10,
-      qualification: "BA",
-      phone_no: 9876543213,
-      address: "Mohar Mohalla Mansa",
-    };
+  const loginTeacher = async (email, password) => {
+    try {
+      const res = await fetch("http://localhost:1337/api/teachers/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password }),
+      });
 
-    if (email === dummyTeacher.email && password === dummyTeacher.password) {
-      setTeacher(dummyTeacher);
+      console.log(" res we get from backend : ", res);
+      const data = await res.json();
+
+      if (!res.ok) {
+        return { success: false, message: data.message };
+      }
+
+      setTeacher(data.teacher);
       return { success: true };
-
+    } catch (error) {
+      return { success: false, message: "Server not reachable" };
     }
-
-    return { success: false, message: "Invalid credentials" };
   };
 
   const logoutTeacher = () => {
