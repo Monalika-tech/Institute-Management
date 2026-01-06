@@ -1,5 +1,6 @@
 import { createContext, useState, useEffect } from "react";
 export const AuthContext = createContext();
+import api from "../api/axios";
 
 export const AuthContextProvider = ({ children }) => {
   const [teacher, setTeacher] = useState(() => {
@@ -7,33 +8,46 @@ export const AuthContextProvider = ({ children }) => {
     return storedTeacher ? JSON.parse(storedTeacher) : null;
   });
 
+  // Login function for teachers
   const loginTeacher = async (email, password) => {
     try {
-      console.log("Logging in with:", { email, password });
+      const res = await api.post("/teachers/login", { email, password });
 
-      
-      const res = await fetch("http://localhost:1337/api/teachers/login", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, password }),
-      });
+      setTeacher(res.data.teacher);
+      localStorage.setItem("teacher", JSON.stringify(res.data.teacher));
+      localStorage.setItem("token", res.data.token);
 
-      console.log(" res we get from backend : ", res);
-      const data = await res.json();
-      console.log("Response data:", data.error);
-
-      if (!res.ok) {
-        return { success: false, message: data.message , error: data.error};
-      }
-      setTeacher(data.teacher);
-      localStorage.setItem("teacher", JSON.stringify(data.teacher));
-      localStorage.setItem("token", data.token);
       return { success: true };
     } catch (error) {
-      return { success: false, message: "Server not reachable" };
+      return {
+        success: false,
+        message: error.response?.data?.message || "Login failed",
+      };
     }
   };
 
+
+  // session restore on refresh
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+
+    if (!token) return;
+
+    const fetchTeacher = async () => {
+      try {
+        const res = await api.get("/teachers/me");
+        setTeacher(res.data.teacher);
+        localStorage.setItem("teacher", JSON.stringify(res.data.teacher));
+      } catch (error) {
+        logoutTeacher();
+      }
+    };
+
+    fetchTeacher();
+  }, []);
+
+
+// logout function for teachers
   const logoutTeacher = () => {
     setTeacher(null);
     localStorage.removeItem("token");
