@@ -1,16 +1,23 @@
 import React, { useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
+import { Link } from "react-router-dom";
 
 function TeacherCredentials() {
   const { teacher, logoutTeacher } = useContext(AuthContext);
+  console.log("TeacherCredentials component rendered", teacher);
   if (!teacher) {
-    return <p> No teacher is loged in!</p>;
+    return <h1 className="text-gray-500">Loading teachers Profile!</h1>;
   }
 
   return (
     <div className="flex flex-col sm:flex-row border border-gray-400">
+      {/* Profile Section -- let part */}
+      <div className="w-ful sm:w-1/4 flex flex-row sm:flex-col gap-4 py-3 sm:py-5 px-4 sm:px-4">
+        <Link to="/editProfile" className="rounded-md border border-green-600 px-4 py-2 text-sm text-green-600 hover:bg-green-50 transition">Edit Profile</Link>
+        <Link to="/addClass" className="rounded-md border border-green-600 px-4 py-2 text-sm text-green-600 hover:bg-green-50 transition">ADD Class</Link>
+      </div>
       {/* Teacher Credentials Section -- left part */}
-      <div className=" w-full sm:w-1/2 flex flex-col items-center justify-center py-10 sm:py-10">
+      <div className=" w-full sm:w-1/2 flex flex-col items-center justify-center py-5 sm:py-10 gap-6">
         <div className="flex items-center gap-2">
           <p className="w-8 md:w-11 h-[2px] bg-[#414141]"></p>
           <p className="font-medium text-sm md:text-base">Profile</p>

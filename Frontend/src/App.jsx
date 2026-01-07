@@ -6,13 +6,15 @@ import Login from "./pages/Login";
 import ClassPage from "./pages/ClassPage";
 import StudentDetails from "./pages/StudentDetails";
 import ProtectedRoute from "./components/ProtectedRoute";
+import EditProfile from "./pages/EditProfile";
+import AddClass from "./pages/AddClass";
 
 function App() {
   return (
     <div>
       <NavBar />
-
       <Routes>
+        <Route path="/login" element={<Login />} />
         <Route
           path="/"
           element={
@@ -21,9 +23,23 @@ function App() {
             </ProtectedRoute>
           }
         />
-
-        <Route path="/login" element={<Login />} />
-
+        <Route
+          path="/editProfile"
+          element={
+            <ProtectedRoute>
+              <EditProfile />
+            </ProtectedRoute>
+          }
+        />
+        c
+        <Route
+          path="/addClass"
+          element={
+            <ProtectedRoute>
+              <AddClass />
+            </ProtectedRoute>
+          }
+        />
         <Route
           path="/class/:classLevel"
           element={
