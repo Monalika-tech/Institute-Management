@@ -1,5 +1,10 @@
 import React from "react";
 import Title from "../components/Title";
+import { AuthContext } from "../context/AuthContext";
+
+
+
+
 const EditProfile = () => {
   return (
     <div className="sm:w-1/2 flex flex-col items-center justify-center py-10 sm:py-20 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-green-500 hover:border-green-500 mx-auto my-20 px-4">
@@ -11,6 +16,9 @@ const EditProfile = () => {
         </p>
       </div>
     </div>
+
+    // form
+
   );
 };
 
