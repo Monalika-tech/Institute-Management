@@ -27,7 +27,11 @@ export const AuthContextProvider = ({ children }) => {
   };
 
   const updateTeacher = (updatedData) => {
-    setTeacher((prev) => ({...prev, ...updatedData}))
+    setTeacher((prev) => {
+      const updatedTeacher = { ...prev, ...updatedData };
+      localStorage.setItem("teacher", JSON.stringify(updatedTeacher));
+      return updatedTeacher;
+    });
   };
 
   // session restore on refresh
@@ -57,7 +61,9 @@ export const AuthContextProvider = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ teacher, loginTeacher, logoutTeacher , updateTeacher}}>
+    <AuthContext.Provider
+      value={{ teacher, loginTeacher, logoutTeacher, updateTeacher }}
+    >
       {children}
     </AuthContext.Provider>
   );

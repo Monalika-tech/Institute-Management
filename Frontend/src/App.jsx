@@ -31,7 +31,7 @@ function App() {
             </ProtectedRoute>
           }
         />
-        c
+        
         <Route
           path="/addClass"
           element={
