@@ -26,6 +26,9 @@ export const AuthContextProvider = ({ children }) => {
     }
   };
 
+  const updateTeacher = (updatedData) => {
+    setTeacher((prev) => ({...prev, ...updatedData}))
+  };
 
   // session restore on refresh
   useEffect(() => {
@@ -46,8 +49,7 @@ export const AuthContextProvider = ({ children }) => {
     fetchTeacher();
   }, []);
 
-
-// logout function for teachers
+  // logout function for teachers
   const logoutTeacher = () => {
     setTeacher(null);
     localStorage.removeItem("token");
@@ -55,7 +57,7 @@ export const AuthContextProvider = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ teacher, loginTeacher, logoutTeacher }}>
+    <AuthContext.Provider value={{ teacher, loginTeacher, logoutTeacher , updateTeacher}}>
       {children}
     </AuthContext.Provider>
   );

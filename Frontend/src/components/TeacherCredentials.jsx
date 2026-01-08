@@ -12,7 +12,7 @@ function TeacherCredentials() {
   return (
     <div className="flex flex-col sm:flex-row border border-gray-400">
       {/* Profile Section -- let part */}
-      <div className="w-ful sm:w-1/4 flex flex-row sm:flex-col gap-4 py-3 sm:py-5 px-4 sm:px-4">
+      <div className="w-full sm:w-1/4 md:w-1/6 flex flex-row sm:flex-col gap-4 py-3 sm:py-5 px-4 sm:px-4">
         <Link to="/editProfile" className="rounded-md border border-green-600 px-4 py-2 text-sm text-green-600 hover:bg-green-50 transition">Edit Profile</Link>
         <Link to="/addClass" className="rounded-md border border-green-600 px-4 py-2 text-sm text-green-600 hover:bg-green-50 transition">ADD Class</Link>
       </div>
