@@ -3,6 +3,7 @@ const dotenv = require('dotenv');
 const connectDB = require('./config/db.js');
 const teacherRoutes = require('./routes/teacherRoutes.js');
 const studentRoutes = require('./routes/studentRoutes.js');
+const classRoutes = require('./routes/classRoutes.js')
 const cors = require('cors');
 
 // Load environment variables
@@ -29,6 +30,7 @@ connectDB();
 // define routes
 server.use('/api/teachers', teacherRoutes);
 server.use('/api/students', studentRoutes);
+server.use("/api/classes" , classRoutes);
 
 
 // Start the server
