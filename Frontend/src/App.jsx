@@ -31,15 +31,25 @@ function App() {
             </ProtectedRoute>
           }
         />
-        
+
         <Route
           path="/addClass"
           element={
             <ProtectedRoute>
-              <AddClass />
+              <AddClass mode="create" />
             </ProtectedRoute>
           }
         />
+
+        <Route
+          path="/editClass/:classLevel"
+          element={
+            <ProtectedRoute>
+              <AddClass mode="edit" />
+            </ProtectedRoute>
+          }
+        />
+
         <Route
           path="/class/:classLevel"
           element={

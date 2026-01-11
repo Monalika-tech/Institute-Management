@@ -7,6 +7,8 @@ const EditProfile = ({ onSuccess }) => {
   const { teacher, updateTeacher } = useContext(AuthContext);
   const navigate = useNavigate();
 
+console.log("teacher data in edit profile:", teacher);
+
   const [formData, setFormData] = useState({
     name: teacher?.name || "",
     email: teacher?.email || "",

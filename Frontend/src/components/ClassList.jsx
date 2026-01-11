@@ -1,10 +1,14 @@
-import React from "react";
+import React, { useContext } from "react";
 import Title from "./Title";
 import Classcard from "./Classcard";
-import classData from "../assets/classData";
+import { ClassContext } from "../context/classContext";
 
 const ClassList = () => {
-  console.log(classData);
+  const { classes } = useContext(ClassContext);
+
+  const classData = classes;
+  console.log("the data in class list ", classData);
+
   return (
     <div className="my-10">
       {/* Title */}

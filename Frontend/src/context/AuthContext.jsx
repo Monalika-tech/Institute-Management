@@ -11,6 +11,7 @@ export const AuthContextProvider = ({ children }) => {
   // Login function for teachers
   const loginTeacher = async (email, password) => {
     try {
+      console.log("Logging in with:", { email, password });
       const res = await api.post("/teachers/login", { email, password });
 
       setTeacher(res.data.teacher);
