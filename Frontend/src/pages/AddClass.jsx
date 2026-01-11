@@ -52,7 +52,7 @@ const AddClass = ({ mode }) => {
       await updateClass(vb.classLevel, formData);
     } else {
       await createClass(formData);
-      alert("Class added successfully");
+    
     }
 
     naviagte("/");

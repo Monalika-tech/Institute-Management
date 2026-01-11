@@ -8,7 +8,7 @@ function StudentDashboard() {
   const classSelected = classData.find((item) => item.classLevel == classLevel);
   // console.log(classSelected);
   return (
-    <div className="flex flex-col sm:flex-row border border-gray-400 py-5 ">
+    <div className="flex flex-col sm:flex-row border border-gray-400 py-5 rounded-md justify-between mx-2 sm:mx-2 lg:mx-20 shadow-md shadow-gray-300">
       <div className="flex items-center gap-2 px-5 ">
         <p className="w-8 md:w-11 h-[2px] bg-[#414141]"></p>
         <p className="font-medium text-sm md:text-base">Class Details </p>

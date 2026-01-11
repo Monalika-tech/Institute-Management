@@ -78,6 +78,11 @@ export const ClassContextProvider = ({ children }) => {
   };
   const deleteHandler = async (_id) => {
     try {
+      const confirmed = window.confirm(
+        "Are you sure you want to delete this class?"
+      );
+
+      if (!confirmed) return;
       console.log("Deleting class with ID:", _id);
 
       const res = await api.delete(`/classes/${_id}`);
