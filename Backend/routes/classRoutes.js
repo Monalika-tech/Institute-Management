@@ -1,5 +1,5 @@
 const express = require('express');
-const { createClass, updateClass, getclassById, getAllClasses } = require('../controllers/classController');
+const { createClass, updateClass, getclassById, getAllClasses , deleteClass} = require('../controllers/classController');
 
 const router = express.Router();
 
@@ -9,6 +9,7 @@ router.post('/', createClass);
 router.get('/', getAllClasses);
 router.get('/:classLevel', getclassById);
 router.put('/:classLevel', updateClass);
+router.delete('/:_id',deleteClass);
 
 // router.delete('/delete/:classLeve;', deleteStudent);
 

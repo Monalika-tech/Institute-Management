@@ -60,7 +60,7 @@ const LoginTeacher = async (req, res) => {
             console.log("Password match status:", isMatch);
 
             if (!isMatch) {
-                return res.status(401).json({ message: "Invalid password" });
+                return res.status(401).json({ message: "Invalid credentials" });
             }
 
             const token = jwt.sign(
@@ -77,12 +77,15 @@ const LoginTeacher = async (req, res) => {
                     _id: teacher._id,
                     name: teacher.name,
                     email: teacher.email,
+                    phone_no: teacher.phone_no,
+                    address: teacher.address,
+                    qualification: teacher.qualification,
                     experiencedYears: teacher.experiencedYears
                 }
             });
         }
         else {
-            return res.status(401).json({ message: "Invalid Email" });
+            return res.status(401).json({ message: "Invalid credentials" });
         }
 
     } catch (error) {

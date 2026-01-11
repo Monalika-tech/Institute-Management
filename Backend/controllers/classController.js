@@ -81,7 +81,28 @@ const getAllClasses = async (req, res) => {
     }
 };
 
+// delete class
+const deleteClass = async (req, res) =>{
+    try {
+        const { _id } = req.params;
+        // const _id = req.body;
+        console.log("Deleting class with ID on server side:", _id);
 
+        const classData = await Classes.findOne({ _id });
+        if(!classData){
+            return res.status(404).json({message : "CLass not found "});
+        }
+        await Classes.deleteOne({_id});
+        return res.status(200) .json({message : "Class deleted successfully",
+            class : classData
+        });
+    } catch (error) {
+        res.status(500).json({
+            message : "Server Error",
+            error : error.message
+        }); 
+    }
+}
 
 // get class for class dasboard by classlevel
 const getclassById = async (req, res) => {
@@ -108,4 +129,4 @@ const getclassById = async (req, res) => {
 
 };
 
-module.exports = { createClass, updateClass, getclassById, getAllClasses };
+module.exports = { createClass, updateClass, getclassById, getAllClasses , deleteClass};
