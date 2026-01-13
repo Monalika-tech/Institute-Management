@@ -1,6 +1,5 @@
 import React, { useContext } from "react";
 import { Link } from "react-router-dom";
-import api from "../api/axios";
 import { ClassContext } from "../context/classContext.jsx";
 
 const Classcard = ({ cls }) => {
@@ -20,7 +19,6 @@ const Classcard = ({ cls }) => {
           <p className="font-semibold text-base">
             <strong>Batch Time : </strong> {batchTime}
           </p>
-          {/* <Link to={`/class/${classLevel}`} className="rounded-md border border-green-600 px-4 py-2  text-sm text-green-600 hover:bg-green-50 transition ">View Students </Link> */}
         </div>
       </Link>
       <div className="w-full sm:w-2/3 flex flex-col sm:flex-col justify-between pt-4 gap-2">

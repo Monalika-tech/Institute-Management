@@ -1,31 +1,54 @@
-import React from "react";
-import classData from "../assets/classData";
-import { useParams } from "react-router-dom";
+import React, { useContext } from "react";
+
+import { Link, useParams } from "react-router-dom";
+import Title from "./Title";
+import { ClassContext } from "../context/classContext.jsx";
 
 function StudentDashboard() {
-  console.log(classData);
+  const { getClassByLevel } = useContext(ClassContext);
+
   const { classLevel } = useParams();
-  const classSelected = classData.find((item) => item.classLevel == classLevel);
-  // console.log(classSelected);
+
+  console.log(classLevel);
+
+  const classSelected = getClassByLevel(classLevel);
+
+  console.log(classSelected);
   return (
-    <div className="flex flex-col sm:flex-row border border-gray-400 py-5 rounded-md justify-between mx-2 sm:mx-2 lg:mx-20 shadow-md shadow-gray-300">
-      <div className="flex items-center gap-2 px-5 ">
-        <p className="w-8 md:w-11 h-[2px] bg-[#414141]"></p>
-        <p className="font-medium text-sm md:text-base">Class Details </p>
-        {/* <p className="w-8 md:w-11 h-[2px] bg-[#414141]"></p> */}
+    <div className="w-full font-serif  flex flex-col sm:flex-row">
+      <div className="w-full flex flex-col sm:flex-row border border-gray-400 py-5 rounded-md justify-between mx-2 sm:mx-2 lg:mx-10 shadow-md shadow-gray-300">
+        <div className="flex flex-col items-center gap-2 px-5 ">
+          {/* title */}
+          {/* <div className="text-center py-8 px-10 text-3xl"> */}
+          <Title text1={"Class"} text2={"Details"} />
+          <Link
+            to={"/"}
+            className=" border border-green-700 text-Balck hover:text-white px-3 py-2  rounded-md hover:bg-green-600 mx-5 sm:mx-2 lg:mr-5 mt-4 sm:mt-4"
+          >
+            Back
+          </Link>
+        </div>
+        <h1 className="text-4xl font-serif sm:py-3 lg:text leading-relaxed px-4  sm:px-2">
+          Class {classSelected.classLevel}
+        </h1>
+        <div className="flex flex-col px-5  gap-6">
+          <p className="font-text  sm:font-semibold text-base">
+            <strong> Time : </strong>
+            {classSelected.batchTime}
+          </p>
+          <p className="font-text  sm:font-semibold text-base">
+            <strong> Total Students : </strong>
+            {classSelected.totalStudent}
+          </p>
+        </div>
       </div>
-      <h1 className="text-4xl sm:py-3 lg:text leading-relaxed px-4  sm:px-20">
-        Class {classSelected.classLevel}
-      </h1>
-      <div className="flex flex-col px-5  gap-6">
-        <p className="font-semibold text-base">
-          <strong> Time : </strong>
-          {classSelected.time}
-        </p>
-        <p className="font-semibold text-base">
-          <strong> Total Students : </strong>
-          {classSelected.totalStudents}
-        </p>
+      <div>
+        <Link
+          to={"/addStudent/" + classLevel}
+          className=" bg-green-700 text-white px-3 py-2  rounded-md hover:bg-green-600 mx-5 sm:mx-2 lg:mr-5 mt-4 sm:mt-4"
+        >
+          AddStudent
+        </Link>
       </div>
     </div>
   );

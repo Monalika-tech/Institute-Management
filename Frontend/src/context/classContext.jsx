@@ -35,6 +35,7 @@ export const ClassContextProvider = ({ children }) => {
     fetchClasses();
   }, []);
 
+  // create new class
   const createClass = async (newClassData) => {
     try {
       console.log("Creating class with data:", newClassData);
@@ -54,6 +55,7 @@ export const ClassContextProvider = ({ children }) => {
     }
   };
 
+  // update class details
   const updateClass = async (classLevel, updatedData) => {
     try {
       console.log("Updating class:", classLevel, "with data:", updatedData);
@@ -76,6 +78,8 @@ export const ClassContextProvider = ({ children }) => {
       setLoading(false);
     }
   };
+
+  // delete class
   const deleteHandler = async (_id) => {
     try {
       const confirmed = window.confirm(

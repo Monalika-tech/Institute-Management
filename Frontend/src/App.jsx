@@ -8,13 +8,16 @@ import StudentDetails from "./pages/StudentDetails";
 import ProtectedRoute from "./components/ProtectedRoute";
 import EditProfile from "./pages/EditProfile";
 import AddClass from "./pages/AddClass";
+import RegisterStudent from "./pages/RegisterStudent";
 
 function App() {
   return (
     <div>
       <NavBar />
+
       <Routes>
         <Route path="/login" element={<Login />} />
+
         <Route
           path="/"
           element={
@@ -23,6 +26,8 @@ function App() {
             </ProtectedRoute>
           }
         />
+
+        
         <Route
           path="/editProfile"
           element={
@@ -55,6 +60,24 @@ function App() {
           element={
             <ProtectedRoute>
               <ClassPage />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/addStudent/:classLevel"
+          element={
+            <ProtectedRoute>
+              <RegisterStudent mode="add" />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/editStudent/:_id"
+          element={
+            <ProtectedRoute>
+              <RegisterStudent mode="edit" />
             </ProtectedRoute>
           }
         />

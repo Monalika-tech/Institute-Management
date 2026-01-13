@@ -1,23 +1,52 @@
 import React, { useEffect, useState } from "react";
 import Title from "../components/Title";
-import { useParams } from "react-router-dom";
-import studentData from "../assets/studentData";
+import { Link, useParams } from "react-router-dom";
+import { studentContext } from "../context/studentContext.jsx";
+
+import api from "../api/axios";
 
 function StudentDetails() {
+  const { getStudById, loading, error, deleteStudByID } =
+    React.useContext(studentContext);
   const { _id } = useParams();
-  const [student, setStudent] = useState(null);
 
-  useEffect(() => {
-    const foundStudent = studentData.find((item) => item._id === _id);
-    setStudent(foundStudent);
-  }, [_id]);
+  const student = getStudById(_id);
 
   console.log(student);
-  if (!student) {
-    return <p>Student not found</p>;
+
+
+  const deleteandnavigate = (_id, classLevel) => {
+    deleteStudByID(_id);
+    window.location.href = `/class/${classLevel}`;
+  };
+
+
+  if (loading) {
+    return <p>Loading...</p>;
   }
+  if (error) {
+    return <p>Error: {error}</p>;
+  }
+  if (!student) {
+    return <p>Student not found on client </p>;
+  }
+
   return (
-    <div className="flex flex-col sm:flex-row border border-gray-400">
+    <div className="flex flex-col sm:flex-row border border-gray-400  py-5 rounded-md justify-between mx-2 sm:mx-2 lg:mx-10 shadow-md shadow-gray-300">
+      <div>
+        <Link
+          to={`/editStudent/${_id}`}
+          className=" bg-green-700 text-white px-3 py-2  rounded-md hover:bg-green-600 mx-5 sm:mx-2 lg:mr-5 mt-4 sm:mt-4"
+        >
+          Update Student Details
+        </Link>
+        <button
+          onClick={() => deleteandnavigate(_id, student.classLevel)}
+          className=" bg-green-700 text-white px-3 py-2  rounded-md hover:bg-green-600 mx-5 sm:mx-2 lg:mr-5 mt-4 sm:mt-4"
+        >
+          Delete Student Details
+        </button>
+      </div>
       {/* Student Credentials Section -- left part */}
       <div className=" w-full sm:w-1/2 flex flex-col items-center justify-center py-10 sm:py-10">
         <div className="flex items-center gap-2">
@@ -54,7 +83,7 @@ function StudentDetails() {
         </div>
       </div>
       {/* image section -- right part */}
-      <div className="w-full sm:w-1/2 flex items-center justify-center py-10">
+      <div className="w-full sm:w-1/2 flex items-center justify-center py-10 mx-2">
         <img
           src="https://media.istockphoto.com/id/1793392179/vector/open-book-with-planet-flat-icon-vector-sign-for-logo-concept-and-illustration-planet-earth.jpg?s=612x612&w=0&k=20&c=4AfeQi0WbobUhoyBgIyGKBYt_-1GudONWjSIflo1HP0="
           alt="logo"
