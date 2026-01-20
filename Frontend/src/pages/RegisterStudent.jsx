@@ -25,7 +25,6 @@ const RegisterStudent = ({ mode }) => {
         setFormData({
           name: studentData.name || "",
           email: studentData.email || "",
-          password: "",
           classLevel: studentData.classLevel || "",
           parentName: studentData.parentName || "",
           phone_no: studentData.phone_no || "",
@@ -40,7 +39,6 @@ const RegisterStudent = ({ mode }) => {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
-    password: "",
     classLevel: "",
     parentName: "",
     phone_no: "",

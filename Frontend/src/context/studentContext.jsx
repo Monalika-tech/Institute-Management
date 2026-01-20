@@ -104,6 +104,20 @@ export const StudentContextProvider = ({ children }) => {
     return students.find((stud) => stud._id === _id);
   };
 
+  const getStudentByIdFromServer = async (_id) => {
+  try {
+    setLoading(true);
+    const res = await api.get(`/students/${_id}`);
+    return res.data.student;
+  } catch (error) {
+    setError(error.response?.data?.message || "Failed to fetch student");
+    return null;
+  } finally {
+    setLoading(false);
+  }
+};
+
+
   return (
     <studentContext.Provider
       value={{
@@ -113,6 +127,7 @@ export const StudentContextProvider = ({ children }) => {
         updateStudDetail,
         deleteStudByID,
         getStudById,
+        getStudentByIdFromServer,
         error,
         loading,
       }}

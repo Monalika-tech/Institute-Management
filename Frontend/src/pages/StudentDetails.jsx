@@ -1,23 +1,34 @@
 import React, { useEffect, useState } from "react";
 import Title from "../components/Title";
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams ,useNavigate} from "react-router-dom";
 import { studentContext } from "../context/studentContext.jsx";
 
 import api from "../api/axios";
 
 function StudentDetails() {
-  const { getStudById, loading, error, deleteStudByID } =
+  const { getStudById,getStudentByIdFromServer, loading, error, deleteStudByID } =
     React.useContext(studentContext);
   const { _id } = useParams();
 
-  const student = getStudById(_id);
+  const [student, setStudent] = useState(null);
 
-  console.log(student);
+  const navigate=useNavigate();
 
+  useEffect(() => {
+    (async () => {
+      const localStudent = getStudById(_id);
+      if (localStudent) {
+        setStudent(localStudent);
+      } else {
+        const fetchedStudent = await getStudentByIdFromServer(_id);
+        setStudent(fetchedStudent);
+      }
+    })();
+  }, [_id]);
 
   const deleteandnavigate = (_id, classLevel) => {
     deleteStudByID(_id);
-    window.location.href = `/class/${classLevel}`;
+    navigate(`/class/${classLevel}`);
   };
 
 
