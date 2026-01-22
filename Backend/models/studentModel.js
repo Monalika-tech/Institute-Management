@@ -10,10 +10,7 @@ const studentSchema = new mongoose.Schema({
     phone_no: { type: String, required: true, unique: true, trim: true, maxlength: 10, match: [/^\d{10}$/] },
     address: { type: String, required: true },
     school: { type: String, required: true },
-    monthlyFee: { type: Number, required: true },
-    createdBy: { type: mongoose.Schema.Types.ObjectId, ref: 'Class', required: true },
-
-    // joinDate: { type: Date, default: Date.now },
+    monthlyFee: { type: Number, required: true },    // joinDate: { type: Date, default: Date.now },
 },
     { timestamps: true });
 

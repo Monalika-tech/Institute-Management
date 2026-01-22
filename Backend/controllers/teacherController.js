@@ -64,7 +64,10 @@ const LoginTeacher = async (req, res) => {
             }
 
             const token = jwt.sign(
-                { id: teacher._id },
+                {
+                    id: teacher._id,
+                    role: "teacher"
+                },
                 process.env.JWT_SECRET,
                 { expiresIn: "1d" }
             );
@@ -109,7 +112,7 @@ const GetTeacherById = async (req, res) => {
 
         res.status(200).json({ teacher });
     } catch (error) {
-        res.status(500).json({ message: "Server Error" , error: error.message});
+        res.status(500).json({ message: "Server Error", error: error.message });
     }
 };
 

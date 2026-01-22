@@ -24,9 +24,19 @@ const registerStudent = async (req, res) => {
         await newstudent.save();
 
         console.log("Student registered successfully!", newstudent);
+        const token = jwt.sign(
+            {
+                id: newstudent._id,
+                role: "student"
+            },
+            process.env.JWT_SECRET,
+            { expiresIn: "1d" }
+        );
+
 
         res.status(200).json({
             message: "Student registered successfully!",
+            token,
             student: {
                 _id: newstudent._id,
                 name: newstudent.name,
@@ -79,7 +89,7 @@ const updateStudent = async (req, res) => {
     try {
         const { _id } = req.params;
         const { name, email, password, classLevel, parentName, phone_no, address, school, monthlyFee } = req.body;
-        
+
         const existingStudent = await Student.findOne({ _id });
 
         if (!existingStudent) {
@@ -114,8 +124,8 @@ const updateStudent = async (req, res) => {
 //get single student to see student profile
 const getStudentById = async (req, res) => {
     try {
-        
-        const {_id} = req.params;
+
+        const { _id } = req.params;
         console.log("Fetching student with ID:", _id);
         const student = await Student.findOne({ _id });
         if (!student) {
@@ -143,7 +153,7 @@ const getAllStudents = async (req, res) => {
 
         const students = await Student.find({});
 
-        
+
         res.status(200).json({
             message: "Students retrieved successfully",
             students,
@@ -153,7 +163,7 @@ const getAllStudents = async (req, res) => {
 
         res.status(500).json({
             message: "Server Error", error: error.message
-        }); 
+        });
     }
 };
 
