@@ -8,7 +8,7 @@ const teacherSchema = new mongoose.Schema({
     qualification: { type: String, trim: true },
     phone_no: { type: String, required: true, unique: true, trim: true, maxlength: 10, match: [/^\d{10}$/] },
     address: { type: String },
-    role: { type: String, enum: ['admin', 'teacher'], default: 'teacher' },
+    role: { type: String, enum: ['teacher'], default: 'teacher' },
     // subjectSpecialization: { type: String }
 },
     { timestamps: true });

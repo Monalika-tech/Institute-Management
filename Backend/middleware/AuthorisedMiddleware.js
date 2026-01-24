@@ -1,5 +1,5 @@
 // here we check whether the user is authorised to access a particular route or not based on role
-
+console.log(" IN Authorization middleware ");
 const authorize = (...allowedRoles) => {
     return (req, res, next) => {
         if (!req.user || !allowedRoles.includes(req.user.role)) {

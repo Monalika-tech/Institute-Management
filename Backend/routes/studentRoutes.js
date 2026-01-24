@@ -1,9 +1,9 @@
 const express = require('express');
-const { registerStudent, getAllStudents, getStudentById, updateStudent, deleteStudent } = require('../controllers/studentController');
+const { registerStudent, getAllStudents, getStudentById, updateStudent, deleteStudent, LoginStudent } = require('../controllers/studentController');
 const studValidator = require('../middleware/vadidators/studValidationMiddleware');
 const protect = require('../middleware/AuthMiddleware');
 const authorize = require('../middleware/authorisedMiddleware');
-const ownership = require('../middleware/OwnershipMiddleware');
+const ownership = require('../middleware/ownership/OwnershipMiddleware');
 
 const router = express.Router();
 
@@ -12,9 +12,12 @@ const router = express.Router();
 //Public routes 
 router.get('/:_id', protect, authorize('teacher', 'student'), ownership, getStudentById);
 router.get('/', protect, authorize('teacher'), ownership, getAllStudents);
+router.post('/login', LoginStudent)
+
 
 //private routes 
 router.put('/:_id', studValidator, protect, authorize('teacher', 'student'), ownership, updateStudent);
 router.delete('/:_id', protect, authorize('teacher'), ownership, deleteStudent);
 router.post('/', studValidator, protect, authorize('teacher'), ownership, registerStudent);
+
 module.exports = router;

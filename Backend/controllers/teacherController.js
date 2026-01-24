@@ -100,6 +100,8 @@ const LoginTeacher = async (req, res) => {
 
     }
 };
+
+
 const GetTeacherById = async (req, res) => {
     try {
         const teacherId = req.teacherId;

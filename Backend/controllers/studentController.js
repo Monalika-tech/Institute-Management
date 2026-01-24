@@ -1,4 +1,5 @@
 const Student = require("../models/studentModel");
+
 //controllers for student
 
 //register or create  or addstudent used in registration form
@@ -24,19 +25,9 @@ const registerStudent = async (req, res) => {
         await newstudent.save();
 
         console.log("Student registered successfully!", newstudent);
-        const token = jwt.sign(
-            {
-                id: newstudent._id,
-                role: "student"
-            },
-            process.env.JWT_SECRET,
-            { expiresIn: "1d" }
-        );
-
 
         res.status(200).json({
             message: "Student registered successfully!",
-            token,
             student: {
                 _id: newstudent._id,
                 name: newstudent.name,
@@ -57,6 +48,47 @@ const registerStudent = async (req, res) => {
         });
     }
 }
+// cretae a proper login contoroller this is not ready and remember to add a token with role student 
+const LoginStudent = async (req, res) => {
+    //login student
+    try {
+        const { email, password } = req.body;
+
+        const student = await Student.findOne({ email });
+        if (!student) {
+
+            return res.status(401).json({ message: "Invalid credentials" });
+        }
+
+        console.log("Student found:", student);
+        const isMatch = await bcrypt.compare(password, student.password);
+        if (!isMatch) {
+            return res.status(401).json({
+                message: "Invalid credentials"
+            });
+        }
+
+
+        const token = jwt.sign(
+            {
+                id: student._id,
+                role: "student"
+            },
+            process.env.JWT_SECRET,
+            { expiresIn: "1d" }
+        );
+        res.status(200).json({
+            message: "student login succesfull",
+            token,
+            student: student
+        })
+
+    } catch (error) {
+        res.status(500).json({
+            message: "Server Error", error: error.message
+        });
+    }
+};
 
 //delete student while deleting the student record
 const deleteStudent = async (req, res) => {
@@ -168,4 +200,4 @@ const getAllStudents = async (req, res) => {
 };
 
 
-module.exports = { registerStudent, getAllStudents, getStudentById, updateStudent, deleteStudent };
+module.exports = { registerStudent, getAllStudents, getStudentById, updateStudent, deleteStudent, LoginStudent };
