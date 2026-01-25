@@ -1,7 +1,7 @@
 const Classes = require("../../models/classModel");
 
 
-console.log("n class Ownership ..");
+console.log("class Ownership ..");
 const classOwnership = async (req, res, next) => {
     try {
         // logged in user
@@ -9,10 +9,7 @@ const classOwnership = async (req, res, next) => {
         // resource accessed
         const classId = req.params._id;
 
-        if (user.role === 'admin') {
-            next();
-        }
-
+        if (user.role === 'admin') return next();
 
         if (user.role !== 'teacher') {
             return res.status(403).json({
@@ -22,11 +19,10 @@ const classOwnership = async (req, res, next) => {
 
         // route - create calss or get all classes.
         if (!classId) {
-            next();
+            return next();
         }
 
         // and if clsssId found find class route- get, put , delete 
-
         const cls = await Classes.findById(classId)
         if (!cls) {
             return res.status(404).json({
@@ -35,7 +31,7 @@ const classOwnership = async (req, res, next) => {
         }
 
         // if found then match the id's 
-        if (cls.teacherID !== user._id) {
+        if (cls.teacherID.toString() !== user._id.toString()) {
             return res.status(403).json({
                 message: "Access denied! You do not own this data "
             })

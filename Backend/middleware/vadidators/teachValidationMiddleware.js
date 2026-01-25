@@ -19,7 +19,7 @@ const teacherValidator = [
 
         let err = error.map((error) => error.msg);
         if (err.length > 0) {
-            return res.status(400).json({ errors: err[0] });
+            return res.status(400).json({ errors: err });
         }
         else {
             next();

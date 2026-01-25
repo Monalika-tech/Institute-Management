@@ -104,7 +104,7 @@ const LoginTeacher = async (req, res) => {
 
 const GetTeacherById = async (req, res) => {
     try {
-        const teacherId = req.teacherId;
+        const teacherId = req.params._id;
 
         const teacher = await Teacher.findById(teacherId).select("-password");
 

@@ -1,5 +1,8 @@
 const Student = require("../models/studentModel");
 
+const bcrypt = require('bcryptjs');
+
+const jwt = require('jsonwebtoken');
 //controllers for student
 
 //register or create  or addstudent used in registration form
@@ -7,14 +10,18 @@ const registerStudent = async (req, res) => {
     try {
         const { name, email, password, classLevel, parentName, phone_no, address, school, monthlyFee } = req.body;
         const existingstudent = await Student.findOne({ email });
+
         if (existingstudent) {
             console.log("Student already exists!");
             return res.status(400).json({ message: "Student already exists!" });
         }
+        const salt = await bcrypt.genSalt(10);
+        const hashedPassword = await bcrypt.hash(password, salt);
+
         const newstudent = new Student({
             name,
             email,
-            password,
+            password: hashedPassword,
             classLevel,
             parentName,
             phone_no,
@@ -32,6 +39,7 @@ const registerStudent = async (req, res) => {
                 _id: newstudent._id,
                 name: newstudent.name,
                 email: newstudent.email,
+                password : newstudent.password,
                 classLevel: newstudent.classLevel,
                 parentName: newstudent.parentName,
                 phone_no: newstudent.phone_no,
@@ -62,6 +70,7 @@ const LoginStudent = async (req, res) => {
 
         console.log("Student found:", student);
         const isMatch = await bcrypt.compare(password, student.password);
+        console.log('Password match ?', isMatch);
         if (!isMatch) {
             return res.status(401).json({
                 message: "Invalid credentials"

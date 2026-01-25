@@ -19,6 +19,7 @@ const ownership = async (req, res, next) => {
 
         // TEACHER: owns class → owns student
         if (user.role === "teacher") {
+
             const studentId = req.params._id; //Which student is being accessed?
 
             // list routes (getAll, register)
@@ -48,7 +49,7 @@ const ownership = async (req, res, next) => {
 
         return res.status(403).json({ message: "Unauthorized" });
     } catch (error) {
-        return res.status(500).json({ message: "Ownership check failed" , error : error.message});
+        return res.status(500).json({ message: "Ownership check failed", error: error.message });
     }
 };
 
