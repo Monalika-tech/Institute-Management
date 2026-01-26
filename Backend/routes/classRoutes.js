@@ -11,8 +11,8 @@ const router = express.Router();
 
 //route to register or add new student
 router.post('/', protect, authorize('teacher'), classOwnership , createClass);
-
 router.get('/', protect, authorize('teacher'), classOwnership , getAllClasses);
+
 // private route
 router.get('/:_id', protect, authorize('teacher'),  classOwnership, getclassById);
 router.put('/:_id', protect, authorize('teacher'), classOwnership , updateClass);

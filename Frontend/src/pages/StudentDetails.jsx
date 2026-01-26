@@ -1,18 +1,23 @@
 import React, { useEffect, useState } from "react";
 import Title from "../components/Title";
-import { Link, useParams ,useNavigate} from "react-router-dom";
+import { Link, useParams, useNavigate } from "react-router-dom";
 import { studentContext } from "../context/studentContext.jsx";
 
 import api from "../api/axios";
 
 function StudentDetails() {
-  const { getStudById,getStudentByIdFromServer, loading, error, deleteStudByID } =
-    React.useContext(studentContext);
+  const {
+    getStudById,
+    getStudentByIdFromServer,
+    loading,
+    error,
+    deleteStudByID,
+  } = React.useContext(studentContext);
   const { _id } = useParams();
 
   const [student, setStudent] = useState(null);
 
-  const navigate=useNavigate();
+  const navigate = useNavigate();
 
   useEffect(() => {
     (async () => {
@@ -26,11 +31,10 @@ function StudentDetails() {
     })();
   }, [_id]);
 
-  const deleteandnavigate = (_id, classLevel) => {
-    deleteStudByID(_id);
+  const deleteandnavigate = async (_id, classLevel) => {
+    await deleteStudByID(_id);
     navigate(`/class/${classLevel}`);
   };
-
 
   if (loading) {
     return <p>Loading...</p>;

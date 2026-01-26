@@ -4,7 +4,7 @@ const mongoose = require('mongoose');
 const studentSchema = new mongoose.Schema({
     name: { type: String, required: true, trim: true, minlength: 2, maxlength: 50 },
     email: { type: String, required: true, unique: true, lowercase: true, trim: true, match: [/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/] },
-    password: { type: String, required: true },
+    password: { type: String, required: true, select: false },
     classLevel: { type: mongoose.Schema.Types.ObjectId, ref: 'Class', required: true },
     parentName: { type: String, required: true },
     phone_no: { type: String, required: true, unique: true, trim: true, maxlength: 10, match: [/^\d{10}$/] },

@@ -11,12 +11,6 @@ const classOwnership = async (req, res, next) => {
 
         if (user.role === 'admin') return next();
 
-        if (user.role !== 'teacher') {
-            return res.status(403).json({
-                message: "Access denied! "
-            })
-        }
-
         // route - create calss or get all classes.
         if (!classId) {
             return next();

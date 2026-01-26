@@ -3,6 +3,7 @@ const Student = require("../models/studentModel");
 const bcrypt = require('bcryptjs');
 
 const jwt = require('jsonwebtoken');
+const Classes = require("../models/classModel");
 //controllers for student
 
 //register or create  or addstudent used in registration form
@@ -17,6 +18,10 @@ const registerStudent = async (req, res) => {
         }
         const salt = await bcrypt.genSalt(10);
         const hashedPassword = await bcrypt.hash(password, salt);
+
+        const cls = await Classes.findOne({_id: classLevel, teacherID : req.user._id});
+         
+        if(!cls) return res.status(403).json({message: "Invalid class access" })
 
         const newstudent = new Student({
             name,

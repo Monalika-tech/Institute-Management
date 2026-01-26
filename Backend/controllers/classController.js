@@ -5,7 +5,7 @@ const createClass = async (req, res) => {
     try {
         const { classLevel, totalStudent, batchTime } = req.body;
 
-        const existingClass = await Classes.findOne({ classLevel });
+        const existingClass = await Classes.findOne({ classLevel , teacherID : req.user._id});
 
         if (existingClass) {
             return res.status(400).json({
@@ -15,8 +15,8 @@ const createClass = async (req, res) => {
 
         const newClass = new Classes({
             classLevel,
-            totalStudent,
             batchTime,
+            teacherID: req.user._id
         });
 
         await newClass.save();

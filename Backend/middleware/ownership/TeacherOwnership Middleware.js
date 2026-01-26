@@ -1,5 +1,5 @@
-const Classes = require("../../models/classModel");
-const Student = require("../../models/studentModel");
+// const Classes = require("../../models/classModel");
+// const Student = require("../../models/studentModel");
 
 
 const teacherOwnership = async (req, res, next) => {
