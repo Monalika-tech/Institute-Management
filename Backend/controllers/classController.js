@@ -68,7 +68,9 @@ const updateClass = async (req, res) => {
 // get all the classes for class list 
 const getAllClasses = async (req, res) => {
     try {
-        const classes = await Classes.find({});
+        const logTeacherID = req.user._id;
+
+        const classes = await Classes.find({teacherID : logTeacherID });
         res.status(200).json({
             message: "Classes retrieved successfully",
             classes,

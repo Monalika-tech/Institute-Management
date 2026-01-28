@@ -10,18 +10,18 @@ const Classes = require("../models/classModel");
 const registerStudent = async (req, res) => {
     try {
         const { name, email, password, classLevel, parentName, phone_no, address, school, monthlyFee } = req.body;
-        const existingstudent = await Student.findOne({ email });
+        const existingstudent = await Student.findOne({ email, classLevel });
 
         if (existingstudent) {
             console.log("Student already exists!");
-            return res.status(400).json({ message: "Student already exists!" });
+            return res.status(400).json({ message: "Student already exists in this class!" });
         }
         const salt = await bcrypt.genSalt(10);
         const hashedPassword = await bcrypt.hash(password, salt);
 
-        const cls = await Classes.findOne({_id: classLevel, teacherID : req.user._id});
-         
-        if(!cls) return res.status(403).json({message: "Invalid class access" })
+        const cls = await Classes.findOne({ _id: classLevel, teacherID: req.user._id });
+
+        if (!cls) return res.status(403).json({ message: "Invalid class access" })
 
         const newstudent = new Student({
             name,
@@ -44,7 +44,7 @@ const registerStudent = async (req, res) => {
                 _id: newstudent._id,
                 name: newstudent.name,
                 email: newstudent.email,
-                password : newstudent.password,
+                password: newstudent.password,
                 classLevel: newstudent.classLevel,
                 parentName: newstudent.parentName,
                 phone_no: newstudent.phone_no,
@@ -119,7 +119,7 @@ const deleteStudent = async (req, res) => {
             return res.status(404).json({ message: "Student not found" });
         }
 
-        await Student.deleteOne(_id);
+        await Student.deleteOne({_id});
 
         console.log("Student deleted successfully", exist);
         res.status(200).json({ message: "Student deleted successfully", student: exist });
@@ -187,17 +187,19 @@ const getStudentById = async (req, res) => {
         });
     }
 };
-//get all students - with filtering class wise 
+//get all students 
 const getAllStudents = async (req, res) => {
     try {
-        // const { classLevel } = req.params;
-        // let filter = {};
 
-        // if (classLevel) {
-        //     filter.classLevel = classLevel;
-        // }
+        const logTeacherID = req.user._id;
 
-        const students = await Student.find({});
+        const classes = await Classes.find({ teacherID: logTeacherID }).select("_id");
+
+
+        const classIds = classes.map(c => c._id);
+
+
+        const students = await Student.find({ classLevel: { $in: classIds } });
 
 
         res.status(200).json({
@@ -214,4 +216,21 @@ const getAllStudents = async (req, res) => {
 };
 
 
-module.exports = { registerStudent, getAllStudents, getStudentById, updateStudent, deleteStudent, LoginStudent };
+const getStudentByClass = async (req , res ) => {
+    const logTeacherID = req.user._id; 
+    const classId = req.params.classId;
+
+    const classData = await Classes.findOne({
+        _id : classId,
+        teacherID: logTeacherID
+    });
+
+    if(!classData) { 
+        return res.status(403).json({message : "Not your class!!"})
+    }
+
+    const students =await Student.find({classLevel : classId});
+    res.json(students);
+}
+
+module.exports = { registerStudent, getAllStudents, getStudentById, updateStudent, deleteStudent, LoginStudent , getStudentByClass};
