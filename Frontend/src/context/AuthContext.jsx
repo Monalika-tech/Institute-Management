@@ -1,71 +1,65 @@
-import { createContext, useState, useEffect } from "react";
-export const AuthContext = createContext();
+import { createContext, useContext, useState, useEffect } from "react";
 import api from "../api/axios";
 
-export const AuthContextProvider = ({ children }) => {
-  const [teacher, setTeacher] = useState(() => {
-    const storedTeacher = localStorage.getItem("teacher");
-    return storedTeacher ? JSON.parse(storedTeacher) : null;
-  });
+const AuthContext = createContext();
 
-  // Login function for teachers
-  const loginTeacher = async (email, password) => {
-    try {
-      console.log("Logging in with:", { email, password });
-      const res = await api.post("/teachers/login", { email, password });
+export const AuthProvider = ({ children }) => {
+  const [token, setToken] = useState(localStorage.getItem("token"));
+  const [role, setRole] = useState(localStorage.getItem("role"));
+  const [userId, setUserId] = useState(localStorage.getItem("userId"));
+  const [loading, setLoading] = useState(true);
 
-      setTeacher(res.data.teacher);
-      localStorage.setItem("teacher", JSON.stringify(res.data.teacher));
-      localStorage.setItem("token", res.data.token);
-
-      return { success: true };
-    } catch (error) {
-      return {
-        success: false,
-        message: error.response?.data?.message || "Login failed",
-      };
-    }
-  };
-
-  const updateTeacher = (updatedData) => {
-    setTeacher((prev) => {
-      const updatedTeacher = { ...prev, ...updatedData };
-      localStorage.setItem("teacher", JSON.stringify(updatedTeacher));
-      return updatedTeacher;
-    });
-  };
-
-  // session restore on refresh
   useEffect(() => {
-    const token = localStorage.getItem("token");
+    if (token) {
+      localStorage.setItem("token", token);
+      localStorage.setItem("role", role);
+      localStorage.setItem("userId", userId);
+    } else {
+      localStorage.clear();
+    }
+    setLoading(false);
+  }, [token, role, userId]);
 
-    if (!token) return;
+  // Teacher login
+  const loginTeacher = async (email, password) => {
+    const res = await api.post("/teachers/login", { email, password });
 
-    const fetchTeacher = async () => {
-      try {
-        const res = await api.get("/teachers/me");
-        setTeacher(res.data.teacher);
-        localStorage.setItem("teacher", JSON.stringify(res.data.teacher));
-      } catch (error) {
-        logoutTeacher();
-      }
-    };
+    setToken(res.data.token);
+    setRole(res.data.role);
+    setUserId(res.data.id);
+  };
 
-    fetchTeacher();
-  }, []);
+  // Student login (if needed)
+  const loginStudent = async (email, password) => {
+    const res = await api.post("/students/login", { email, password });
 
-  // logout function for teachers
-  const logoutTeacher = () => {
-    setTeacher(null);
-    localStorage.removeItem("token");
-    localStorage.removeItem("teacher");
+    setToken(res.data.token);
+    setRole(res.data.role);
+    setUserId(res.data.id);
+  };
+
+  const logout = () => {
+    setToken(null);
+    setRole(null);
+    setUserId(null);
   };
 
   return (
     <AuthContext.Provider
-      value={{ teacher, loginTeacher, logoutTeacher, updateTeacher }}
+      value={{
+        token,
+        role,
+        userId,
+        loginTeacher,
+        loginStudent,
+        logout,
+        isAuthenticated: !!token,
+        loading,
+      }}
     >
       {children}
     </AuthContext.Provider>
   );
 };
+
+export const useAuth = () => useContext(AuthContext);
