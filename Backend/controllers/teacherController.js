@@ -118,25 +118,7 @@ const GetTeacherById = async (req, res) => {
     }
 };
 
-// get teacher by id 
-// const GetTeacherById = async (req, res) => {
-//     try {
-//         const teacherId = req.teacherId;
-//         const teacher = await Teacher.findById(teacherId);
-//         if (!teacher) {
-//             return res.status(404).json({ message: "Teacher not found" });
-//         }
-//         console.log(teacher);
-//         res.status(200).json({ teacher });
-//     }
-//     catch (error) {
-//         console.error(error);
-//         res.status(500).json({
-//             message: "Server Error",
-//             error: error.message
-//         });
-//     }
-// };
+
 
 module.exports = {
     LoginTeacher, RegisterTeacher, GetTeacherById
