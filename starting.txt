@@ -1,0 +1,90 @@
+PS E:\vs-code\Web-Design\Institute\Institute-Management\backend> npm start
+
+PS E:\vs-code\Web-Design\Institute\Institute-Management\frontend> npm run dev
+
+teacher data :
+Teacher a
+
+_id   697716814a3c2c4ffe5d72ab
+name  "Teacher A"
+email  "teachera@test.com"
+password  "$2b$10$vcU53F4pHnP9eu3lovgoDOCRDhuSLhlAKRlCWXdd8Jhhh0Jk2mUGq"
+experiencedYears  5
+qualification "MSc Physics"
+phone_no  "9999999991"
+address   "Delhi"
+role  "teacher"
+
+login data : 
+  "email": "teachera@test.com",
+  "password": "Strong@123456"
+
+
+Teacher B
+
+_id 697a235033b0bb1c9d6defd5
+name "Teacher B"
+email "teacherb@test.com"
+password "$2b$10$6JkYgGYCskXzA9QxKdlKaukttZ.D7hv5eYcMM5uoq3AnFO9ELO1ya"
+experiencedYears 10
+qualification "MSc Mathematics"
+phone_no "9999999881"
+address "123, Test Street, Test City, Test State, 123456"
+role  "teacher"
+
+login data : 
+  "email": "teacherb@test.com",
+  "password": "Strong@12345678",
+
+
+
+CLASSES : 
+
+ Teacher A       - 10, 11, 12 , 9                              
+ 
+_id 697a348533b0bb1c9d6defe4
+classLevel 10
+teacherID 697716814a3c2c4ffe5d72ab
+batchTime "4-5 PM"
+
+
+_id 697a34a533b0bb1c9d6defe7
+classLevel 11
+teacherID 697716814a3c2c4ffe5d72ab
+batchTime "9-10 AM"
+
+
+_id 697a34b033b0bb1c9d6defea
+classLevel 12
+teacherID 697716814a3c2c4ffe5d72ab
+batchTime "3-4 PM"
+
+
+_id 697a34b933b0bb1c9d6defed
+classLevel 9
+teacherID  697716814a3c2c4ffe5d72ab
+batchTime "4-5 PM"
+
+
+TeacherB - 11, 12 , 10
+
+_id 697a340e33b0bb1c9d6defda
+classLevel 11
+teacherID 697a235033b0bb1c9d6defd5
+batchTime "9-10 AM"
+
+
+_id  697a341f33b0bb1c9d6defdd
+classLevel 12
+teacherID  697a235033b0bb1c9d6defd5
+batchTime "10-11 AM"
+
+
+_id 697a342d33b0bb1c9d6defe0
+classLevel 10
+teacherID 697a235033b0bb1c9d6defd5
+batchTime "4-5 PM"
+
+  Student Data : 
+  # TEACHER A 
+   --> class 9 :

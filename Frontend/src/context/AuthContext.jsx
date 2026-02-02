@@ -20,23 +20,45 @@ export const AuthProvider = ({ children }) => {
     setLoading(false);
   }, [token, role, userId]);
 
+
   // Teacher login
+  
   const loginTeacher = async (email, password) => {
-    const res = await api.post("/teachers/login", { email, password });
+    try {
+      const res = await api.post("/teachers/login", { email, password });
 
-    setToken(res.data.token);
-    setRole(res.data.role);
-    setUserId(res.data.id);
+      setToken(res.data.token);
+      setRole(res.data.role);
+      setUserId(res.data.id);
+
+      return { success: true };
+    } catch (error) {
+      return {
+        success: false,
+        message: error.response?.data?.message || "Login failed",
+      };
+    }
   };
 
-  // Student login (if needed)
+
+  // student login 
   const loginStudent = async (email, password) => {
-    const res = await api.post("/students/login", { email, password });
+    try {
+      const res = await api.post("/students/login", { email, password });
 
-    setToken(res.data.token);
-    setRole(res.data.role);
-    setUserId(res.data.id);
+      setToken(res.data.token);
+      setRole(res.data.role);
+      setUserId(res.data.id);
+
+      return { success: true };
+    } catch (error) {
+      return {
+        success: false,
+        message: error.response?.data?.message || "Login failed",
+      };
+    }
   };
+
 
   const logout = () => {
     setToken(null);

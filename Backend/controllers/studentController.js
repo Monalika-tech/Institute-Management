@@ -218,7 +218,7 @@ const getAllStudents = async (req, res) => {
 
 const getStudentByClass = async (req , res ) => {
     const logTeacherID = req.user._id; 
-    const classId = req.params.classId;
+    const classId = req.params._id;
 
     const classData = await Classes.findOne({
         _id : classId,

@@ -11,7 +11,7 @@ const router = express.Router();
 //route to register or add new student
 router.post('/', studValidator, protect, authorize('teacher'), ownership, registerStudent);
 router.get('/my', protect, authorize('teacher'), ownership, getAllStudents); // will get all student under teacher
-router.get('/class/:_id', protect, authorize('teacher'), ownership, getStudentByClass); // will get all student under particular class
+router.get('/class/:_id', protect, authorize('teacher'),  getStudentByClass); // will get all student under particular class
 
 router.post('/login', LoginStudent)
 
