@@ -33,11 +33,11 @@ function App() {
       <AppLayout>
         <Routes>
           {/* Public */}
-          <Route path="/login" element={<Login />} />
+          ✅<Route path="/login" element={<Login />} />
 
           {/* ===== TEACHER ===== */}
 
-          <Route
+          ✅<Route
             path="/"
             element={
               <ProtectedRoute allowedRoles={["teacher"]}>
@@ -119,9 +119,9 @@ function App() {
               </ProtectedRoute>
             }
           />
-
-          <Route
-            path="/student/class"
+ 
+          ✅<Route
+            path="/class/:_id"
             element={
               <ProtectedRoute allowedRoles={["student"]}>
                 <ClassPage />

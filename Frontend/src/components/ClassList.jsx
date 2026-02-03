@@ -1,11 +1,7 @@
-import React, { useContext } from "react";
 import Title from "./Title";
 import Classcard from "./Classcard";
-import { ClassContext } from "../context/classContext";
 
-const ClassList = () => {
-  const { classes } = useContext(ClassContext);
-
+const ClassList = ({ classes }) => {
   const classData = classes;
   console.log("the data in class list ", classData);
 
@@ -18,6 +14,7 @@ const ClassList = () => {
           List of all classes teached here!
         </p>
       </div>
+
       {/* Class cards will go here */}
       <div className="grid grid-cols-1 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 gap-y-6 place-items-center">
         {classData.map((cls) => (

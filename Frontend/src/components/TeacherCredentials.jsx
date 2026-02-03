@@ -1,11 +1,10 @@
 import React, { useContext } from "react";
-import { AuthContext } from "../context/AuthContext";
-import { Link } from "react-router-dom";
-import { ClassContext } from "../context/classContext";
 
-function TeacherCredentials() {
-  const { teacher, logoutTeacher } = useContext(AuthContext);
-  const { setSelectedClass } = useContext(ClassContext);
+import { Link } from "react-router-dom";
+
+
+function TeacherCredentials({teacher}) {
+
   console.log("TeacherCredentials component rendered", teacher);
   if (!teacher) {
     return <h1 className="text-gray-500">Loading teachers Profile!</h1>;
