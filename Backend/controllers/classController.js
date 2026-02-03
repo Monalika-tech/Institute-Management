@@ -110,8 +110,8 @@ const deleteClass = async (req, res) =>{
 const getclassById = async (req, res) => {
     try {
 
-        const { classLevel } = req.params;
-        const classData = await Classes.findOne({ classLevel });
+        const { _id } = req.params;
+        const classData = await Classes.findOne({ _id });
         if (!classData) {
             return res.status(404).json({ message: "Class not found" });
         }

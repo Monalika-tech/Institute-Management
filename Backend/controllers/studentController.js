@@ -108,7 +108,7 @@ const LoginStudent = async (req, res) => {
 const deleteStudent = async (req, res) => {
     try {
         console.log("requesting parameters : ", req.params);
-        const _id = req.params;
+        const {_id} = req.params;
 
         if (!_id) {
             return res.status(400).json({ message: "Student ID is required" });
@@ -119,7 +119,7 @@ const deleteStudent = async (req, res) => {
             return res.status(404).json({ message: "Student not found" });
         }
 
-        await Student.deleteOne({_id});
+        await Student.deleteOne({ _id });
 
         console.log("Student deleted successfully", exist);
         res.status(200).json({ message: "Student deleted successfully", student: exist });
@@ -216,21 +216,28 @@ const getAllStudents = async (req, res) => {
 };
 
 
-const getStudentByClass = async (req , res ) => {
-    const logTeacherID = req.user._id; 
-    const classId = req.params._id;
+const getStudentByClass = async (req, res) => {
+    try {
+        const logTeacherID = req.user._id;
+        const classId = req.params._id;
 
-    const classData = await Classes.findOne({
-        _id : classId,
-        teacherID: logTeacherID
-    });
+        const classData = await Classes.findOne({
+            _id: classId,
+            teacherID: logTeacherID
+        });
 
-    if(!classData) { 
-        return res.status(403).json({message : "Not your class!!"})
+        if (!classData) {
+            return res.status(403).json({ message: "Not your class!!" })
+        }
+
+        const students = await Student.find({ classLevel: classId });
+        res.status(200).json({ students });
+    } catch (error) {
+        res.status(500).json({
+            message: "ServerError", error: error.message
+        });
+
     }
-
-    const students =await Student.find({classLevel : classId});
-    res.json(students);
 }
 
-module.exports = { registerStudent, getAllStudents, getStudentById, updateStudent, deleteStudent, LoginStudent , getStudentByClass};
+module.exports = { registerStudent, getAllStudents, getStudentById, updateStudent, deleteStudent, LoginStudent, getStudentByClass };
