@@ -25,7 +25,7 @@ export const registerTeacher = async (data) => {
 // Get teacher by ID
 export const getTeacherById = async (_id) => {
   try {
-    console.log("geting the teacher :", _id);
+    console.log("getting the teacher :", _id);
     const res = await api.get(`/teachers/${_id}`);
     console.log("the response we get after getting the teacher : " , res );
     return res.data;

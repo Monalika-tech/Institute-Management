@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import ClassDashboard from "../components/ClassDashboard";
 import StudentsList from "../components/StudentsList";
 import { getClassById } from "../api/ClassAPI";
-import { getAllStudentsByCLass } from "../api/StudentAPI";
+import { getStudentsByCLass } from "../api/StudentAPI";
 
 function ClassDetail() {
   const { _id } = useParams();
@@ -16,7 +16,7 @@ function ClassDetail() {
     const fetchClassDetails = async () => {
       try {
         const classRes = await getClassById(_id);
-        const studentsRes = await getAllStudentsByCLass(_id);
+        const studentsRes = await getStudentsByCLass(_id);
 
         setClassInfo(classRes.class);
         setStudents(studentsRes.students);

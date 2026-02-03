@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 
 import Login from "./pages/Login";
 import NavBar from "./components/NavBar";
@@ -30,108 +30,96 @@ function AppLayout({ children }) {
 
 function App() {
   return (
-    <Router>
-      <AppLayout>
-        <Routes>
-          {/* Public */}
-          ✅<Route path="/login" element={<Login />} />
-
-          {/* ===== TEACHER ===== */}
-
-          ✅<Route
-            path="/"
-            element={
-              <ProtectedRoute allowedRoles={["teacher"]}>
-                <Home />
-              </ProtectedRoute>
-            }
-          />
-
-          <Route
-            path="/classes"
-            element={
-              <ProtectedRoute allowedRoles={["teacher"]}>
-                <ClassPage />
-              </ProtectedRoute>
-            }
-          />
-
-          <Route
-            path="/students"
-            element={
-              <ProtectedRoute allowedRoles={["teacher"]}>
-                <StudentPage />
-              </ProtectedRoute>
-            }
-          />
-
-          <Route
-            path="/addClass"
-            element={
-              <ProtectedRoute allowedRoles={["teacher"]}>
-                <AddClass mode="create" />
-              </ProtectedRoute>
-            }
-          />
-
-          <Route
-            path="/editClass/:classLevel"
-            element={
-              <ProtectedRoute allowedRoles={["teacher"]}>
-                <AddClass mode="edit" />
-              </ProtectedRoute>
-            }
-          />
-
-          <Route
-            path="/addStudent/:classLevel"
-            element={
-              <ProtectedRoute allowedRoles={["teacher"]}>
-                <RegisterStudent mode="add" />
-              </ProtectedRoute>
-            }
-          />
-
-          <Route
-            path="/editStudent/:_id"
-            element={
-              <ProtectedRoute allowedRoles={["teacher"]}>
-                <RegisterStudent mode="edit" />
-              </ProtectedRoute>
-            }
-          />
-
-          <Route
-            path="/editProfile"
-            element={
-              <ProtectedRoute allowedRoles={["teacher"]}>
-                <EditProfile />
-              </ProtectedRoute>
-            }
-          />
-
-          {/* ===== STUDENT ===== */}
-
-          <Route
-            path="/student/:_id"
-            element={
-              <ProtectedRoute allowedRoles={["student", "teacher"]}>
-                <StudentDetails />
-              </ProtectedRoute>
-            }
-          />
- 
-          ✅<Route
-            path="/class/:_id"
-            element={
-              <ProtectedRoute allowedRoles={["student"]}>
-                <ClassDetail />
-              </ProtectedRoute>
-            }
-          />
-        </Routes>
-      </AppLayout>
-    </Router>
+    <AppLayout>
+      <Routes>
+        {/* Public */}
+        ✅<Route path="/login" element={<Login />} />
+        {/* ===== TEACHER ===== */}
+        ✅
+        <Route
+          path="/"
+          element={
+            <ProtectedRoute allowedRoles={["teacher"]}>
+              <Home />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/classes"
+          element={
+            <ProtectedRoute allowedRoles={["teacher"]}>
+              <ClassPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/students"
+          element={
+            <ProtectedRoute allowedRoles={["teacher"]}>
+              <StudentPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/addClass"
+          element={
+            <ProtectedRoute allowedRoles={["teacher"]}>
+              <AddClass mode="create" />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/editClass/:classLevel"
+          element={
+            <ProtectedRoute allowedRoles={["teacher"]}>
+              <AddClass mode="edit" />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/addStudent/:classLevel"
+          element={
+            <ProtectedRoute allowedRoles={["teacher"]}>
+              <RegisterStudent mode="add" />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/editStudent/:_id"
+          element={
+            <ProtectedRoute allowedRoles={["teacher"]}>
+              <RegisterStudent mode="edit" />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/editProfile"
+          element={
+            <ProtectedRoute allowedRoles={["teacher"]}>
+              <EditProfile />
+            </ProtectedRoute>
+          }
+        />
+        {/* ===== STUDENT ===== */}
+        <Route
+          path="/student/:_id"
+          element={
+            <ProtectedRoute allowedRoles={["student", "teacher"]}>
+              <StudentDetails />
+            </ProtectedRoute>
+          }
+        />
+        ✅
+        <Route
+          path="/class/:_id"
+          element={
+            <ProtectedRoute allowedRoles={["student"]}>
+              <ClassDetail />
+            </ProtectedRoute>
+          }
+        />
+      </Routes>
+    </AppLayout>
   );
 }
 

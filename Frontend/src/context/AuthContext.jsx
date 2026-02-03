@@ -10,7 +10,7 @@ export const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    if (token) {
+    if (token && role && userId) {
       localStorage.setItem("token", token);
       localStorage.setItem("role", role);
       localStorage.setItem("userId", userId);
@@ -28,10 +28,11 @@ export const AuthProvider = ({ children }) => {
     try {
       const res = await api.post("/teachers/login", { email, password });
 
-      console.log("the respone we get from backend is : ", res);
+      console.log("the respone we get from backend is : ", res.data);
+
       setToken(res.data.token);
-      setRole(res.data.token.role);
-      setUserId(res.data.token.id);
+      setRole(res.data.role);
+      setUserId(res.data.userId);
 
       return { success: true };
     } catch (error) {
@@ -48,8 +49,8 @@ export const AuthProvider = ({ children }) => {
       const res = await api.post("/students/login", { email, password });
       console.log("the respone we get from backend is : ", res);
       setToken(res.data.token);
-      setRole(res.data.token.role);
-      setUserId(res.data.token.id);
+      setRole(res.data.role);
+      setUserId(res.data.userId);
 
       return { success: true };
     } catch (error) {
