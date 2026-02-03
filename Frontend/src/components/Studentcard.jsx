@@ -1,13 +1,15 @@
-import React, { useContext } from "react";
 import { Link } from "react-router-dom";
-import { studentContext } from "../context/studentContext.jsx";
+
 
 const Studentcard = ({ stud }) => {
-  const { deleteStudByID } = useContext(studentContext);
+
   const { _id, name, email, classLevel } = stud;
-  // console.log(name);
-  // console.log(_id);
-  // console.log(name);
+    const deleteHandler = async (_id) => {
+    await deleteStudent(_id);
+    window.location.reload(); // quick fix for now
+  };
+
+  
   return (
     <div className="text-gray-700 cursor-pointer hover:bg-green-100 border shadow border-gray-200 hover:border-green-500 rounded-md p-4  scale-100 hover:scale-105 transition-transform duration-200">
       <Link className="text-gray-700 cursor-pointer" to={`/students/${_id}`}>
@@ -23,13 +25,13 @@ const Studentcard = ({ stud }) => {
       </Link>
       <div className="my-4 flex flex-col gap-2">
         <Link
-          to={`/students/${_id}`}
+          to={`/student/${_id}`}
           className="rounded-md border border-green-600 px-4 py-2 text-sm text-green-600 hover:bg-green-50 transition"
         >
           View Details
         </Link>
         <button
-          onClick={() => deleteStudByID(_id)}
+          onClick={() => deleteHandler(_id)}
           className="rounded-md border border-red-600 px-4 py-2 text-sm text-red-600 hover:bg-red-50 transition"
         >
           Delete Student

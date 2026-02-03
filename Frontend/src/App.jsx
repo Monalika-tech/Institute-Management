@@ -15,6 +15,7 @@ import RegisterStudent from "./pages/RegisterStudent";
 import StudentDetails from "./pages/StudentDetails";
 
 import { useAuth } from "./context/AuthContext";
+import ClassDetail from "./pages/ClassDetail";
 
 function AppLayout({ children }) {
   const { isAuthenticated } = useAuth();
@@ -124,7 +125,7 @@ function App() {
             path="/class/:_id"
             element={
               <ProtectedRoute allowedRoles={["student"]}>
-                <ClassPage />
+                <ClassDetail />
               </ProtectedRoute>
             }
           />

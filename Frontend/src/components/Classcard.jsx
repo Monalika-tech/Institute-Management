@@ -4,7 +4,7 @@ const Classcard = ({ cls }) => {
   console.log("Classcard component rendered", cls);
   const { _id, classLevel, batchTime } = cls;
 
-  const deleteHandler = async () => {
+  const deleteHandler = async (_id) => {
     await deleteClass(_id);
     window.location.reload(); // quick fix for now
   };

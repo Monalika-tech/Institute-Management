@@ -1,19 +1,10 @@
-import React, { useContext } from "react";
-
 import { Link, useParams } from "react-router-dom";
 import Title from "./Title";
-import { ClassContext } from "../context/classContext.jsx";
 
-function StudentDashboard() {
-  const { getClassByLevel } = useContext(ClassContext);
+function ClassDashboard({ classInfo }) {
+  if (!classInfo) return null;
 
-  const { classLevel } = useParams();
-
-  console.log(classLevel);
-
-  const classSelected = getClassByLevel(classLevel);
-
-  console.log(classSelected);
+  console.log(classInfo);
   return (
     <div className="w-full font-serif  flex flex-col sm:flex-row">
       <div className="w-full flex flex-col sm:flex-row border border-gray-400 py-5 rounded-md justify-between mx-2 sm:mx-2 lg:mx-10 shadow-md shadow-gray-300">
@@ -29,22 +20,22 @@ function StudentDashboard() {
           </Link>
         </div>
         <h1 className="text-4xl font-serif sm:py-3 lg:text leading-relaxed px-4  sm:px-2">
-          Class {classSelected.classLevel}
+          Class {classInfo.classLevel}
         </h1>
         <div className="flex flex-col px-5  gap-6">
           <p className="font-text  sm:font-semibold text-base">
             <strong> Time : </strong>
-            {classSelected.batchTime}
+            {classInfo.batchTime}
           </p>
           <p className="font-text  sm:font-semibold text-base">
             <strong> Total Students : </strong>
-            {classSelected.totalStudent}
+            {/* {classInfo.totalStudent} */}need to find?..
           </p>
         </div>
       </div>
       <div>
         <Link
-          to={"/addStudent/" + classLevel}
+          to={`/addStudent/${classInfo.classLevel}`}
           className=" bg-green-700 text-white px-3 py-2  rounded-md hover:bg-green-600 mx-5 sm:mx-2 lg:mr-5 mt-4 sm:mt-4"
         >
           AddStudent
@@ -54,4 +45,4 @@ function StudentDashboard() {
   );
 }
 
-export default StudentDashboard;
+export default ClassDashboard;

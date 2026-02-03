@@ -1,35 +1,13 @@
-import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
 import Title from "./Title";
 import Studentcard from "./Studentcard";
-import api from "../api/axios";
-import { studentContext } from "../context/studentContext.jsx";
+import { useAuth } from "../context/AuthContext";
 
-function StudentsList() {
-  const { students, loading, error } = React.useContext(studentContext);
-
-  const { classLevel } = useParams();
-  console.log("Class level from params:", students);
-
-  const filteredStudents = students.filter(
-    (stud) => stud.classLevel === Number(classLevel)
-  );
-
-  console.log(
-    "Filtered students for class level",
-    classLevel,
-    ":",
-    filteredStudents
-  );
+function StudentsList({students}) {
+  const [loading] = useAuth();
+  console.log("students under this class are :", students);
 
   if (loading) {
     return <p>Loading...</p>;
-  }
-  if (error) {
-    return <p>Error: {error}</p>;
-  }
-  if (filteredStudents.length === 0) {
-    return <p>No students found for class level: {classLevel}</p>;
   }
 
   return (
@@ -43,7 +21,7 @@ function StudentsList() {
       </div>
       {/* student cards */}
       <div className="grid grid-cols-1 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 gap-y-6 place-items-center">
-        {filteredStudents.map((stud) => (
+        {students.map((stud) => (
           <Studentcard key={stud._id} stud={stud} />
         ))}
       </div>

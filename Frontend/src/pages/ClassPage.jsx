@@ -1,14 +1,12 @@
-import React from "react";
-import StudentDasboard from "../components/StudentDashboard";
-import StudentsList from "../components/StudentsList";
+import React from 'react'
 
 function ClassPage() {
   return (
     <div>
-      <StudentDasboard />
-      <StudentsList />
+        <h1>CLass page for teacher </h1>
+      
     </div>
-  );
+  )
 }
 
-export default ClassPage;
+export default ClassPage
