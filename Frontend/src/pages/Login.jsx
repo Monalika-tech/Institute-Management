@@ -1,54 +1,40 @@
 import React from "react";
 import Title from "../components/Title";
+import { useAuth } from "../context/AuthContext";
 import { Link, useNavigate } from "react-router-dom";
-import { AuthContext } from "../context/AuthContext";
+
 
 function Login() {
+  const { loginTeacher, loginStudent, loading } = useAuth();
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
+  const [role, setRole] = React.useState("teacher");
   const [error, setError] = React.useState({});
-  const [isloading, setIsLoading] = React.useState(false);
 
   const navigate = useNavigate();
-  const { loginTeacher } = React.useContext(AuthContext);
 
   const onSubmitHandler = async (e) => {
     e.preventDefault();
+    setError({});
 
-    console.log(validateForm());
-    if (!validateForm()) return;
+    let result;
 
-    setIsLoading(true);
-
-    console.log("Submitting form with:", { email, password });
-    const result = await loginTeacher(email, password);
-
-    setIsLoading(false);
+    if (role === "teacher") {
+      console.log(" Login - Submitting form with:", { email, password });
+      result = await loginTeacher(email, password);
+    } else {
+      result = await loginStudent(email, password);
+    }
 
     if (result.success) {
-      navigate("/");
+      // Role based redirect
+      if (role === "teacher") navigate("/");
+      if (role === "student") navigate("/student/dashboard");
     } else {
       setError({ form: result.message });
     }
   };
 
-  const validateForm = () => {
-    const newErrors = {};
-    if (!email.trim()) {
-      newErrors.email = "Email is Required!!";
-    } else if (!/^\S+@\S+\.\S+$/.test(email)) {
-      newErrors.email = "Enter a Valid Email";
-    }
-
-    if (!password.trim()) {
-      newErrors.password = "Password is required!";
-    } else if (password.length < 6) {
-      newErrors.password = "Password must be at least 6 characters!";
-    }
-
-    setError(newErrors);
-    return Object.keys(newErrors).length === 0;
-  };
   return (
     <div className="sm:w-1/2 flex flex-col items-center justify-center py-10 sm:py-20 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-green-500 hover:border-green-500 mx-auto my-20 px-4">
       {/* Title */}
@@ -62,6 +48,7 @@ function Login() {
       {/* Login Form */}
       <form onSubmit={onSubmitHandler} className="w-full px-8">
         <div className="mb-4">
+          {/* email */}
           <label
             htmlFor="email"
             className="block text-sm font-medium text-gray-700"
@@ -69,7 +56,7 @@ function Login() {
             Email
           </label>
           <input
-            disabled={isloading}
+            disabled={loading}
             name="email"
             type="email"
             id="email"
@@ -82,7 +69,9 @@ function Login() {
             <div className="text-red-500 text-sm">{error.email}</div>
           )}
         </div>
+
         <div className="mb-4">
+          {/* password */}
           <label
             htmlFor="password"
             className="block text-sm font-medium text-gray-700"
@@ -90,7 +79,7 @@ function Login() {
             Password
           </label>
           <input
-            disabled={isloading}
+            disabled={loading}
             name="password"
             type="password"
             id="password"
@@ -103,17 +92,30 @@ function Login() {
             <div className="text-red-500 text-sm">{error.password}</div>
           )}
         </div>
+
+        {/*roles  */}
+        <label
+          htmlFor="role"
+          className="block text-sm font-medium text-gray-700 "
+        >
+          Role
+        </label>
+        <select value={role} onChange={(e) => setRole(e.target.value)}>
+          <option value="teacher">Teacher</option>
+          <option value="student">Student</option>
+        </select>
+
         <div className="flex  flex-col items-center justify-center">
           <button
             type="submit"
-            disabled={isloading}
+            disabled={loading}
             className={`w-1/4  text-white py-2 px-4 rounded-md ${
-              isloading
+              loading
                 ? "bg-gray-400"
                 : "bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
             }`}
           >
-            {isloading ? "Logging in..." : "Login"}
+            {loading ? "Logging in..." : "Login"}
           </button>
           <Link
             to="/register"

@@ -15,21 +15,23 @@ export const AuthProvider = ({ children }) => {
       localStorage.setItem("role", role);
       localStorage.setItem("userId", userId);
     } else {
-      localStorage.clear();
+      localStorage.removeItem("token");
+      localStorage.removeItem("role");
+      localStorage.removeItem("userId");
     }
     setLoading(false);
   }, [token, role, userId]);
 
-
   // Teacher login
-  
+
   const loginTeacher = async (email, password) => {
     try {
       const res = await api.post("/teachers/login", { email, password });
 
+      console.log("the respone we get from backend is : ", res);
       setToken(res.data.token);
-      setRole(res.data.role);
-      setUserId(res.data.id);
+      setRole(res.data.token.role);
+      setUserId(res.data.token.id);
 
       return { success: true };
     } catch (error) {
@@ -40,15 +42,14 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-
-  // student login 
+  // student login
   const loginStudent = async (email, password) => {
     try {
       const res = await api.post("/students/login", { email, password });
-
+      console.log("the respone we get from backend is : ", res);
       setToken(res.data.token);
-      setRole(res.data.role);
-      setUserId(res.data.id);
+      setRole(res.data.token.role);
+      setUserId(res.data.token.id);
 
       return { success: true };
     } catch (error) {
@@ -58,7 +59,6 @@ export const AuthProvider = ({ children }) => {
       };
     }
   };
-
 
   const logout = () => {
     setToken(null);

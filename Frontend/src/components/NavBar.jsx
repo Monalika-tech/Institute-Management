@@ -1,7 +1,7 @@
 import React from "react";
 import logo from "../assets/logo.png";
 import { Link, NavLink,useNavigate } from "react-router-dom";
-import { AuthContext } from "../context/AuthContext";
+
 
 function NavBar() {
   const linkClass = ({ isActive }) =>
