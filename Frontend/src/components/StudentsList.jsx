@@ -1,14 +1,9 @@
 import Title from "./Title";
 import Studentcard from "./Studentcard";
-import { useAuth } from "../context/AuthContext";
+import { useState } from "react";
 
-function StudentsList({students}) {
-  const [loading] = useAuth();
+function StudentsList({ students }) {
   console.log("students under this class are :", students);
-
-  if (loading) {
-    return <p>Loading...</p>;
-  }
 
   return (
     <div className="my-10">

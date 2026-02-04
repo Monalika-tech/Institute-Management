@@ -12,12 +12,6 @@ function ClassDashboard({ classInfo }) {
           {/* title */}
           {/* <div className="text-center py-8 px-10 text-3xl"> */}
           <Title text1={"Class"} text2={"Details"} />
-          <Link
-            to={"/"}
-            className=" border border-green-700 text-Balck hover:text-white px-3 py-2  rounded-md hover:bg-green-600 mx-5 sm:mx-2 lg:mr-5 mt-4 sm:mt-4"
-          >
-            Back
-          </Link>
         </div>
         <h1 className="text-4xl font-serif sm:py-3 lg:text leading-relaxed px-4  sm:px-2">
           Class {classInfo.classLevel}
@@ -33,10 +27,16 @@ function ClassDashboard({ classInfo }) {
           </p>
         </div>
       </div>
-      <div>
+      <div className="flex flex-row sm:flex-col  ">
+        <Link
+          to={"/"}
+          className="w-fit bg-green-700 text-white px-3 py-2  rounded-md hover:bg-green-600 mx-5 sm:mx-2 lg:mr-5 mt-4 sm:mt-4"
+        >
+          Back
+        </Link>
         <Link
           to={`/addStudent/${classInfo.classLevel}`}
-          className=" bg-green-700 text-white px-3 py-2  rounded-md hover:bg-green-600 mx-5 sm:mx-2 lg:mr-5 mt-4 sm:mt-4"
+          className=" w-fit bg-green-700 text-white px-3 py-2  rounded-md hover:bg-green-600 mx-5 sm:mx-2 lg:mr-5 mt-4 sm:mt-4"
         >
           AddStudent
         </Link>

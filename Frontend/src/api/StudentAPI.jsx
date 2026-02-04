@@ -39,6 +39,7 @@ export const getStudentById = async (_id) => {
   try {
     const res = await api.get(`/students/${_id}`);
     console.log("the res we get after getting student : ", res);
+    
     return res.data;
   } catch (error) {
     throw error.response?.data || { message: "Failed to fetch student" };
