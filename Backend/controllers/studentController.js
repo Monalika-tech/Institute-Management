@@ -94,6 +94,8 @@ const LoginStudent = async (req, res) => {
         res.status(200).json({
             message: "student login succesfull",
             token,
+            role: "student",
+            userId: student._id,
             student: student
         })
 
@@ -108,7 +110,7 @@ const LoginStudent = async (req, res) => {
 const deleteStudent = async (req, res) => {
     try {
         console.log("requesting parameters : ", req.params);
-        const {_id} = req.params;
+        const { _id } = req.params;
 
         if (!_id) {
             return res.status(400).json({ message: "Student ID is required" });

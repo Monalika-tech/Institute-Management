@@ -76,6 +76,8 @@ const LoginTeacher = async (req, res) => {
             res.status(200).json({
                 message: "Login Successful!",
                 token,
+                role: "teacher",
+                userId: teacher._id,
                 teacher: {
                     _id: teacher._id,
                     name: teacher.name,
