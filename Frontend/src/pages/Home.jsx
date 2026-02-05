@@ -26,7 +26,8 @@ function Home() {
         console.log("classes response :", classesRes.classes);
 
         setTeacher(teacherRes.teacher);
-        localStorage.setItem("teacher", teacherRes.teacher);
+
+        localStorage.setItem("teacher", JSON.stringify(teacherRes.teacher));
         setClasses(classesRes.classes);
       } catch (error) {
         console.error("Home data fetch failed", error);

@@ -27,9 +27,19 @@ export const getTeacherById = async (_id) => {
   try {
     console.log("getting the teacher :", _id);
     const res = await api.get(`/teachers/${_id}`);
-    console.log("the response we get after getting the teacher : " , res );
+    console.log("the response we get after getting the teacher : ", res);
     return res.data;
   } catch (error) {
     throw error.response?.data || { message: "Failed to fetch teacher" };
+  }
+};
+
+export const updateTeacher = async (_id, data) => {
+  try {
+    console.log("the teacher to update ", data);
+    const res = await api.put(`/teachers/${_id}`, data);
+    return res.data;
+  } catch (error) {
+    throw error.response?.data || { message: "Failed to update teacher" };
   }
 };
