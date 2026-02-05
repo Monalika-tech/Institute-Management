@@ -1,5 +1,5 @@
 const express = require('express');
-const { LoginTeacher, RegisterTeacher, GetTeacherById } = require('../controllers/teacherController');
+const { LoginTeacher, RegisterTeacher, GetTeacherById, updateTeacher } = require('../controllers/teacherController');
 const router = express.Router();
 
 
@@ -20,6 +20,7 @@ router.post('/login', LoginTeacher);
 
 router.post('/register', teacherValidator, RegisterTeacher);
 router.get('/:_id', protect, authorize('teacher'), teacherOwnership, GetTeacherById);
+router.put('/:_id', protect, authorize('teacher'), teacherOwnership,updateTeacher );
 
 
 module.exports = router;

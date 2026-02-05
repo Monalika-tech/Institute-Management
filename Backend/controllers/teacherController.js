@@ -119,9 +119,45 @@ const GetTeacherById = async (req, res) => {
         res.status(500).json({ message: "Server Error", error: error.message });
     }
 };
+const updateTeacher = async (req, res) => {
+    try {
+        const { _id } = req.params;
+        const { name, email, password, phone_no, address, qualification, experiencedYears } = req.body;
+
+        const existingTeacher = await Teacher.findOne({ _id });
+
+        if (!existingTeacher) {
+            return res.status(404).json({ message: "Teacher not found" });
+        }
 
 
+        existingTeacher.name = name || existingTeacher.name;
+        existingTeacher.email = email || existingTeacher.email;
+        existingTeacher.phone_no = phone_no || existingTeacher.phone_no;
+        existingTeacher.address = address || existingTeacher.address;
+        existingTeacher.qualification = qualification || existingTeacher.qualification;
+        existingTeacher.experiencedYears = experiencedYears || existingTeacher.experiencedYears
+
+        if (password) {
+            const salt = await bcrypt.genSalt(10);
+            existingTeacher.password = await bcrypt.hash(password, salt);
+        }
+
+        await existingTeacher.save();
+
+        return res.status(200).json({
+            message: "Teacher updated successfully",
+            teacher: existingTeacher,
+        });
+
+    } catch (error) {
+        res.status(500).json({
+            message: "Server Error", error: error.message
+        });
+    }
+
+};
 
 module.exports = {
-    LoginTeacher, RegisterTeacher, GetTeacherById
+    LoginTeacher, RegisterTeacher, GetTeacherById, updateTeacher
 };
