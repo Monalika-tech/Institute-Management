@@ -64,15 +64,15 @@ function App() {
           path="/addClass"
           element={
             <ProtectedRoute allowedRoles={["teacher"]}>
-              <AddClass mode="create" />
+              <AddClass  />
             </ProtectedRoute>
           }
         />
         <Route
-          path="/editClass/:classLevel"
+          path="/editClass/:_id"
           element={
             <ProtectedRoute allowedRoles={["teacher"]}>
-              <AddClass mode="edit" />
+              <AddClass />
             </ProtectedRoute>
           }
         />
@@ -92,7 +92,7 @@ function App() {
             </ProtectedRoute>
           }
         />
-        <Route
+        ✅<Route
           path="/editProfile"
           element={
             <ProtectedRoute allowedRoles={["teacher"]}>
@@ -101,7 +101,7 @@ function App() {
           }
         />
         {/* ===== STUDENT ===== */}
-        <Route
+        ✅<Route
           path="/student/:_id"
           element={
             <ProtectedRoute allowedRoles={["student", "teacher"]}>

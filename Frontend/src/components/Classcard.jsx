@@ -31,7 +31,7 @@ const Classcard = ({ cls }) => {
           View Details
         </Link>
         <Link
-          to={`/editClass/${classLevel}`}
+          to={`/editClass/${_id}`}
           className="rounded-md border border-green-600 px-4 py-2 text-sm text-green-600 hover:bg-green-50 transition"
         >
           Edit Details
