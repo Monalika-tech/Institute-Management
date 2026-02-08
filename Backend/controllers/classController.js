@@ -37,10 +37,10 @@ const createClass = async (req, res) => {
 const updateClass = async (req, res) => {
     try {
 
-        const { classLevel } = req.params;
+        const { _id } = req.params;
         const { totalStudent, batchTime } = req.body;
 
-        const existingClass = await Classes.findOne({ classLevel });
+        const existingClass = await Classes.findOne({ _id });
 
 
         if (!existingClass) {
