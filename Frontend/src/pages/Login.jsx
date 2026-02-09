@@ -3,9 +3,8 @@ import Title from "../components/Title";
 import { useAuth } from "../context/AuthContext";
 import { Link, useNavigate } from "react-router-dom";
 
-
 function Login() {
-  const { loginTeacher, loginStudent, loading } = useAuth();
+  const { loginTeacher, loginStudent, loading, userId } = useAuth();
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
   const [role, setRole] = React.useState("teacher");
@@ -28,8 +27,8 @@ function Login() {
 
     if (result.success) {
       // Role based redirect
-      if (role === "teacher") navigate("/");
-      if (role === "student") navigate("/student/dashboard");
+      if (role === "teacher") navigate(`/Teacher/${userId}`);
+      if (role === "student") navigate(`/Student/${userId}`);
     } else {
       setError({ form: result.message });
     }
