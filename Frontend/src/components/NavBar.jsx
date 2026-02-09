@@ -49,11 +49,17 @@ function NavBar() {
             <span className="w-3/4 h-[2px] bg-green-600" />
           </NavLink>
         </li>
+
+        <li>
+          <NavLink to="/about" className={linkClass}>
+            <span>About</span>
+            <span className="w-3/4 h-[2px] bg-green-600" />
+          </NavLink>
+        </li>
       </ul>
 
       {/* Actions */}
       <div className="flex  flex-row justify-center gap-10 items-center gap-4">
-
         {teacher ? (
           <>
             <button
@@ -74,7 +80,7 @@ function NavBar() {
           </>
         )}
         <button
-        type="button"
+          type="button"
           onClick={() => navigate(-1)}
           className="hover:bg-gray-100 hover-shadow-md px-1 py-1 rounded"
         >

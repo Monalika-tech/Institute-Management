@@ -7,12 +7,10 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        elegantSerif: ["Playfair Display", "serif"],
-        classySerif: ["Prata", "serif"],
-        classySans: ["Josefin Sans", "sans-serif"],
+        playwrite: ['"Playwrite NZ Basic"', 'cursive'],
       },
+    }
 
-    },
   },
   plugins: [],
 }

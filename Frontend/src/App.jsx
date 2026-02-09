@@ -17,6 +17,7 @@ import StudentDetails from "./pages/StudentDetails";
 import { useAuth } from "./context/AuthContext";
 import ClassDetail from "./pages/ClassDetail";
 import TeacherDetails from "./pages/TeacherDetails";
+import About from "./pages/About";
 
 function AppLayout({ children }) {
   const { isAuthenticated } = useAuth();
@@ -36,6 +37,7 @@ function App() {
         {/* Public */}
         ✅<Route path="/login" element={<Login />} />
         <Route path="/" element={<Home />} />
+        <Route path="/about" element={<About />} />
         {/* ===== TEACHER ===== */}
         ✅
         <Route
