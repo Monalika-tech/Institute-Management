@@ -62,7 +62,7 @@ const EditProfile = () => {
   const onSubmitHandler = async (e) => {
     e.preventDefault();
     try {
-      console.log("dat we get for update " , formData);
+      console.log("dat we get for update ", formData);
       const res = await updateTeacher(teacher._id, formData);
 
       localStorage.setItem("teacher", JSON.stringify(res.teacher));
@@ -112,9 +112,18 @@ const EditProfile = () => {
           onChange={handleChange}
         />
 
-        <button className="w-full my-3  bg-green-600 text-white py-2 rounded-md">
-          Update Profile
-        </button>
+        <div className="flex flex-coll gap-6">
+          <button
+            type="button"
+            onClick={() => navigate(-1)}
+            className="w-full my-3  bg-green-600 text-white py-2 rounded-3xl"
+          >
+            Cancle
+          </button>
+          <button className="w-full my-3  bg-green-600 text-white py-2 rounded-3xl">
+            Update Profile
+          </button>
+        </div>
       </form>
     </div>
   );
@@ -125,8 +134,8 @@ const Input = ({ label, ...props }) => (
     <label className="block text-sm font-medium mb-1">{label}</label>
     <input
       {...props}
-      className={`w-full px-4 py-2 border rounded-md ${
-        props.disabled ? "bg-gray-100 cursor-not-allowed" : ""
+      className={`w-full px-4 py-2 border border-green-700 shadow-black-10 rounded-md hover:bg-green-100 ${
+        props.disabled ? "bg-green-100  text-gray-700 cursor-not-allowed" : ""
       }`}
     />
   </div>

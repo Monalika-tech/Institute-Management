@@ -4,11 +4,11 @@ import { useState } from "react";
 
 function NavBar() {
   const { logout } = useAuth();
-  const [open , setopen] = useState(false);
+  const [open, setopen] = useState(false);
 
-const teacher = localStorage.getItem("teacher");
+  const teacher = localStorage.getItem("teacher");
 
-console.log('teacher :',teacher);
+  console.log("teacher :", teacher);
 
   const linkClass = ({ isActive }) =>
     `flex flex-col items-center gap-1 ${
@@ -52,12 +52,13 @@ console.log('teacher :',teacher);
       </ul>
 
       {/* Actions */}
-      <div className="flex items-center gap-4">
+      <div className="flex  flex-row justify-center gap-10 items-center gap-4">
+
         {teacher ? (
           <>
             <button
               onClick={handleLogout}
-              className="rounded-md bg-green-600 px-4 py-2 text-sm text-white hover:bg-red-700 transition"
+              className="rounded-md bg-green-700 px-4 py-2 text-sm text-white hover:bg-red-700 transition"
             >
               LogOut
             </button>
@@ -66,12 +67,19 @@ console.log('teacher :',teacher);
           <>
             <Link
               to="/register"
-              className="rounded-md border border-green-600 px-4 py-2 text-sm text-green-600 hover:bg-green-50 transition"
+              className="rounded-md  border border-green-700 px-4 py-2 text-sm text-green-700 hover:bg-green-50 transition"
             >
               Sign Up
             </Link>
           </>
         )}
+        <button
+        type="button"
+          onClick={() => navigate(-1)}
+          className="hover:bg-gray-100 hover-shadow-md px-1 py-1 rounded"
+        >
+          Back
+        </button>
       </div>
     </nav>
   );

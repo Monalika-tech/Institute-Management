@@ -16,6 +16,7 @@ import StudentDetails from "./pages/StudentDetails";
 
 import { useAuth } from "./context/AuthContext";
 import ClassDetail from "./pages/ClassDetail";
+import TeacherDetails from "./pages/TeacherDetails";
 
 function AppLayout({ children }) {
   const { isAuthenticated } = useAuth();
@@ -34,13 +35,14 @@ function App() {
       <Routes>
         {/* Public */}
         ✅<Route path="/login" element={<Login />} />
+        <Route path="/" element={<Home />} />
         {/* ===== TEACHER ===== */}
         ✅
         <Route
-          path="/"
+          path="/Teacher/:_id"
           element={
             <ProtectedRoute allowedRoles={["teacher"]}>
-              <Home />
+              <TeacherDetails />
             </ProtectedRoute>
           }
         />
@@ -64,7 +66,7 @@ function App() {
           path="/addClass"
           element={
             <ProtectedRoute allowedRoles={["teacher"]}>
-              <AddClass  />
+              <AddClass />
             </ProtectedRoute>
           }
         />
@@ -92,7 +94,8 @@ function App() {
             </ProtectedRoute>
           }
         />
-        ✅<Route
+        ✅
+        <Route
           path="/editProfile"
           element={
             <ProtectedRoute allowedRoles={["teacher"]}>
@@ -101,7 +104,8 @@ function App() {
           }
         />
         {/* ===== STUDENT ===== */}
-        ✅<Route
+        ✅
+        <Route
           path="/student/:_id"
           element={
             <ProtectedRoute allowedRoles={["student", "teacher"]}>
@@ -113,7 +117,7 @@ function App() {
         <Route
           path="/class/:_id"
           element={
-            <ProtectedRoute allowedRoles={[ "teacher","student"]}>
+            <ProtectedRoute allowedRoles={["teacher", "student"]}>
               <ClassDetail />
             </ProtectedRoute>
           }

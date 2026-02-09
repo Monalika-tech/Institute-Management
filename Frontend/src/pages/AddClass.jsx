@@ -107,8 +107,15 @@ const AddClass = () => {
         ))}
 
         <button
+          type="button"
+          onClick={() => navigate(-1)}
+          className="w-full my-3  bg-green-600 text-white py-2 rounded-md"
+        >
+          Cancle
+        </button>
+        <button
           type="submit"
-          className="mt-6 w-full bg-green-600 text-white px-4 py-2 rounded-md hover:bg-green-700 transition"
+          className="mt-3 w-full bg-green-600 text-white px-4 py-2 rounded-md hover:bg-green-700 transition"
         >
           {isEdit ? "Update Class" : "Add Class"}
         </button>
