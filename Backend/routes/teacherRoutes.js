@@ -20,7 +20,7 @@ router.post('/login', LoginTeacher);
 
 router.post('/register', teacherValidator, RegisterTeacher);
 router.get('/:_id', protect, authorize('teacher'), teacherOwnership, GetTeacherById);
-router.put('/:_id', protect, authorize('teacher'), teacherOwnership,updateTeacher );
+router.put('/:_id',  protect, authorize('teacher'), teacherOwnership, updateTeacher);
 
 
 module.exports = router;
