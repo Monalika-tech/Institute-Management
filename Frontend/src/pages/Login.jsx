@@ -62,7 +62,7 @@ function Login() {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
-            className="mt-1 block w-full px-4 py-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500 text-base sm:text-sm"
+            className="mt-1 block w-full px-4 py-3 border border-gray-300 rounded-md bg-white/10 "
           />
           {error.email && (
             <div className="text-red-500 text-sm">{error.email}</div>
@@ -85,7 +85,7 @@ function Login() {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
-            className="mt-1 block w-full px-4 py-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 text-base sm:text-sm"
+            className=" w-full block  mt-1 px-4 py-2 border border-gray-300 rounded-md bg-white/10 "
           />
           {error.password && (
             <div className="text-red-500 text-sm">{error.password}</div>
@@ -99,7 +99,11 @@ function Login() {
         >
           Role
         </label>
-        <select value={role} onChange={(e) => setRole(e.target.value)}>
+        <select
+          className="text-white"
+          value={role}
+          onChange={(e) => setRole(e.target.value)}
+        >
           <option value="teacher">Teacher</option>
           <option value="student">Student</option>
         </select>
@@ -108,7 +112,7 @@ function Login() {
           <button
             type="submit"
             disabled={loading}
-            className={`w-1/4  text-white py-2 px-4 rounded-md ${
+            className={` text-white py-2 px-4 rounded-md ${
               loading
                 ? "bg-gray-400"
                 : "bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
@@ -118,7 +122,7 @@ function Login() {
           </button>
           <Link
             to="/register"
-            className="ml-4 text-sm text-gray-600 hover:underline"
+            className="ml-4 text-sm text-white hover:underline"
           >
             Don't have an account? Register!
           </Link>

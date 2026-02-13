@@ -24,19 +24,21 @@ function AppLayout({ children }) {
   const { isAuthenticated } = useAuth();
 
   return (
-    <div className="min-h-screen bg-gray-100">
+    <div className="min-h-screen flex flex-col ">
       {/* Top Navbar */}
       {isAuthenticated && <NavBar />}
-
-      <div className="flex min-h-[calc(100vh-64px)]">
-        {/* Sidebar */}
-        {isAuthenticated && <Slidebar />}
-
+      <div className="flex flex-col sm:flex-row flex-1">
+        {/* Sidebar (actions) */}
+        {isAuthenticated && (
+          <aside className="sm:w-40 w-full sm:min-h-full bg-green-800/20 backdrop-blur-sm  ">
+            <Slidebar />
+          </aside>
+        )}
         {/* Main Content Area */}
-        <main className="relative flex-1 overflow-hidden">
+        <main className="relative flex-1 overflow-hidden rounded-2xl sm:ml-2">
           {/* Background Layer */}
           <div
-            className="absolute inset-0 bg-cover bg-center blur-sm scale-110"
+            className="absolute inset-0 bg-cover bg-center blur-sm scale-110 "
             style={{
               backgroundImage:
                 "url('https://img.freepik.com/free-photo/book-with-green-board-background_1150-3837.jpg?semt=ais_hybrid&w=740&q=80')",
@@ -48,27 +50,27 @@ function AppLayout({ children }) {
 
           {/* Content */}
           <div className="relative z-10 p-6">
-            <div className="rounded-2xl bg-white/10 shadow-xl p-6">
+            <div className="rounded-2xl bg-white/10  shadow-lg p-4 sm:p-6">
               {children}
             </div>
           </div>
         </main>
+        
       </div>
     </div>
   );
 }
-
 
 function App() {
   return (
     <AppLayout>
       <Routes>
         {/* Public */}
-        ✅<Route path="/login" element={<Login />} />
+        <Route path="/login" element={<Login />} />
         <Route path="/" element={<Home />} />
         <Route path="/about" element={<About />} />
         {/* ===== TEACHER ===== */}
-        ✅
+
         <Route
           path="/Teacher/:_id"
           element={
@@ -125,7 +127,7 @@ function App() {
             </ProtectedRoute>
           }
         />
-        ✅
+
         <Route
           path="/editProfile"
           element={
@@ -135,7 +137,7 @@ function App() {
           }
         />
         {/* ===== STUDENT ===== */}
-        ✅
+
         <Route
           path="/student/:_id"
           element={
@@ -144,7 +146,7 @@ function App() {
             </ProtectedRoute>
           }
         />
-        ✅
+
         <Route
           path="/class/:_id"
           element={

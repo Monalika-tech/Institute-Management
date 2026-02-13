@@ -4,19 +4,6 @@ import { Link } from "react-router-dom";
 const Home = () => {
   return (
     <div className="relative min-h-screen overflow-hidden">
-      {/* Background Image */}
-      <div
-        className="absolute inset-0 bg-cover bg-center scale-110 "
-        style={{
-          backgroundImage:
-            "url('https://img.freepik.com/free-photo/book-with-green-board-background_1150-3837.jpg?semt=ais_hybrid&w=740&q=80')",
-          boxShadow: "inset 0 0 150px rgba(0,0,0,0.25)",
-        }}
-      />
-
-      {/* Dark Overlay */}
-      <div className="absolute inset-0 bg-black/10 backdrop-blur-sm" />
-
       {/* Content */}
       <div className="relative z-10 flex items-center justify-center min-h-screen px-6">
         <div className="max-w-3xl text-center text-white ">
@@ -29,7 +16,7 @@ const Home = () => {
             operations — all in one place.
           </p>
 
-          <div className="flex justify-center gap-4">
+          <div className="flex justify-center gap-4 sm:flex-row flex-col">
             <Link
               to="/login"
               className="bg-green-600 hover:bg-green-700 text-white font-semibold px-8 py-3 rounded-full shadow-lg transition duration-300"
