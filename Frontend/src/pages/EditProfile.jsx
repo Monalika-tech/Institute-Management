@@ -77,7 +77,7 @@ const EditProfile = () => {
   if (loading) return <p className="text-center py-10">Loading profile...</p>;
 
   return (
-    <div className="sm:w-1/2 bg-white/70 mx-auto my-16 p-6 border border-gray-300 rounded-3xl shadow-xl.shadow-black mx-auto my-6 sm:my-20 px-4 hover:border-green-500 mx-auto my-20 px-4">
+    <div className="sm:w-3/4  lg:w-1/2 bg-white/10 mx-auto my-16 p-6 border border-gray-300 rounded-3xl shadow-xl.shadow-black mx-auto my-6 sm:my-20 px-4 hover:border-green-500 mx-auto my-20 px-4">
       <div className="text-center mb-8 py-8 text-3xl">
         <Title text1="Edit" text2="Profile" />
         {/* <p className="text-sm text-gray-600">Need to edit profile..</p> */}

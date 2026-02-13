@@ -10,7 +10,7 @@ const Classcard = ({ cls }) => {
   };
 
   return (
-    <div className="text-gray-700 cursor-pointer hover:bg-gray-100 border shadow border-gray-200 rounded-md p-4 ">
+    <div className=" w-full text-gray-700 cursor-pointer hover:bg-gray-100 border shadow border-gray-200 rounded-md p-4 ">
       <Link to={`/class/${_id}`}>
         <p className="pt-3 pb-1 text-sm"> Class {classLevel}</p>
         <div className="flex flex-col  gap-6">
