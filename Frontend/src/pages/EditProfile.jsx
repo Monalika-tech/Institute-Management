@@ -77,54 +77,77 @@ const EditProfile = () => {
   if (loading) return <p className="text-center py-10">Loading profile...</p>;
 
   return (
-    <div className="sm:w-3/4  lg:w-1/2 bg-white/10 mx-auto my-16 p-6 border border-gray-300 rounded-3xl shadow-xl.shadow-black mx-auto my-6 sm:my-20 px-4 hover:border-green-500 mx-auto my-20 px-4">
-      <div className="text-center mb-8 py-8 text-3xl">
-        <Title text1="Edit" text2="Profile" />
-        {/* <p className="text-sm text-gray-600">Need to edit profile..</p> */}
-      </div>
-
-      <form onSubmit={onSubmitHandler} className="space-y-4">
-        <Input
-          label="Name"
-          name="name"
-          value={formData.name}
-          onChange={handleChange}
-          className="w-full px-4 py-3 bo"
-        />
-        <Input label="Email" name="email" value={formData.email} disabled />
-        <Input
-          label="Phone No"
-          name="phone_no"
-          value={formData.phone_no}
-          onChange={handleChange}
-        />
-        <Input
-          label="Qualification"
-          name="qualification"
-          value={formData.qualification}
-          onChange={handleChange}
-        />
-        <Input
-          label="Experience (Years)"
-          name="experiencedYears"
-          type="number"
-          value={formData.experiencedYears}
-          onChange={handleChange}
-        />
-
-        <div className="flex flex-coll gap-6">
-          <button
-            type="button"
-            onClick={() => navigate(-1)}
-            className="w-full my-3  bg-green-600 text-white py-2 rounded-3xl"
-          >
-            Cancle
-          </button>
-          <button className="w-full my-3  bg-green-600 text-white py-2 rounded-3xl">
-            Update Profile
-          </button>
+    <div className="min-h-screen flex items-center justify-center px-4">
+      <div
+        className="  
+  w-full 
+ max-w-3xl w-full  mx-auto 
+  my-8 sm:my-16 
+  px-4 sm:px-8 
+  py-8 sm:py-12 
+  bg-white/90 
+  rounded-2xl 
+  shadow-md 
+  border border-gray-200
+"
+      >
+        <div className="text-center mb-6 text-3xl">
+          <Title text1="Edit" text2="Profile" />
+          <p className="text-sm text-gray-500 mt-1">
+            Update your personal information
+          </p>
         </div>
-      </form>
+
+        <form
+          onSubmit={onSubmitHandler}
+          className="grid grid-cols-1 md:grid-cols-2 gap-5"
+        >
+          <Input
+            label="Name"
+            name="name"
+            value={formData.name}
+            onChange={handleChange}
+            className="w-full px-4 py-3 bo"
+          />
+          <Input label="Email" name="email" value={formData.email} disabled />
+          <Input
+            label="Phone No"
+            name="phone_no"
+            value={formData.phone_no}
+            onChange={handleChange}
+          />
+          <Input
+            label="Qualification"
+            name="qualification"
+            value={formData.qualification}
+            onChange={handleChange}
+          />
+          <Input
+            label="Experience (Years)"
+            name="experiencedYears"
+            type="number"
+            value={formData.experiencedYears}
+            onChange={handleChange}
+          />
+
+          <div className="flex flex-col sm:flex-row gap-4 mt-6 md:col-span-2">
+            <button
+              type="button"
+              onClick={() => navigate(-1)}
+              className="w-full sm:w-1/2 bg-gray-200 text-gray-700 py-3 rounded-lg"
+            >
+              Cancel
+            </button>
+
+            <button
+              type="submit"
+              className="w-full sm:w-1/2 bg-green-600 text-white py-3 rounded-lg hover:bg-green-700 transition"
+            >
+              Update
+            </button>
+          </div>
+        </form>
+      </div>
     </div>
   );
 };
@@ -134,9 +157,9 @@ const Input = ({ label, ...props }) => (
     <label className="block text-sm font-medium mb-1">{label}</label>
     <input
       {...props}
-      className={`w-full px-4 py-2 border border-green-700 shadow-black-10 rounded-md hover:bg-green-100 ${
-        props.disabled ? "bg-green-100  text-gray-700 cursor-not-allowed" : ""
-      }`}
+      className={`w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500
+focus:border-green-500 transition ${props.disabled ? "bg-gray-100 text-gray-500 cursor-not-allowed" : ""}
+`}
     />
   </div>
 );

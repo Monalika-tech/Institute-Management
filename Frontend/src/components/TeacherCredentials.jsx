@@ -1,3 +1,5 @@
+import Title from "./Title";
+
 function TeacherCredentials({ teacher }) {
   if (!teacher) {
     return <h1 className="text-gray-500">Loading teachers Profile!</h1>;
@@ -7,11 +9,8 @@ function TeacherCredentials({ teacher }) {
     <div className="flex flex-col sm:flex-row border border-gray-400  py-5 rounded-md justify-between mx-2 sm:mx-2 lg:mx-10 shadow-md shadow-gray-300">
       <div className="w-full sm:w-1/5"></div>
       <div className="w-full sm:w-2/5 flex flex-col justify-center px-6 py-8 gap-6">
-        <div className="flex items-center gap-2">
-          <span className="w-10 h-[2px] bg-gray-500"></span>
-          <p className="text-sm font-medium tracking-wide text-gray-700">
-            Teacher Profile
-          </p>
+        <div className="flex items-center gap-2 text-3xl">
+          <Title text1={"P" } text2={"rofile"} />
         </div>
 
         <h1 className="text-2xl font-semibold text-gray-900">Institute Name</h1>

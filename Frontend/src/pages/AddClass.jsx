@@ -64,62 +64,67 @@ const AddClass = () => {
   };
 
   return (
-    <div className="sm:w-1/2 flex flex-col items-center justify-center py-10 sm:py-20 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-green-500 hover:border-green-500 mx-auto my-6 sm:my-20 px-4">
-      {/* Title */}
-      <div className="text-center py-8 px-10 text-3xl">
-        <Title text1={"Class"} text2={"Data"} />
-        <p className="w-3/4 m-auto text-xs sm:text-sm md:text-base text-grey-600">
-          Need to edit profile!!
-        </p>
-      </div>
+    <div className="min-h-screen flex items-center justify-center px-4">
+      <div className="w-full max-w-2xl bg-white rounded-2xl shadow-md p-6 sm:p-8">
+        {/* Title */}
+        <div className="text-center py-8 px-10 text-3xl">
+          <Title text1={"Class"} text2={"Data"} />
+          <p className="w-3/4 m-auto text-xs sm:text-sm md:text-base text-grey-600">
+            Need to edit profile!!
+          </p>
+        </div>
 
-      <form onSubmit={onSubmitHandler}>
-        {/* form fields will go here */}
+        <form onSubmit={onSubmitHandler}>
+          {/* form fields will go here */}
 
-        {Object.keys(formData).map((key) => (
-          <div key={key}>
-            <label
-              htmlFor={key}
-              className="block text-sm font-medium text-gray-700 py-2"
+          {Object.keys(formData).map((key) => (
+            <div key={key}>
+              <label
+                htmlFor={key}
+                className="block text-sm font-medium text-gray-700 py-2"
+              >
+                {key.toUpperCase()}
+              </label>
+              <input
+                id={key}
+                name={key}
+                type={
+                  key === "batchTime"
+                    ? "text"
+                    : key === "classLevel"
+                      ? "number"
+                      : "number"
+                }
+                value={formData[key]}
+                onChange={handleChange}
+                disabled={key === "classLevel" && isEdit ? true : false}
+                className={`mt-1 block w-full px-4 py-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500 text-base sm:text-sm ${
+                  key === "classLevel" && isEdit
+                    ? "bg-gray-100 cursor-not-allowed"
+                    : ""
+                }`}
+              />
+            </div>
+          ))}
+
+          <div className="flex flex-col sm:flex-row gap-4 mt-6 md:col-span-2">
+            <button
+              type="button"
+              onClick={() => navigate(-1)}
+              className="w-full sm:w-1/2 bg-gray-200 text-gray-700 py-3 rounded-lg"
             >
-              {key.toUpperCase()}
-            </label>
-            <input
-              id={key}
-              name={key}
-              type={
-                key === "batchTime"
-                  ? "text"
-                  : key === "classLevel"
-                    ? "number"
-                    : "number"
-              }
-              value={formData[key]}
-              onChange={handleChange}
-              disabled={key === "classLevel" && isEdit ? true : false}
-              className={`mt-1 block w-full px-4 py-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500 text-base sm:text-sm ${
-                key === "classLevel" && isEdit
-                  ? "bg-gray-100 cursor-not-allowed"
-                  : ""
-              }`}
-            />
-          </div>
-        ))}
+              Cancel
+            </button>
 
-        <button
-          type="button"
-          onClick={() => navigate(-1)}
-          className="w-full my-3  bg-green-600 text-white py-2 rounded-md"
-        >
-          Cancle
-        </button>
-        <button
-          type="submit"
-          className="mt-3 w-full bg-green-600 text-white px-4 py-2 rounded-md hover:bg-green-700 transition"
-        >
-          {isEdit ? "Update Class" : "Add Class"}
-        </button>
-      </form>
+            <button
+              type="submit"
+              className="w-full sm:w-1/2 bg-green-600 text-white py-3 rounded-lg hover:bg-green-700 transition"
+            >
+              {isEdit ? "Update Class" : "Add Class"}
+            </button>
+          </div>
+        </form>
+      </div>
     </div>
   );
 };

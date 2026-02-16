@@ -6,12 +6,13 @@ function ClassDashboard({ classInfo }) {
 
   console.log(classInfo);
   return (
-    <div className="w-full font-serif  flex flex-col sm:flex-row">
-      <div className="w-full flex flex-col sm:flex-row border border-gray-400 py-5 rounded-md justify-between mx-2 sm:mx-2 lg:mx-10 shadow-md shadow-gray-300">
+    <div className="w-full font-serif  flex flex-col md:flex-row">
+      <div className="w-full flex flex-col md:flex-row border border-gray-400 py-5 rounded-md justify-between mx-2 sm:mx-2 lg:mx-10 shadow-md shadow-gray-300">
         <div className="flex flex-col items-center gap-2 px-5 ">
           {/* title */}
-          {/* <div className="text-center py-8 px-10 text-3xl"> */}
+          <div className="text-center bg-white/20 rounded-md p-2 text-3xl">
           <Title text1={"Class"} text2={"Details"} />
+          </div>
         </div>
         <h1 className="text-4xl font-serif sm:py-3 lg:text leading-relaxed px-4  sm:px-2">
           Class {classInfo.classLevel}

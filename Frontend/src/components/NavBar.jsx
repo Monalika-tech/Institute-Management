@@ -43,6 +43,7 @@ function NavBar() {
         <div className="max-w-7xl mx-auto flex items-center justify-between px-6 py-4">
 
           {/* Logo */}
+          
           <h1
             onClick={() => navigate("/")}
             className="text-xl font-bold text-green-600 cursor-pointer"

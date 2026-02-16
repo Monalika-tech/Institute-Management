@@ -1,40 +1,53 @@
 import { Link } from "react-router-dom";
+import { deleteStudent } from "../api/StudentAPI";
 
-
-const Studentcard = ({ stud }) => {
-
+const Studentcard = ({ stud, onDelete }) => {
   const { _id, name, email, classLevel } = stud;
-    const deleteHandler = async (_id) => {
-    await deleteStudent(_id);
-    window.location.reload(); // quick fix for now
+
+  const deleteHandler = async () => {
+    try {
+      await deleteStudent(_id);
+      onDelete?.(_id);
+    } catch (err) {
+      console.error(err);
+      alert("Failed to delete student");
+    }
   };
 
-  
   return (
-    <div className="text-gray-700 cursor-pointer hover:bg-green-100 border shadow border-gray-200 hover:border-green-500 rounded-md p-4  scale-100 hover:scale-105 transition-transform duration-200">
-      <Link className="text-gray-700 cursor-pointer" to={`/student/${_id}`}>
-        <p className="pt-3 pb-1 text-gray-500">{name}</p>
-        <div className="flex flex-col  gap-6">
-          <p className="font-semibold text-base">
-            <strong> Email : </strong> {email}{" "}
-          </p>
-          <p className="font-semibold text-base">
-            <strong>Class Level : </strong> {classLevel}
-          </p>
-        </div>
-      </Link>
-      <div className="my-4 flex flex-col gap-2">
+    <div className="w-full bg-white rounded-2xl shadow-sm border border-gray-200 p-6 hover:shadow-md transition">
+      
+      {/* Header */}
+      <div className="mb-4">
+        <h3 className="text-xl font-semibold text-gray-800 truncate">
+          {name}
+        </h3>
+        <p className="text-sm text-gray-500 break-all">
+          {email}
+        </p>
+      </div>
+
+      {/* Class Badge */}
+      <div className="mb-6">
+        <span className="inline-block text-xs font-medium bg-green-100 text-green-700 px-3 py-1 rounded-full">
+          Class {classLevel}
+        </span>
+      </div>
+
+      {/* Actions */}
+      <div className="flex flex-col sm:flex-row gap-3">
         <Link
           to={`/student/${_id}`}
-          className="rounded-md border border-green-600 px-4 py-2 text-sm text-green-600 hover:bg-green-50 transition"
+          className="flex-1 text-center bg-green-600 text-white py-2.5 rounded-lg text-sm font-medium hover:bg-green-700 transition"
         >
-          View Details
+          View
         </Link>
+
         <button
-          onClick={() => deleteHandler(_id)}
-          className="rounded-md border border-red-600 px-4 py-2 text-sm text-red-600 hover:bg-red-50 transition"
+          onClick={deleteHandler}
+          className="flex-1 border border-red-600 text-red-600 py-2.5 rounded-lg text-sm font-medium hover:bg-red-50 transition"
         >
-          Delete Student
+          Delete
         </button>
       </div>
     </div>
