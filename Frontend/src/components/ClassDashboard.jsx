@@ -23,7 +23,7 @@ function ClassDashboard({ classInfo }) {
             {classInfo.batchTime}
           </p>
           <p className="font-text  sm:font-semibold text-base">
-            <strong> Total Students : </strong>
+            <strong> Total Students : </strong>c
             {/* {classInfo.totalStudent} */}need to find?..
           </p>
         </div>

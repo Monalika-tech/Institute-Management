@@ -1,8 +1,13 @@
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useParams } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
 
 const Slidebar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
+  const { userId, role } = useAuth();
+  const location = useLocation();
+
+  console.log("Current location:", location.pathname);
 
   // Prevent background scroll on mobile when open
   useEffect(() => {
@@ -39,21 +44,58 @@ const Slidebar = () => {
         sm:translate-x-0`}
       >
         <div className="p-3 w-full sm:w-32 flex sm:flex-col gap-2 sm:gap-4 ">
-          <Link
-            to="/editProfile"
-            className="rounded-md border border-green-600 px-4 py-2 text-sm text-green-800 hover:bg-green-200 transition"
-            onClick={() => setMenuOpen(false)}
-          >
-            Edit Profile
-          </Link>
+          {role === "teacher" && (
+            <div>
+              {location.pathname.startsWith("/Teacher/") && (
+                <div className="p-3 w-full sm:w-32 flex sm:flex-col gap-2 sm:gap-4 ">
+                  <Link
+                    to="/editProfile"
+                    className="rounded-md border border-green-600 px-4 py-2 text-sm text-green-800 hover:bg-green-200 transition"
+                    onClick={() => setMenuOpen(false)}
+                  >
+                    Edit Profile
+                  </Link>
 
-          <Link
-            to="/addClass"
-            className="rounded-md border border-green-600 px-4 py-2 text-sm text-green-800 hover:bg-green-200 transition"
-            onClick={() => setMenuOpen(false)}
-          >
-            Add Class
-          </Link>
+                  <Link
+                    to="/addClass"
+                    className="rounded-md border border-green-600 px-4 py-2 text-sm text-green-800 hover:bg-green-200 transition"
+                    onClick={() => setMenuOpen(false)}
+                  >
+                    Add Class
+                  </Link>
+                </div>
+              )}
+              {location.pathname.startsWith("/student/") && (
+                <div className="p-3 w-full sm:w-32 flex sm:flex-col gap-2 sm:gap-4 ">
+                  <Link
+                    to={`/editStudent/${userId}`}
+                    className="rounded-md border border-green-600 px-4 py-2 text-sm text-green-800 hover:bg-green-200 transition"
+                  >
+                    Edit Profile
+                  </Link>
+                  <button
+                    onClick={() =>
+                      deleteandnavigate(userId, student.classLevel)
+                    }
+                    className="rounded-md border border-green-600 px-4 py-2 text-sm text-green-800 hover:bg-green-200 transition"
+                  >
+                    Delete student
+                  </button>
+                </div>
+              )}
+            </div>
+          )}
+
+          {role === "student" && (
+            <div className="p-3 w-full sm:w-32 flex sm:flex-col gap-2 sm:gap-4 ">
+              <Link
+                to={`/editStudent/${userId}`}
+                className="rounded-md border border-green-600 px-4 py-2 text-sm text-green-800 hover:bg-green-200 transition"
+              >
+                Edit Profile
+              </Link>
+            </div>
+          )}
 
           {/* Close Button (Mobile Only) */}
           <button

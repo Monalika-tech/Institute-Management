@@ -31,31 +31,11 @@ function StudentDetails() {
   if (loading) {
     return <p>Loading...</p>;
   }
-  // if (error) {
-  //   return <p>Error: {error}</p>;
-  // }
-  // if (!student) {
-  //   return <p>Student not found on client </p>;
-  // }
 
   return (
-    <div className="flex flex-col sm:flex-row border border-gray-400  py-5 rounded-md justify-between mx-2 sm:mx-2 lg:mx-10 shadow-md shadow-gray-300">
-      <div>
-        <Link
-          to={`/editStudent/${_id}`}
-          className=" bg-green-700 text-white px-3 py-2  rounded-md hover:bg-green-600 mx-5 sm:mx-2 lg:mr-5 mt-4 sm:mt-4"
-        >
-          Update Student Details
-        </Link>
-        <button
-          onClick={() => deleteandnavigate(_id, student.classLevel)}
-          className=" bg-green-700 text-white px-3 py-2  rounded-md hover:bg-green-600 mx-5 sm:mx-2 lg:mr-5 mt-4 sm:mt-4"
-        >
-          Delete Student Details
-        </button>
-      </div>
+    <div className="flex flex-col md:flex-row items-center border border-gray-400  py-5 rounded-md justify-between mx-2 sm:mx-2 lg:mx-10 shadow-md shadow-gray-300 ">
       {/* Student Credentials Section -- left part */}
-      <div className=" w-full sm:w-1/2 flex flex-col items-center justify-center py-10 sm:py-10">
+      <div className=" w-full sm:w-1/2 flex flex-col items-center justify-center py-10 sm:py-10 scale-110">
         <div className="flex items-center gap-2">
           {/* <p className="w-8 md:w-11 h-[2px] bg-[#414141]"></p> */}
           <div className="text-center  px-10 text-3xl">
