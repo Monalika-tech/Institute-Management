@@ -9,8 +9,8 @@ const Classes = require("../models/classModel");
 //register or create  or addstudent used in registration form
 const registerStudent = async (req, res) => {
     try {
-        const { name, email, password, classLevel, parentName, phone_no, address, school, monthlyFee } = req.body;
-        const existingstudent = await Student.findOne({ email, classLevel });
+        const { name, email, password, classID, parentName, phone_no, address, school, monthlyFee } = req.body;
+        const existingstudent = await Student.findOne({ email, classID });
 
         if (existingstudent) {
             console.log("Student already exists!");
@@ -19,7 +19,7 @@ const registerStudent = async (req, res) => {
         const salt = await bcrypt.genSalt(10);
         const hashedPassword = await bcrypt.hash(password, salt);
 
-        const cls = await Classes.findOne({ _id: classLevel, teacherID: req.user._id });
+        const cls = await Classes.findOne({ _id: classID, teacherID: req.user._id });
 
         if (!cls) return res.status(403).json({ message: "Invalid class access" })
 
@@ -27,7 +27,7 @@ const registerStudent = async (req, res) => {
             name,
             email,
             password: hashedPassword,
-            classLevel,
+            classID,
             parentName,
             phone_no,
             address,
@@ -45,7 +45,7 @@ const registerStudent = async (req, res) => {
                 name: newstudent.name,
                 email: newstudent.email,
                 password: newstudent.password,
-                classLevel: newstudent.classLevel,
+                classID: newstudent.classID,
                 parentName: newstudent.parentName,
                 phone_no: newstudent.phone_no,
                 address: newstudent.address,
@@ -74,6 +74,7 @@ const LoginStudent = async (req, res) => {
         }
 
         console.log("Student found:", student);
+        console.log("Comparing password:", { inputPassword: password, storedHashedPassword: student.password });
         const isMatch = await bcrypt.compare(password, student.password);
         console.log('Password match ?', isMatch);
         if (!isMatch) {
@@ -136,7 +137,7 @@ const deleteStudent = async (req, res) => {
 const updateStudent = async (req, res) => {
     try {
         const { _id } = req.params;
-        const { name, email, password, classLevel, parentName, phone_no, address, school, monthlyFee } = req.body;
+        const { name, email, password, classID, parentName, phone_no, address, school, monthlyFee } = req.body;
 
         const existingStudent = await Student.findOne({ _id });
 
@@ -148,7 +149,7 @@ const updateStudent = async (req, res) => {
         existingStudent.name = name || existingStudent.name;
         existingStudent.email = email || existingStudent.email;
         existingStudent.password = password || existingStudent.password;
-        existingStudent.classLevel = classLevel || existingStudent.classLevel;
+        existingStudent.classID = classID || existingStudent.classID;
         existingStudent.parentName = parentName || existingStudent.parentName;
         existingStudent.phone_no = phone_no || existingStudent.phone_no;
         existingStudent.address = address || existingStudent.address;
@@ -175,7 +176,8 @@ const getStudentById = async (req, res) => {
 
         const { _id } = req.params;
         console.log("Fetching student with ID:", _id);
-        const student = await Student.findOne({ _id });
+        const student = await Student.findById(_id)
+            .populate("classId", "classLevel batchTime");
         if (!student) {
             return res.status(404).json({ message: "Student not found" });
         }
@@ -196,12 +198,12 @@ const getAllStudents = async (req, res) => {
         const logTeacherID = req.user._id;
 
         const classes = await Classes.find({ teacherID: logTeacherID }).select("_id");
-
+console.log("Classes found for teacher:", classes);
 
         const classIds = classes.map(c => c._id);
 
-
-        const students = await Student.find({ classLevel: { $in: classIds } });
+        const students = await Student.find({ classID: { $in: classIds } })
+            .populate("classID", "classLevel batchTime");
 
 
         res.status(200).json({
@@ -232,7 +234,9 @@ const getStudentByClass = async (req, res) => {
             return res.status(403).json({ message: "Not your class!!" })
         }
 
-        const students = await Student.find({ classLevel: classId });
+        const students = await Student.find({ classID: classId })
+            .populate("classID", "classLevel batchTime");
+
         res.status(200).json({ students });
     } catch (error) {
         res.status(500).json({
