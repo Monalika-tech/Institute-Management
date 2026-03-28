@@ -10,7 +10,7 @@ const studValidator = [
     body('password').notEmpty().withMessage('Password is required').isStrongPassword().withMessage('password must be a strong password').isLength({ min: 6 }).withMessage('Password must be at least 6 characters long'),
     body('phone_no').notEmpty().withMessage('Phone number is required').isLength({ max: 10 }).withMessage('Phone number must be at most 10 digits').matches(/^\d{10}$/).withMessage('Phone number must be numeric and exactly 10 digits'),
     body('address').notEmpty().withMessage('Address is required'),
-    body('classID').notEmpty().withMessage('Class ID is required').custom((value) => mongoose.Types.ObjectId.isValid(value)).withMessage('Invalid Class ID'),
+    body('classID').notEmpty().withMessage('Class IDc is required').custom((value) => mongoose.Types.ObjectId.isValid(value)).withMessage('Invalid Class ID'),
     body('parentName').notEmpty().withMessage('Parent Name is required'),
     body('school').notEmpty().withMessage('School is required'),
     body('monthlyFee').notEmpty().withMessage('Monthly Fee is required').isNumeric().withMessage('Monthly Fee must be a number'),
