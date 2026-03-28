@@ -1,137 +1,73 @@
-import { useState, useEffect } from "react";
-import { Link, useLocation, useNavigate } from "react-router-dom";
-import { useAuth } from "../context/AuthContext";
-import { deleteStudent } from "../api/StudentAPI";
- // adjust path if needed
+import { useState } from "react";
+import { Link, useLocation } from "react-router-dom";
+import {
+  FaChalkboardTeacher,
+  FaUser,
+  FaUserEdit,
+  FaEdit,
+  FaPlus,
+  FaBars,
+  FaUserGraduate,
+  FaUsers,
+} from "react-icons/fa";
 
-const Slidebar = ({ classLevel }) => {
-  const [menuOpen, setMenuOpen] = useState(false);
-  const { userId, role } = useAuth();
-  const location = useLocation();
-  const navigate = useNavigate();
-
-  const deleteandnavigate = async (_id) => {
-
-    const confirmDelete = window.confirm(
-      "Are you sure you want to delete this student?"
-    );
-
-    if (!confirmDelete) return;
-
-    try {
-      await deleteStudentc(_id);
-      navigate(`/class/${classLevel}`);
-    } catch (error) {
-      console.error("Delete failed", error);
-    }
+const Slidebar = () => {
+  const [isOpen, setIsOpen] = useState(false);
+  const location = useLocation(); // for active link highlight
+  const menuItems = [
+    { name: "Dashboard", path: "/dashboard", icon: <FaUser /> },
+    { name: "Teachers", path: "/teachers", icon: <FaChalkboardTeacher /> },
+    { name: "Students", path: "/students", icon: <FaUserGraduate /> },
+    { name: "Add User", path: "/add-user", icon: <FaUserEdit /> },
+    { name: "Edit", path: "/edit", icon: <FaEdit /> },
+    { name: "New", path: "/new", icon: <FaPlus /> },
+    { name: "Users", path: "/users", icon: <FaUsers /> },
+  ];
+  const toggleSlidebar = () => {
+    setIsOpen(!isOpen);
   };
-
-  // Prevent background scroll on mobile when open
-  useEffect(() => {
-    document.body.style.overflow = menuOpen ? "hidden" : "auto";
-  }, [menuOpen]);
-
   return (
-    <>
-      {/* Mobile Toggle Button */}
-      <button
-        className="sm:hidden m-3 px-4 py-2 bg-green-700 text-white rounded-md shadow-md"
-        onClick={() => setMenuOpen(true)}
-      >
-        Menu
-      </button>
-
-      {/* Overlay */}
-      <div
-        className={`fixed inset-0 bg-black/40 backdrop-blur-sm transition-opacity duration-300 z-30 sm:hidden ${
-          menuOpen ? "opacity-100 visible" : "opacity-0 invisible"
-        }`}
-        onClick={() => setMenuOpen(false)}
-      />
-
-      {/* Sidebar */}
-      <div
-        className={`fixed sm:sticky top-0 left-0 h-screen
-        sm:w-56
-        bg-white/80 backdrop-blur-lg border-r border-white/20
-        shadow-xl 
-        transform transition-transform duration-300 ease-in-out
-        z-40
-        ${menuOpen ? "translate-x-0" : "-translate-x-full"}
-        sm:translate-x-0`}
-      >
-        <div className="p-3 w-full sm:w-32 flex sm:flex-col gap-2 sm:gap-4">
-
-          {role === "teacher" && (
-            <div>
-
-              {location.pathname.startsWith("/Teacher/") && (
-                <div className="flex flex-col gap-3">
-
-                  <Link
-                    to="/editProfile"
-                    className="rounded-md border border-green-600 px-4 py-2 text-sm text-green-800 hover:bg-green-200 transition"
-                    onClick={() => setMenuOpen(false)}
-                  >
-                    Edit Profile
-                  </Link>
-
-                  <Link
-                    to="/addClass"
-                    className="rounded-md border border-green-600 px-4 py-2 text-sm text-green-800 hover:bg-green-200 transition"
-                    onClick={() => setMenuOpen(false)}
-                  >
-                    Add Class
-                  </Link>
-
-                </div>
-              )}
-
-              {location.pathname.startsWith("/student/") && (
-                <div className="flex flex-col gap-3">
-
-                  <Link
-                    to={`/editStudent/${userId}`}
-                    className="rounded-md border border-green-600 px-4 py-2 text-sm text-green-800 hover:bg-green-200 transition"
-                  >
-                    Edit Profile
-                  </Link>
-
-                  <button
-                    onClick={() => deleteandnavigate(userId)}
-                    className="rounded-md border border-red-600 px-4 py-2 text-sm text-red-700 hover:bg-red-200 transition"
-                  >
-                    Delete Student
-                  </button>
-
-                </div>
-              )}
-
-            </div>
-          )}
-
-          {role === "student" && (
-            <div className="flex flex-col gap-3">
-              <Link
-                to={`/editStudent/${userId}`}
-                className="rounded-md border border-green-600 px-4 py-2 text-sm text-green-800 hover:bg-green-200 transition"
-              >
-                Edit Profile
-              </Link>
-            </div>
-          )}
-
-          {/* Close Button */}
-          <button
-            onClick={() => setMenuOpen(false)}
-            className="sm:hidden text-xl m-2"
-          >
-            ✕
-          </button>
-
-        </div>
+    <div className="p-4 sm:p-2 flex flex-row m-2 sm:m-0">
+      {/* button to open-close the slide bar on small screens */}
+      <div className="sm:hidden absolute top-2 left-4 z-10">
+        <button onClick={toggleSlidebar}>
+          <FaBars />
+        </button>
       </div>
-    </>
+      {isOpen && (
+        <div
+          className="fixed inset-0 bg-black/10 z-20 sm:hidden"
+          onClick={toggleSlidebar}
+        />
+      )}
+      {/* button to perform action  */}
+
+      <div
+        className={`
+  fixed z-30 top-0 left-0 h-full w-64 flex flex-row sm:flex-col bg-white shadow-lg transition-transform duration-300
+  ${isOpen ? "translate-x-0" : "-translate-x-full"}
+  sm:translate-x-0 sm:static sm:block
+`}
+      >
+        {menuItems.map((Items, index) => {
+          const isActive = location.pathname.startsWith(Items.path);
+          return (
+            <Link
+              key={index}
+              to={Items.path}
+              className={`flex items-center gap-3 p-2 rounded transition-all
+  ${isActive ? "bg-white/40 text-black" : "hover:bg-gray-100"}
+`}
+              onClick={() => setIsOpen(false)}
+            >
+              {Items.icon}
+              <span className="hidden sm:inline">{Items.name}</span>
+            </Link>
+          );
+        })}
+      
+      </div>
+    </div>
   );
 };
 

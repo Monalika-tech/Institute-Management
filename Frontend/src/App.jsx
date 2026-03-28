@@ -1,41 +1,50 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
 
-import Login from "./pages/Login";
 import NavBar from "./components/NavBar";
 import ProtectedRoute from "./components/ProtectedRoute";
-
-import Home from "./pages/Home";
-import ClassPage from "./pages/ClassPage";
-import StudentPage from "./pages/StudentPage";
-
-import EditProfile from "./pages/EditProfile";
-import AddClass from "./pages/AddClass";
-import RegisterStudent from "./pages/RegisterStudent";
-import StudentDetails from "./pages/StudentDetails";
-
-import { useAuth } from "./context/AuthContext";
-import ClassDetail from "./pages/ClassDetail";
-import TeacherDetails from "./pages/TeacherDetails";
-import About from "./pages/About";
 import Slidebar from "./components/Slidebar";
 
+// pages
+import Login from "./pages/Login";
+import Home from "./pages/Home";
+import TeacherDetails from "./pages/TeacherDetails";
+import ClassPage from "./pages/ClassPage";
+import StudentPage from "./pages/StudentPage";
+import About from "./pages/About";
+
+// teacher Pages
+import EditProfile from "./pages/EditProfile"; // user profile
+import AddClass from "./pages/AddClass";
+import RegisterStudent from "./pages/RegisterStudent";
+
+// shared by both users - teacher and student
+import StudentDetails from "./pages/StudentDetails";
+import ClassDetail from "./pages/ClassDetail";
+
+import { useAuth } from "./context/AuthContext";
+
+// ============================LAYOUT COMPONENT============================
 function AppLayout({ children }) {
   const { isAuthenticated } = useAuth();
 
   return (
     <div className="min-h-screen flex flex-col ">
+
       {/* Top Navbar */}
       {isAuthenticated && <NavBar />}
+
       <div className="flex flex-col sm:flex-row flex-1">
         {/* Sidebar (actions) */}
         {isAuthenticated && (
-          <aside className="sm:w-40 w-full sm:min-h-full bg-green-800/20 backdrop-blur-sm  ">
+          <aside className="  sm:min-h-full bg-green-800/20 backdrop-blur-sm  ">
             <Slidebar />
           </aside>
         )}
+
         {/* Main Content Area */}
         <main className="relative flex-1 overflow-hidden rounded-2xl sm:ml-2">
+
           {/* Background Layer */}
           <div
             className="absolute inset-0 bg-cover bg-center blur-sm scale-110 "
@@ -49,13 +58,12 @@ function AppLayout({ children }) {
           <div className="absolute inset-0 bg-black/20" />
 
           {/* Content */}
-          <div className="relative z-10 p-6">
+          <div className="relative z-10 p-1">
             <div className="rounded-2xl bg-white/10  shadow-lg p-4 sm:p-6">
               {children}
             </div>
           </div>
         </main>
-        
       </div>
     </div>
   );
