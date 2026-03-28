@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { deleteStudent } from "../api/StudentAPI";
 
 const Studentcard = ({ stud, onDelete }) => {
-  const { _id, name, email, classLevel } = stud;
+  const { _id, name, email, classID } = stud;
 
   const deleteHandler = async () => {
     try {
@@ -15,14 +15,14 @@ const Studentcard = ({ stud, onDelete }) => {
   };
 
   return (
-    <div className="w-full bg-white rounded-2xl shadow-sm border border-gray-200 p-6 hover:shadow-md transition">
+    <div className="w-full bg-white/30 rounded-2xl shadow-sm border border-gray-200 p-6 hover:shadow-md transition">
       
       {/* Header */}
       <div className="mb-4">
         <h3 className="text-xl font-semibold text-gray-800 truncate">
           {name}
         </h3>
-        <p className="text-sm text-gray-500 break-all">
+        <p className="text-sm text-gray-900 break-all">
           {email}
         </p>
       </div>
@@ -30,7 +30,7 @@ const Studentcard = ({ stud, onDelete }) => {
       {/* Class Badge */}
       <div className="mb-6">
         <span className="inline-block text-xs font-medium bg-green-100 text-green-700 px-3 py-1 rounded-full">
-          Class {classLevel}
+          Class {classID.classLevel}
         </span>
       </div>
 

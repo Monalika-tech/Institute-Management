@@ -6,11 +6,11 @@ function ClassDashboard({ classInfo }) {
 
   console.log(classInfo);
   return (
-    <div className="w-full font-serif  flex flex-col md:flex-row">
-      <div className="w-full flex flex-col md:flex-row border border-gray-400 py-5 rounded-md justify-between mx-2 sm:mx-2 lg:mx-10 shadow-md shadow-gray-300">
-        <div className="flex flex-col items-center gap-2 px-5 ">
+    <div className="w-full font-serif  flex flex-col gap-10  ">
+      <div className="w-full flex flex-col md:flex-row border border-gray-400 py-5 rounded-md justify-between shadow-md shadow-gray-300">
+        <div className="flex flex-col items-center gap-2 px-2 ">
           {/* title */}
-          <div className="text-center bg-white/20 rounded-md p-2 text-3xl">
+          <div className="text-center  rounded-md p-2 text-3xl">
           <Title text1={"Class"} text2={"Details"} />
           </div>
         </div>
@@ -29,12 +29,12 @@ function ClassDashboard({ classInfo }) {
         </div>
       </div>
       <div className="flex flex-row sm:flex-col  ">
-        <Link
+        {/* <Link
           to={"/"}
           className="w-fit bg-green-700 text-white px-3 py-2  rounded-md hover:bg-green-600 mx-5 sm:mx-2 lg:mr-5 mt-4 sm:mt-4"
         >
           Back
-        </Link>
+        </Link> */}
         <Link
           to={`/addStudent/${classInfo.classLevel}`}
           className=" w-fit bg-green-700 text-white px-3 py-2  rounded-md hover:bg-green-600 mx-5 sm:mx-2 lg:mr-5 mt-4 sm:mt-4"

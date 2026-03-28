@@ -17,6 +17,8 @@ function ClassDetail() {
       try {
         const classRes = await getClassById(_id);
         const studentsRes = await getStudentsByCLass(_id);
+        console.log("Class details:", classRes);
+        console.log("Students in class:", studentsRes);
 
         setClassInfo(classRes.class);
         setStudents(studentsRes.students);
@@ -35,7 +37,7 @@ function ClassDetail() {
   return (
     <div>
       <ClassDashboard classInfo={classInfo} />
-      <StudentsList students={students} />
+      <StudentsList students={students}  classInfo={classInfo}/>
     </div>
   );
 }

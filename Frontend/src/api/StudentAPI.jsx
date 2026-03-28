@@ -16,7 +16,8 @@ export const createStudent = async (data) => {
 export const getAllStudents = async () => {
   try {
     const res = await api.get("/students/my");
-    console.log("the res we get after getting  student under a teacher : ", res);
+    console.log("the res we get after getting  student under a teacher : ", res.data);
+   
     return res.data;
   } catch (error) {
     throw error.response?.data || { message: "Failed to fetch students" };

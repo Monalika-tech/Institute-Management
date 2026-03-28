@@ -1,15 +1,48 @@
-import React from 'react'
+import React, { useEffect, useState } from "react";
+import { getAllClasses } from "../api/ClassAPI";
+import Title from "../components/Title";
 
 function RegisterStudent() {
+  const [classes, setClasses] = useState([]);
+
+  // fetch classes under the login teacher for drop down
+  useEffect(() => {
+    const fetchClasses = async () => {
+      try {
+        const res = await getAllClasses();
+        setClasses(res.classes);
+        console.log("Classes fetched for dropdown:", res.classes);
+      } catch (error) {
+        console.error("Failed to fetch classes:", error);
+      }
+    };
+    fetchClasses();
+  }, []);
+
+  const [form, setForm] = useState({
+    name: "",
+    email: "",
+    password: "",
+    classID: "",
+    parentName: "",
+    phone_no: "",
+    address: "",
+    school: "",
+    monthlyFee: "",
+  });
   return (
-    <div>
-      <h1> register studnet</h1>
+    <div className="felx flex-col justify-center items-center py-10 sm:py-20 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-green-500 hover:border-green-500 mx-auto my-6 sm:my-20 px-4">
+      <div className="  text-4xl">
+        <Title text1={"Register"} text2={"Form"} />
+      </div>
+      <div>
+        <form></form>
+      </div>
     </div>
-  )
+  );
 }
 
-export default RegisterStudent
-
+export default RegisterStudent;
 
 // import React, { useEffect, useState, useContext } from "react";
 // import { studentContext } from "../context/studentContext.jsx";

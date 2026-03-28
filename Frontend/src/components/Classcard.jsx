@@ -1,10 +1,15 @@
 import { Link } from "react-router-dom";
+import { deleteClass } from "../api/ClassAPI";
 
 const Classcard = ({ cls }) => {
   console.log("Classcard component rendered", cls);
   const { _id, classLevel, batchTime } = cls;
 
   const deleteHandler = async (_id) => {
+    const confirmDelete = window.confirm(
+      "Are you sure you want to delete this item?",
+    );
+    if (!confirmDelete) return;
     await deleteClass(_id);
     window.location.reload(); // quick fix for now
   };

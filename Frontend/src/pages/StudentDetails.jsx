@@ -23,10 +23,10 @@ function StudentDetails() {
     fetchStudent();
   }, [_id]);
 
-  const deleteandnavigate = async (_id, classLevel) => {
-    await deleteStudByID(_id);
-    navigate(`/class/${classLevel}`);
-  };
+  // const deleteandnavigate = async (_id, classLevel) => {
+  //   await deleteStudByID(_id);
+  //   navigate(`/class/${classLevel}`);
+  // };
 
   if (loading) {
     return <p>Loading...</p>;
@@ -35,7 +35,7 @@ function StudentDetails() {
   return (
     <div className="flex flex-col md:flex-row items-center border border-gray-400  py-5 rounded-md justify-between mx-2 sm:mx-2 lg:mx-10 shadow-md shadow-gray-300 ">
       {/* Student Credentials Section -- left part */}
-      <div className=" w-full sm:w-1/2 flex flex-col items-center justify-center py-10 sm:py-10 scale-110">
+      <div className=" w-full md:w-1/2 flex flex-col items-center justify-center py-10 sm:py-10 px-3 ">
         <div className="flex items-center gap-2">
           {/* <p className="w-8 md:w-11 h-[2px] bg-[#414141]"></p> */}
           <div className="text-center  px-10 text-3xl">
