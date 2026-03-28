@@ -2,6 +2,15 @@ PS E:\vs-code\Web-Design\Institute\Institute-Management\backend> npm start
 
 PS E:\vs-code\Web-Design\Institute\Institute-Management\frontend> npm run dev
 
+cmd : 
+C:\Windows\System32>net start mongodb
+The MongoDB Server (MongoDB) service is starting.
+The MongoDB Server (MongoDB) service was started successfully.
+
+C:\Windows\System32>mongosh
+
+
+
 teacher data :
 Teacher a
 
