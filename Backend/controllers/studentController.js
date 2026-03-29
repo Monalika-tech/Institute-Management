@@ -177,7 +177,7 @@ const getStudentById = async (req, res) => {
         const { _id } = req.params;
         console.log("Fetching student with ID:", _id);
         const student = await Student.findById(_id)
-            .populate("classId", "classLevel batchTime");
+            .populate("classID", "classLevel batchTime");
         if (!student) {
             return res.status(404).json({ message: "Student not found" });
         }

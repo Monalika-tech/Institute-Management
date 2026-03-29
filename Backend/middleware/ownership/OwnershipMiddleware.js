@@ -31,8 +31,9 @@ const ownership = async (req, res, next) => {
                 return res.status(404).json({ message: "Student not found" });
             }
 
+            console.log("the student we want to access ", student);
             // 2️ Find class of student
-            const cls = await Classes.findById(student.classLevel);
+            const cls = await Classes.findById(student.classID);
             if (!cls) {
                 return res.status(404).json({ message: "Class not found" });
             }
