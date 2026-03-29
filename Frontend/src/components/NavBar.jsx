@@ -1,6 +1,7 @@
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import { useState, useEffect } from "react";
+import { FaUser, FaSignOutAlt, FaUserGraduate } from "react-icons/fa";
 
 function NavBar() {
   const { logout, isAuthenticated, role, userId } = useAuth();
@@ -20,7 +21,7 @@ function NavBar() {
   const links = [
     { name: "Home", path: "/" },
     { name: "Classes", path: "/classes" },
-    { name: "Students", path: "/students" },
+    { name: "Students ", icon: <FaUserGraduate />, path: "/students" },
     { name: "About", path: "/about" },
   ];
 
@@ -41,9 +42,8 @@ function NavBar() {
       {/* ================= NAVBAR ================= */}
       <nav className="sticky top-0 z-50 bg-white/80 backdrop-blur-lg border-b border-white/20 shadow-sm">
         <div className="max-w-7xl mx-auto flex items-center justify-between px-6 py-4">
-
           {/* Logo */}
-          
+
           <h1
             onClick={() => navigate("/")}
             className="text-xl font-bold text-green-600 cursor-pointer"
@@ -57,7 +57,12 @@ function NavBar() {
               {links.map((item, i) => (
                 <li key={i}>
                   <NavLink to={item.path} className={linkClass}>
-                    {item.name}
+                    <span className="flex flex-row gap-1">
+                      {item.name}
+                      {item.icon && (
+                        <span className="text-xl">{item.icon}</span>
+                      )}
+                    </span>
                   </NavLink>
                 </li>
               ))}
@@ -67,7 +72,10 @@ function NavBar() {
                   onClick={navigateTO}
                   className="text-gray-700 hover:text-green-600 transition"
                 >
-                  Profile
+                  <span className="flex flex-row gap-1">
+                    Profile
+                    <FaUser className="text-xl" />
+                  </span>
                 </button>
               </li>
             </ul>
@@ -80,7 +88,10 @@ function NavBar() {
                 onClick={handleLogout}
                 className="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition"
               >
-                Logout
+                <span className="flex flex-row gap-1">
+                  Logout
+                  <FaSignOutAlt className="text-2xl" />
+                </span>
               </button>
             ) : (
               <Link
@@ -120,7 +131,6 @@ function NavBar() {
         z-50 ${open ? "translate-x-0" : "-translate-x-full"}`}
       >
         <div className="p-6 flex flex-col h-full justify-between">
-
           <div className="space-y-4">
             {/* Close */}
             <button

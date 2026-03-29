@@ -12,7 +12,7 @@ function StudentDetails() {
     const fetchStudent = async () => {
       try {
         const studentRes = await getStudentById(_id);
-        console.log("the stident we fetched ", studentRes);
+        console.log("the student we fetched ", studentRes);
         setStudent(studentRes.student);
       } catch (error) {
         console.error("Class fetch failed:", error);

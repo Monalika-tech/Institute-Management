@@ -9,19 +9,29 @@ import {
   FaBars,
   FaUserGraduate,
   FaUsers,
+  FaEye,
+  FaBell,
+  FaCog,
 } from "react-icons/fa";
 
 const Slidebar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const location = useLocation(); // for active link highlight
+  const menuTitles = [
+    { name: "Profile", path: "/Teacher/:_id", icon: <FaUser /> },
+    { name: "Students", path: "/student", icon: <FaEye /> },
+    { name: "Classes", path: "/classes", icon: <FaChalkboardTeacher /> },
+  ];
   const menuItems = [
-    { name: "Dashboard", path: "/dashboard", icon: <FaUser /> },
-    { name: "Teachers", path: "/teachers", icon: <FaChalkboardTeacher /> },
-    { name: "Students", path: "/students", icon: <FaUserGraduate /> },
-    { name: "Add User", path: "/add-user", icon: <FaUserEdit /> },
-    { name: "Edit", path: "/edit", icon: <FaEdit /> },
-    { name: "New", path: "/new", icon: <FaPlus /> },
-    { name: "Users", path: "/users", icon: <FaUsers /> },
+    { name: "Edit Profile", path: "/editProfile", icon: <FaUserEdit /> },
+    { name: "ADD Students", path: "/addStudent", icon: <FaPlus /> },
+    { name: "Edit Students", path: "/editStudent/:_id", icon: <FaEdit /> },
+    { name: "Add Class", path: "/addClass", icon: <FaPlus /> },
+    { name: "Edit Class", path: "/editClass/:_id", icon: <FaEdit /> },
+    { name: "Schedule classes", path: "/new", icon: <FaUsers /> },
+    { name: "Notifications", path: "/users", icon: <FaBell /> },
+    { name: "Settings", path: "/users", icon: <FaCog /> },
+
   ];
   const toggleSlidebar = () => {
     setIsOpen(!isOpen);
@@ -65,7 +75,6 @@ const Slidebar = () => {
             </Link>
           );
         })}
-      
       </div>
     </div>
   );

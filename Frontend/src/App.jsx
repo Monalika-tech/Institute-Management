@@ -120,7 +120,7 @@ function App() {
           }
         />
         <Route
-          path="/addStudent/:classLevel"
+          path="/addStudent"
           element={
             <ProtectedRoute allowedRoles={["teacher"]}>
               <RegisterStudent mode="add" />
