@@ -19,14 +19,12 @@ function Login() {
     let result;
 
     if (role === "teacher") {
-      console.log(" Login - Submitting form with:", { email, password });
       result = await loginTeacher(email, password);
     } else {
       result = await loginStudent(email, password);
     }
 
     if (result.success) {
-      // Role based redirect
       if (role === "teacher") navigate(`/Teacher/${userId}`);
       if (role === "student") navigate(`/Student/${userId}`);
     } else {
@@ -35,102 +33,99 @@ function Login() {
   };
 
   return (
-    <div className="sm:w-3/4 flex flex-col items-center justify-center py-10 sm:py-10 border border-gray-300 rounded-md shadow-lg focus:outline-none focus:ring-green-500 hover:border-green-500  mx-auto my-20 px-4 bg-white/50">
-      {/* Title */}
-      <div className="text-center py-8 px-10 text-3xl">
-        <Title text1={"Sign"} text2={"in"} />
-        <p className="w-3/4 m-auto text-xs sm:text-sm md:text-base text-grey-600">
-          Login here to access your account!
-        </p>
-      </div>
-
-      {/* Login Form */}
-      <form onSubmit={onSubmitHandler} className="w-full px-8">
-        <div className="mb-4">
-          {/* email */}
-          <label
-            htmlFor="email"
-            className="block text-sm font-medium text-gray-700"
-          >
-            Email
-          </label>
-          <input
-            disabled={loading}
-            name="email"
-            type="email"
-            id="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-            className="mt-1 block w-full px-4 py-3 border border-gray-300 rounded-md bg-white/10 "
-          />
-          {error.email && (
-            <div className="text-red-500 text-sm">{error.email}</div>
-          )}
+    <div className="min-h-screen flex items-center justify-center  px-4">
+      <div className="w-full max-w-md bg-white rounded-2xl shadow-xl p-8">
+        {/* Title */}
+        <div className="text-center mb-6">
+          <Title text1={"Sign"} text2={"In"} />
+          <p className="text-sm text-gray-500 mt-2">
+            Welcome back! Please login to your account.
+          </p>
         </div>
 
-        <div className="mb-4">
-          {/* password */}
-          <label
-            htmlFor="password"
-            className="block text-sm font-medium text-gray-700"
-          >
-            Password
-          </label>
-          <input
-            disabled={loading}
-            name="password"
-            type="password"
-            id="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-            className=" w-full block  mt-1 px-4 py-2 border border-gray-300 rounded-md bg-white/10 "
-          />
-          {error.password && (
-            <div className="text-red-500 text-sm">{error.password}</div>
-          )}
-        </div>
+        {/* Form */}
+        <form onSubmit={onSubmitHandler} className="space-y-5">
+          {/* Email */}
+          <div>
+            <label className="text-sm font-medium text-gray-600">
+              Email Address
+            </label>
+            <input
+              disabled={loading}
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+              className="w-full mt-1 px-4 py-2 border rounded-lg focus:ring-2 focus:ring-green-500 outline-none transition"
+              placeholder="Enter your email"
+            />
+            {error.email && (
+              <p className="text-red-500 text-xs mt-1">{error.email}</p>
+            )}
+          </div>
 
-        {/*roles  */}
-        <label
-          htmlFor="role"
-          className="block text-sm font-medium text-gray-700 "
-        >
-          Role
-        </label>
-        <select
-          className=" hover:text-white"
-          value={role}
-          onChange={(e) => setRole(e.target.value)}
-        >
-          <option value="teacher">Teacher</option>
-          <option value="student">Student</option>
-        </select>
+          {/* Password */}
+          <div>
+            <label className="text-sm font-medium text-gray-600">
+              Password
+            </label>
+            <input
+              disabled={loading}
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+              className="w-full mt-1 px-4 py-2 border rounded-lg focus:ring-2 focus:ring-green-500 outline-none transition"
+              placeholder="Enter your password"
+            />
+            {error.password && (
+              <p className="text-red-500 text-xs mt-1">{error.password}</p>
+            )}
+          </div>
 
-        <div className="flex  flex-col items-center justify-center">
+          {/* Role */}
+          <div>
+            <label className="text-sm font-medium text-gray-600">
+              Select Role
+            </label>
+            <select
+              value={role}
+              onChange={(e) => setRole(e.target.value)}
+              className="w-full mt-1 px-4 py-2 border rounded-lg focus:ring-2 focus:ring-green-500 outline-none transition"
+            >
+              <option value="teacher">Teacher</option>
+              <option value="student">Student</option>
+            </select>
+          </div>
+
+          {/* Button */}
           <button
             type="submit"
             disabled={loading}
-            className={` text-white py-2 px-4 rounded-md ${
-              loading
-                ? "bg-gray-400"
-                : "bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
+            className={`w-full py-2 rounded-lg text-white font-semibold transition ${
+              loading ? "bg-gray-400" : "bg-green-600 hover:bg-green-700"
             }`}
           >
             {loading ? "Logging in..." : "Login"}
           </button>
-          <Link
-            to="/register"
-            className="ml-4 text-sm text-white hover:underline"
-          >
-            Don't have an account? Register!
-          </Link>
-        </div>
-      </form>
-      {error.form && (
-        <p className="text-red-600 text-center mb-3">{error.form}</p>
-      )}
+
+          {/* Register Link */}
+          <p className="text-center text-sm text-gray-500">
+            Don't have an account?{" "}
+            <Link
+              to="/register"
+              className="text-green-600 font-medium hover:underline"
+            >
+              Register
+            </Link>
+          </p>
+
+          {/* Form Error */}
+          {error.form && (
+            <p className="text-red-600 text-center text-sm">{error.form}</p>
+          )}
+        </form>
+      </div>
     </div>
   );
 }

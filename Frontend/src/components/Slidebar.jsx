@@ -24,8 +24,8 @@ const Slidebar = () => {
   ];
   const menuItems = [
     { name: "Edit Profile", path: "/editProfile", icon: <FaUserEdit /> },
-    { name: "ADD Students", path: "/addStudent", icon: <FaPlus /> },
-    { name: "Edit Students", path: "/editStudent/:_id", icon: <FaEdit /> },
+    { name: "ADD Student", path: "/addStudent", icon: <FaPlus /> },
+    { name: "Edit Student", path: "/editStudent/:_id", icon: <FaEdit /> },
     { name: "Add Class", path: "/addClass", icon: <FaPlus /> },
     { name: "Edit Class", path: "/editClass/:_id", icon: <FaEdit /> },
     { name: "Schedule classes", path: "/new", icon: <FaUsers /> },
@@ -54,7 +54,7 @@ const Slidebar = () => {
 
       <div
         className={`
-  fixed z-30 top-0 left-0 h-full w-64 flex flex-row sm:flex-col bg-white shadow-lg transition-transform duration-300
+  fixed z-30 top-0 left-0 h-full w-64 flex flex-row sm:flex-col bg-white sm:bg-white/30 rounded-sm sm:rounded-l-xl shadow-xl transition-transform duration-300
   ${isOpen ? "translate-x-0" : "-translate-x-full"}
   sm:translate-x-0 sm:static sm:block
 `}

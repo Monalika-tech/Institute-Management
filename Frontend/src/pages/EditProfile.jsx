@@ -15,6 +15,7 @@ const EditProfile = () => {
     phone_no: "",
     qualification: "",
     experiencedYears: "",
+    address: "",
   });
   const [loading, setLoading] = useState(true);
 
@@ -68,21 +69,26 @@ const EditProfile = () => {
       localStorage.setItem("teacher", JSON.stringify(res.teacher));
 
       alert("Profile updated successfully");
-      navigate("/");
+      navigate("/teacher/" + teacher._id);
     } catch (err) {
       alert(err.message || "Update failed");
     }
   };
+  const fields = [
+    { label: "Name", name: "name", type: "text" },
+    { label: "Email", name: "email", type: "email", disabled: true },
+    { label: "Phone No", name: "phone_no", type: "text" },
+    { label: "Qualification", name: "qualification", type: "text" },
+    { label: "Experience (Years)", name: "experiencedYears", type: "number" },
+    { label: "Address", name: "address", type: "text" },
+  ];
 
   if (loading) return <p className="text-center py-10">Loading profile...</p>;
 
   return (
     <div className="min-h-screen flex items-center justify-center px-4">
       <div
-        className="  
-  w-full 
- max-w-3xl w-full  mx-auto 
-  my-8 sm:my-16 
+        className="  w-full  max-w-3xl w-full  mx-auto   my-8 sm:my-16 
   px-4 sm:px-8 
   py-8 sm:py-12 
   bg-white/90 
@@ -102,33 +108,17 @@ const EditProfile = () => {
           onSubmit={onSubmitHandler}
           className="grid grid-cols-1 md:grid-cols-2 gap-5"
         >
-          <Input
-            label="Name"
-            name="name"
-            value={formData.name}
-            onChange={handleChange}
-            className="w-full px-4 py-3 bo"
-          />
-          <Input label="Email" name="email" value={formData.email} disabled />
-          <Input
-            label="Phone No"
-            name="phone_no"
-            value={formData.phone_no}
-            onChange={handleChange}
-          />
-          <Input
-            label="Qualification"
-            name="qualification"
-            value={formData.qualification}
-            onChange={handleChange}
-          />
-          <Input
-            label="Experience (Years)"
-            name="experiencedYears"
-            type="number"
-            value={formData.experiencedYears}
-            onChange={handleChange}
-          />
+          {fields.map((field, index) => (
+            <Input
+              key={index}
+              label={field.label}
+              name={field.name}
+              type={field.type}
+              value={formData[field.name]}
+              onChange={handleChange}
+              disabled={field.disabled}
+            />
+          ))}
 
           <div className="flex flex-col sm:flex-row gap-4 mt-6 md:col-span-2">
             <button

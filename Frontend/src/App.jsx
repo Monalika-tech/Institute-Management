@@ -37,13 +37,13 @@ function AppLayout({ children }) {
       <div className="flex flex-col sm:flex-row flex-1">
         {/* Sidebar (actions) */}
         {isAuthenticated && (
-          <aside className="  sm:min-h-full bg-green-800/20 backdrop-blur-sm  ">
+          <aside className="  sm:min-h-full bg-green-800/30 backdrop-blur-sm sm:rounded-l-2xl ">
             <Slidebar />
           </aside>
         )}
 
         {/* Main Content Area */}
-        <main className="relative flex-1 overflow-hidden rounded-2xl sm:ml-2">
+        <main className="relative flex-1 overflow-hidden sm:rounded-r-2xl">
 
           {/* Background Layer */}
           <div
@@ -55,7 +55,7 @@ function AppLayout({ children }) {
           />
 
           {/* Overlay */}
-          <div className="absolute inset-0 bg-black/20" />
+          <div className="absolute inset-0 bg-gray-600/20" />
 
           {/* Content */}
           <div className="relative z-10 p-1">

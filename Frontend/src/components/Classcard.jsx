@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { deleteClass } from "../api/ClassAPI";
+import { FaEye ,FaTrash , FaEdit} from "react-icons/fa";
 
 const Classcard = ({ cls }) => {
   console.log("Classcard component rendered", cls);
@@ -17,7 +18,7 @@ const Classcard = ({ cls }) => {
   return (
     <div className=" w-full  text-gray-700 cursor-pointer hover:bg-white/50 border shadow border-gray-200 rounded-md p-4 ">
       <Link to={`/class/${_id}`}>
-        <p className="pt-3 pb-1 text-sm"> Class {classLevel}</p>
+        <p className="pt-3 pb-1 text-2xl font-bold"> Class {classLevel}</p>
         <div className="flex flex-col  gap-6">
           <p className="font-semibold text-base">
             <strong> Total Students : </strong>
@@ -28,24 +29,24 @@ const Classcard = ({ cls }) => {
           </p>
         </div>
       </Link>
-      <div className="w-full sm:w-2/3 flex flex-col sm:flex-col justify-between pt-4 gap-2">
+      <div className="w-full  flex flex-col sm:flex-row justify-between pt-4 gap-2">
         <Link
           to={`/class/${_id}`}
-          className="rounded-md border border-green-600 px-4 py-2 text-sm text-green-600 hover:bg-green-50 transition"
+          className="rounded-md  px-2 py-2 text-2xl text-gray hover:bg-green-800/70 transition"
         >
-          View Details
+         < FaEye />
         </Link>
         <Link
           to={`/editClass/${_id}`}
-          className="rounded-md border border-green-600 px-4 py-2 text-sm text-green-600 hover:bg-green-50 transition"
+          className="rounded-md  px-2 py-2 text-2xl text-gray hover:bg-green-800/70 transition"
         >
-          Edit Details
+          < FaEdit />
         </Link>
         <button
           onClick={() => deleteHandler(_id)}
-          className="rounded-md border border-red-600 px-4 py-2 text-sm text-red-600 hover:bg-red-50 transition"
+          className="rounded-md  px-2 py-2 text-2xl text-gray hover:bg-red-800/70 transition"
         >
-          Delete Class
+          < FaTrash />
         </button>
       </div>
     </div>
