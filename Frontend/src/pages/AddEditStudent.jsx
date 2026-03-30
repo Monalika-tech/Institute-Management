@@ -3,7 +3,7 @@ import { getAllClasses } from "../api/ClassAPI";
 import Title from "../components/Title";
 import { createStudent } from "../api/StudentAPI";
 
-function RegisterStudent() {
+function AddEditStudent() {
   const [classes, setClasses] = useState([]);
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState("");
@@ -65,6 +65,7 @@ function RegisterStudent() {
 
     } catch (error) {
       console.error("Failed to submit student registration:", error);
+      setSuccess(error.message || "Failed to register student");  
     } finally {
       setLoading(false);
     }
@@ -216,4 +217,4 @@ function RegisterStudent() {
   );
 }
 
-export default RegisterStudent;
+export default AddEditStudent;

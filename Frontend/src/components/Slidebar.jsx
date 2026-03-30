@@ -25,7 +25,7 @@ const Slidebar = () => {
   const menuItems = [
     { name: "Edit Profile", path: "/editProfile", icon: <FaUserEdit /> },
     { name: "ADD Student", path: "/addStudent", icon: <FaPlus /> },
-    { name: "Edit Student", path: "/editStudent/:_id", icon: <FaEdit /> },
+    { name: "Edit Student", path: "/students", icon: <FaEdit /> },
     { name: "Add Class", path: "/addClass", icon: <FaPlus /> },
     { name: "Edit Class", path: "/editClass/:_id", icon: <FaEdit /> },
     { name: "Schedule classes", path: "/new", icon: <FaUsers /> },
@@ -41,7 +41,7 @@ const Slidebar = () => {
       {/* button to open-close the slide bar on small screens */}
       <div className="sm:hidden absolute top-2 left-4 z-10">
         <button onClick={toggleSlidebar}>
-          <FaBars />
+          <FaBars /> 
         </button>
       </div>
       {isOpen && (

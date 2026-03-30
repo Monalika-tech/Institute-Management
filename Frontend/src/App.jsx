@@ -15,14 +15,16 @@ import About from "./pages/About";
 
 // teacher Pages
 import EditProfile from "./pages/EditProfile"; // user profile
-import AddClass from "./pages/AddClass";
-import RegisterStudent from "./pages/RegisterStudent";
+import AddEditClass from "./pages/AddEditClass";
+import AddEditStudent from "./pages/AddEditStudent";
 
 // shared by both users - teacher and student
 import StudentDetails from "./pages/StudentDetails";
 import ClassDetail from "./pages/ClassDetail";
 
 import { useAuth } from "./context/AuthContext";
+
+
 
 // ============================LAYOUT COMPONENT============================
 function AppLayout({ children }) {
@@ -107,7 +109,7 @@ function App() {
           path="/addClass"
           element={
             <ProtectedRoute allowedRoles={["teacher"]}>
-              <AddClass />
+              <AddEditClass />
             </ProtectedRoute>
           }
         />
@@ -115,7 +117,7 @@ function App() {
           path="/editClass/:_id"
           element={
             <ProtectedRoute allowedRoles={["teacher"]}>
-              <AddClass />
+              <AddEditClass />
             </ProtectedRoute>
           }
         />
@@ -123,7 +125,7 @@ function App() {
           path="/addStudent"
           element={
             <ProtectedRoute allowedRoles={["teacher"]}>
-              <RegisterStudent mode="add" />
+              <AddEditStudent mode="add" />
             </ProtectedRoute>
           }
         />
@@ -131,7 +133,7 @@ function App() {
           path="/editStudent/:_id"
           element={
             <ProtectedRoute allowedRoles={["teacher"]}>
-              <RegisterStudent mode="edit" />
+              <AddEditStudent mode="edit" />
             </ProtectedRoute>
           }
         />

@@ -42,6 +42,12 @@ const Studentcard = ({ stud, onDelete }) => {
         >
           View
         </Link>
+         <Link
+          to={`/editStudent/${_id}`}
+          className="flex-1 text-center bg-green-600 text-white py-2.5 rounded-lg text-sm font-medium hover:bg-green-700 transition"
+        >
+          Edit
+        </Link>
 
         <button
           onClick={deleteHandler}

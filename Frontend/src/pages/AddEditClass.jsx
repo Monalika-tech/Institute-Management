@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useEffect } from "react";
 import { createClass, getClassById, updateClass } from "../api/ClassAPI";
 
-const AddClass = () => {
+const AddEditClass = () => {
   const navigate = useNavigate();
   const { _id } = useParams();
 
@@ -129,4 +129,4 @@ const AddClass = () => {
   );
 };
 
-export default AddClass;
+export default AddEditClass;
