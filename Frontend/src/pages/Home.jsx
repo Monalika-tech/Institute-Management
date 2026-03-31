@@ -1,7 +1,25 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
+import { useEffect } from "react";
 
 const Home = () => {
+  const { userId, role, loading } = useAuth();
+  const navigate = useNavigate();
+
+  // useEffect(() => {
+  //   if (!loading) {
+  //     if (userId && role) {
+  //       if (role === "teacher") navigate(`/Teacher/${userId}`);
+  //       else navigate(`/Student/${userId}`);
+  //     } else {
+  //       navigate("/login");
+  //     }
+  //   }
+  // }, [userId, role, loading]);
+
+
+  console.log("the user id and role we get from auth context is : ", userId, role);
   return (
     <div className="relative min-h-screen overflow-hidden">
       {/* Content */}
@@ -18,7 +36,7 @@ const Home = () => {
 
           <div className="flex justify-center gap-4 sm:flex-row flex-col">
             <Link
-              to="/login"
+              to={userId ? role==='teacher'? `/Teacher/${userId}` : `/Student/${userId}` : "/login"}
               className="bg-green-600 hover:bg-green-700 text-white font-semibold px-8 py-3 rounded-full shadow-lg transition duration-300"
             >
               Get Started

@@ -25,8 +25,8 @@ function Login() {
     }
 
     if (result.success) {
-      if (role === "teacher") navigate(`/Teacher/${userId}`);
-      if (role === "student") navigate(`/Student/${userId}`);
+      if (result.role === "teacher") navigate(`/Teacher/${result.userId}`);
+      if (result.role === "student") navigate(`/Student/${result.userId}`);
     } else {
       setError({ form: result.message });
     }

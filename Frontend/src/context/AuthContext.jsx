@@ -34,7 +34,7 @@ export const AuthProvider = ({ children }) => {
       setRole(res.data.role);
       setUserId(res.data.userId);
 
-      return { success: true };
+      return { success: true , userId: res.data.userId, role: res.data.role};
     } catch (error) {
       return {
         success: false,
@@ -52,7 +52,7 @@ export const AuthProvider = ({ children }) => {
       setRole(res.data.role);
       setUserId(res.data.userId);
 
-      return { success: true };
+      return { success: true , userId: res.data.userId, role: res.data.role};
     } catch (error) {
       return {
         success: false,
