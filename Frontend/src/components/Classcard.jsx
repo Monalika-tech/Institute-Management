@@ -1,52 +1,64 @@
 import { Link } from "react-router-dom";
 import { deleteClass } from "../api/ClassAPI";
-import { FaEye ,FaTrash , FaEdit} from "react-icons/fa";
+import { FaEye, FaTrash, FaEdit } from "react-icons/fa";
 
-const Classcard = ({ cls }) => {
-  console.log("Classcard component rendered", cls);
+const Classcard = ({ cls, color }) => {
   const { _id, classLevel, batchTime } = cls;
 
   const deleteHandler = async (_id) => {
     const confirmDelete = window.confirm(
-      "Are you sure you want to delete this item?",
+      "Are you sure you want to delete this class?"
     );
     if (!confirmDelete) return;
     await deleteClass(_id);
-    window.location.reload(); // quick fix for now
+    window.location.reload();
   };
 
   return (
-    <div className=" w-full  text-gray-700 cursor-pointer hover:bg-white/50 border shadow border-gray-200 rounded-md p-4 ">
+    <div
+      className={`relative rounded-xl p-5 shadow-md border border-gray-200 
+      transition-all duration-300 hover:shadow-xl hover:-translate-y-1 ${color.bg}`}
+    >
+      {/* Top Accent */}
+      <div className={`h-1 w-full rounded-t-xl absolute top-0 left-0 ${color.accent}`} />
+
       <Link to={`/class/${_id}`}>
-        <p className="pt-3 pb-1 text-2xl font-bold"> Class {classLevel}</p>
-        <div className="flex flex-col  gap-6">
-          <p className="font-semibold text-base">
-            <strong> Total Students : </strong>
-            {/* {totalStudent} */}pending... need to find..
+        <h2 className="text-xl font-bold mb-2">
+          Class {classLevel}
+        </h2>
+
+        <div className="space-y-2 text-sm">
+          <p>
+            <span className="font-semibold">Students:</span> Pending...
           </p>
-          <p className="font-semibold text-base">
-            <strong>Batch Time : </strong> {batchTime}
+
+          <p>
+            <span className="font-semibold">Batch:</span> {batchTime}
           </p>
         </div>
       </Link>
-      <div className="w-full  flex flex-col sm:flex-row justify-between pt-4 gap-2">
+
+      {/* Actions */}
+      <div className="flex justify-end gap-3 mt-5">
         <Link
           to={`/class/${_id}`}
-          className="rounded-md  px-2 py-2 text-2xl text-gray hover:bg-green-800/70 transition"
+          className="p-2 rounded-md bg-white/70 hover:bg-green-500 hover:text-white transition"
         >
-         < FaEye />
+          <FaEye />
         </Link>
+
         <Link
           to={`/editClass/${_id}`}
-          className="rounded-md  px-2 py-2 text-2xl text-gray hover:bg-green-800/70 transition"
+          className="p-2 rounded-md bg-white/70 hover:bg-blue-500 hover:text-white transition"
         >
-          < FaEdit />
+          <FaEdit />
         </Link>
+
         <button
           onClick={() => deleteHandler(_id)}
-          className="rounded-md  px-2 py-2 text-2xl text-gray hover:bg-red-800/70 transition"
+          className="p-2 rounded-md bg-white/70 hover:bg-red-500 hover:text-white transition"
         >
-          < FaTrash />
+          <FaTrash />
         </button>
       </div>
     </div>

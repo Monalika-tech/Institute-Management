@@ -40,15 +40,15 @@ function NavBar() {
   return (
     <>
       {/* ================= NAVBAR ================= */}
-      <nav className="sticky top-0 z-50 bg-white/80 backdrop-blur-lg border-b border-white/20 shadow-sm">
+      <nav className="sticky top-0 z-50 bg-blue-800/50 backdrop-blur-lg border-b border-white/20 shadow-sm">
         <div className="max-w-7xl mx-auto flex items-center justify-between px-6 py-4">
           {/* Logo */}
 
           <h1
             onClick={() => navigate("/")}
-            className="text-xl font-bold text-green-600 cursor-pointer"
+            className="text-xl font-bold text-white cursor-pointer"
           >
-            EduPanel
+          InstituteHub
           </h1>
 
           {/* Desktop Links */}
@@ -165,7 +165,7 @@ function NavBar() {
           {isAuthenticated && (
             <button
               onClick={handleLogout}
-              className="w-full bg-green-600 text-white py-2 rounded-lg hover:bg-red-600 transition"
+              className="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-red-600 transition"
             >
               Logout
             </button>

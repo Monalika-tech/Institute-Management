@@ -12,6 +12,23 @@ function StudentsList({ students }) {
   const handleDelete = (id) => {
     setStudentList((prev) => prev.filter((s) => s._id !== id));
   };
+  const colorClasses = [
+    {
+      bg: "bg-green-50",
+      accent: "bg-green-500",
+      badge: "bg-green-100 text-green-700",
+    },
+    {
+      bg: "bg-blue-50",
+      accent: "bg-blue-500",
+      badge: "bg-blue-100 text-blue-700",
+    },
+    {
+      bg: "bg-purple-50",
+      accent: "bg-purple-500",
+      badge: "bg-purple-100 text-purple-700",
+    },
+  ];
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 my-12">
@@ -32,8 +49,13 @@ function StudentsList({ students }) {
         </div>
       ) : (
         <div className="grid gap-6 grid-cols-1 sm:grid-cols-1 lg:grid-cols-3 xl:grid-cols-4">
-          {studentList.map((stud) => (
-            <Studentcard key={stud._id} stud={stud} onDelete={handleDelete} />
+          {studentList.map((stud, index) => (
+            <Studentcard
+              key={stud._id}
+              stud={stud}
+              onDelete={handleDelete}
+              color={colorClasses[index % colorClasses.length]}
+            />
           ))}
         </div>
       )}

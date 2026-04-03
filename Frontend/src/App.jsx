@@ -23,6 +23,7 @@ import StudentDetails from "./pages/StudentDetails";
 import ClassDetail from "./pages/ClassDetail";
 
 import { useAuth } from "./context/AuthContext";
+import AttendancePage from "./pages/AttendancePage";
 
 
 
@@ -31,7 +32,7 @@ function AppLayout({ children }) {
   const { isAuthenticated } = useAuth();
 
   return (
-    <div className="min-h-screen flex flex-col ">
+    <div className="min-h-screen flex flex-col  ">
 
       {/* Top Navbar */}
       {isAuthenticated && <NavBar />}
@@ -39,7 +40,7 @@ function AppLayout({ children }) {
       <div className="flex flex-col sm:flex-row flex-1">
         {/* Sidebar (actions) */}
         {isAuthenticated && (
-          <aside className="  sm:min-h-full bg-green-800/30 backdrop-blur-sm sm:rounded-l-2xl ">
+          <aside className="  sm:min-h-full bg-blue-800/80 backdrop-blur-sm sm:rounded-l-2xl ">
             <Slidebar />
           </aside>
         )}
@@ -47,17 +48,17 @@ function AppLayout({ children }) {
         {/* Main Content Area */}
         <main className="relative flex-1 overflow-hidden sm:rounded-r-2xl">
 
-          {/* Background Layer */}
+          {/* Background Layer
           <div
             className="absolute inset-0 bg-cover bg-center blur-sm scale-110 "
             style={{
               backgroundImage:
                 "url('https://img.freepik.com/free-photo/book-with-green-board-background_1150-3837.jpg?semt=ais_hybrid&w=740&q=80')",
             }}
-          />
+          /> */}
 
           {/* Overlay */}
-          <div className="absolute inset-0 bg-gray-600/20" />
+          {/* <div className="absolute inset-0 bg-white/20" /> */}
 
           {/* Content */}
           <div className="relative z-10 p-1">
@@ -165,6 +166,15 @@ function App() {
             </ProtectedRoute>
           }
         />
+
+        <Route
+        path="/attendance"
+        element={
+          <ProtectedRoute allowedRoles={["teacher"]}>
+            <AttendancePage/>
+          </ProtectedRoute>
+        }
+      />  
       </Routes>
     </AppLayout>
   );

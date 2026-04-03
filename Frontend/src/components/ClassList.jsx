@@ -4,6 +4,28 @@ import Classcard from "./Classcard";
 const ClassList = ({ classes }) => {
   const classData = classes;
   console.log("the data in class list ", classData);
+  const colorClasses = [
+    {
+      bg: "bg-green-50",
+      accent: "bg-green-500",
+    },
+    {
+      bg: "bg-blue-50",
+      accent: "bg-blue-500",
+    },
+    {
+      bg: "bg-purple-50",
+      accent: "bg-purple-500",
+    },
+    {
+      bg: "bg-pink-50",
+      accent: "bg-pink-500",
+    },
+    {
+      bg: "bg-yellow-50",
+      accent: "bg-yellow-500",
+    },
+  ];
 
   return (
     <div className="my-10">
@@ -17,8 +39,12 @@ const ClassList = ({ classes }) => {
 
       {/* Class cards will go here */}
       <div className="grid gap-6 grid-cols-[repeat(auto-fit,minmax(250px,1fr))]">
-        {classData.map((cls) => (
-          <Classcard key={cls._id} cls={cls} />
+        {classData.map((cls, index) => (
+          <Classcard
+            key={cls._id}
+            cls={cls}
+            color={colorClasses[index % colorClasses.length]}
+          />
         ))}
       </div>
     </div>

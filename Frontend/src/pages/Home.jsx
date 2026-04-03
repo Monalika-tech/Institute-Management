@@ -22,6 +22,17 @@ const Home = () => {
   console.log("the user id and role we get from auth context is : ", userId, role);
   return (
     <div className="relative min-h-screen overflow-hidden">
+      Background Layer
+          <div
+            className="absolute inset-0 bg-cover bg-center blur-sm scale-110 "
+            style={{
+              backgroundImage:
+                "url('https://img.freepik.com/free-photo/book-with-green-board-background_1150-3837.jpg?semt=ais_hybrid&w=740&q=80')",
+            }}
+          />
+
+            {/* Overlay */}
+          <div className="absolute inset-0 bg-gray-800/20" />
       {/* Content */}
       <div className="relative z-10 flex items-center justify-center min-h-screen px-6">
         <div className="max-w-3xl text-center text-white ">
@@ -44,7 +55,7 @@ const Home = () => {
 
             <Link
               to="/about"
-              className="border border-white/70 hover:bg-white hover:text-green-700 text-white font-semibold px-8 py-3 rounded-full transition duration-300"
+              className="border border-green-800/70 hover:bg-green-700/70 hover:text-white text-white font-semibold px-8 py-3 rounded-full transition duration-300"
             >
               Learn More
             </Link>
