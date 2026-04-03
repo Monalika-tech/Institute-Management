@@ -1,5 +1,6 @@
 const Notification = require("../models/Notification");
 const Student = require("../models/Student");
+const NotificationStatus = require("../models/NotificationStatus");
 
 // CREATE
 exports.createNotification = async (req, res) => {
@@ -13,6 +14,20 @@ exports.createNotification = async (req, res) => {
             classId: type === "class" ? classId : null,
             createdBy: req.user.id,
         });
+
+        let students;
+
+        if (type === "class") {
+            students = await Student.find({ classId });
+        } else {
+            students = await Student.find(); // all students
+        }
+        const statusDocs = student.map((s) => ({
+            notificationId: notification._id,
+            studentId: s._id,
+        }));
+
+        await NotificationStatus.insertMany(statusDocs);
 
         res.status(201).json(notification);
     } catch (err) {
