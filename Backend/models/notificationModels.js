@@ -17,6 +17,10 @@ const notificationSchema = new mongoose.Schema(
             default: null,
         },
 
+        priority: { type: String, enum: ["normal", "important", "urgent"], default: "normal" },
+
+        expiresAt: { type: Date},
+
         createdBy: {
             type: mongoose.Schema.Types.ObjectId,
             ref: "Teacher",
