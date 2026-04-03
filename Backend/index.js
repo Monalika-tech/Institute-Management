@@ -5,7 +5,7 @@ const teacherRoutes = require('./routes/teacherRoutes.js');
 const studentRoutes = require('./routes/studentRoutes.js');
 const classRoutes = require('./routes/classRoutes.js');
 const attendanceRoutes = require('./routes/attendanceRoutes.js');
-
+const notificationRoutes = require('./routes/notificationRoutes.js');
 const cors = require('cors');
 
 
@@ -35,6 +35,8 @@ server.use('/api/teachers', teacherRoutes);
 server.use('/api/students', studentRoutes);
 server.use("/api/classes" , classRoutes);
 server.use("/api/attendance", attendanceRoutes);
+server.use("/api/notifications", notificationRoutes);
+
 
 
 // Start the server
