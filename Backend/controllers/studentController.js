@@ -148,13 +148,18 @@ const updateStudent = async (req, res) => {
 
         existingStudent.name = name || existingStudent.name;
         existingStudent.email = email || existingStudent.email;
-        existingStudent.password = password || existingStudent.password;
+        // existingStudent.password = password || existingStudent.password;
         existingStudent.classID = classID || existingStudent.classID;
         existingStudent.parentName = parentName || existingStudent.parentName;
         existingStudent.phone_no = phone_no || existingStudent.phone_no;
         existingStudent.address = address || existingStudent.address;
         existingStudent.school = school || existingStudent.school;
         existingStudent.monthlyFee = monthlyFee || existingStudent.monthlyFee;
+
+        if (password) {
+            const salt = await bcrypt.genSalt(10);
+            existingStudent.password = await bcrypt.hash(password, salt);
+        }
         await existingStudent.save();
 
         return res.status(200).json({
@@ -198,7 +203,7 @@ const getAllStudents = async (req, res) => {
         const logTeacherID = req.user._id;
 
         const classes = await Classes.find({ teacherID: logTeacherID }).select("_id");
-console.log("Classes found for teacher:", classes);
+        console.log("Classes found for teacher:", classes);
 
         const classIds = classes.map(c => c._id);
 
