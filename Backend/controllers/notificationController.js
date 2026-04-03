@@ -47,6 +47,7 @@ exports.getNotifications = async (req, res) => {
 
         if (role === "student") {
             const student = await Student.findById(id);
+            const status = await NotificationStatus.find({ studentId: id });
 
             const data = await Notification.find({
                 $or: [
