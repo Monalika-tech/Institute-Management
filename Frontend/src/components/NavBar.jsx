@@ -40,74 +40,62 @@ function NavBar() {
   return (
     <>
       {/* ================= NAVBAR ================= */}
-      <nav className="sticky top-0 z-50 bg-blue-800/50 backdrop-blur-lg border-b border-white/20 shadow-sm">
-        <div className="max-w-7xl mx-auto flex items-center justify-between px-6 py-4">
+      <nav className="sticky top-0 z-50 bg-blue-900/90 border-b border-blue-700/50 backdrop-blur-sm">
+        <div className="max-w-7xl mx-auto flex items-center justify-between px-6 py-3">
           {/* Logo */}
-
           <h1
             onClick={() => navigate("/")}
-            className="text-xl font-bold text-white cursor-pointer"
+            className="text-xl ml-10 font-bold text-white cursor-pointer"
           >
-          InstituteHub
+            InstituteHub
           </h1>
 
           {/* Desktop Links */}
           {isAuthenticated && (
-            <ul className="hidden md:flex gap-8 text-sm font-medium items-center">
+            <ul className="hidden md:flex gap-6 text-sm font-medium items-center">
               {links.map((item, i) => (
                 <li key={i}>
-                  <NavLink to={item.path} className={linkClass}>
-                    <span className="flex flex-row gap-1">
-                      {item.name}
-                      {item.icon && (
-                        <span className="text-xl">{item.icon}</span>
-                      )}
-                    </span>
+                  <NavLink
+                    to={item.path}
+                    className={({ isActive }) =>
+                      `px-3 py-2 rounded-md transition ${
+                        isActive
+                          ? "bg-blue-100 text-blue-700"
+                          : "text-gray-900 hover:bg-gray-100"
+                      }`
+                    }
+                  >
+                    {item.name}
                   </NavLink>
                 </li>
               ))}
 
-              <li>
-                <button
-                  onClick={navigateTO}
-                  className="text-gray-700 hover:text-green-600 transition"
-                >
-                  <span className="flex flex-row gap-1">
-                    Profile
-                    <FaUser className="text-xl" />
-                  </span>
-                </button>
-              </li>
+              <button
+                onClick={navigateTO}
+                className="text-gray-900 hover:scale-120 transition-transform"
+              >
+                <FaUser />
+              </button>
             </ul>
           )}
 
-          {/* Desktop Actions */}
-          <div className="hidden md:flex items-center gap-4">
-            {isAuthenticated ? (
+          {/* Actions */}
+          <div className="hidden md:flex items-center gap-3">
+            {isAuthenticated && (
               <button
                 onClick={handleLogout}
-                className="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition"
+                className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-red-500 transition"
               >
-                <span className="flex flex-row gap-1">
-                  Logout
-                  <FaSignOutAlt className="text-2xl" />
-                </span>
+                Logout
               </button>
-            ) : (
-              <Link
-                to="/register"
-                className="border border-green-600 text-green-600 px-4 py-2 rounded-lg hover:bg-green-50 transition"
-              >
-                Sign Up
-              </Link>
             )}
           </div>
 
-          {/* Mobile Hamburger */}
+          {/* Mobile Menu */}
           {isAuthenticated && (
             <button
               onClick={() => setOpen(!open)}
-              className="md:hidden text-2xl"
+              className="md:hidden text-2xl text-white"
             >
               ☰
             </button>
@@ -128,7 +116,7 @@ function NavBar() {
         className={`fixed top-0 left-0 h-full w-64 sm:w-72
         bg-white/80 backdrop-blur-xl border-r border-white/20
         shadow-2xl transform transition-transform duration-300 ease-in-out
-        z-50 ${open ? "translate-x-0" : "-translate-x-full"}`}
+        z-[125] ${open ? "translate-x-0" : "-translate-x-full"}`}
       >
         <div className="p-6 flex flex-col h-full justify-between">
           <div className="space-y-4">

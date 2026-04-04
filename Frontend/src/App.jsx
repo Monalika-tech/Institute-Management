@@ -24,47 +24,26 @@ import ClassDetail from "./pages/ClassDetail";
 
 import { useAuth } from "./context/AuthContext";
 import AttendancePage from "./pages/AttendancePage";
-
-
+import Settings from "./pages/Settings";
+import Notification from "./pages/Notification";
 
 // ============================LAYOUT COMPONENT============================
 function AppLayout({ children }) {
   const { isAuthenticated } = useAuth();
 
   return (
-    <div className="min-h-screen flex flex-col  ">
+    <div className="min-h-screen bg-gray-100 flex flex-col">
+      {/* Navbar */}
+      {isAuthenticated && <NavBar className="sticky top-0 "  />}
 
-      {/* Top Navbar */}
-      {isAuthenticated && <NavBar />}
+      <div className="flex flex-1">
+        {/* Sidebar */}
+        {isAuthenticated && <Slidebar />}
 
-      <div className="flex flex-col sm:flex-row flex-1">
-        {/* Sidebar (actions) */}
-        {isAuthenticated && (
-          <aside className="  sm:min-h-full bg-blue-800/80 backdrop-blur-sm sm:rounded-l-2xl ">
-            <Slidebar />
-          </aside>
-        )}
-
-        {/* Main Content Area */}
-        <main className="relative flex-1 overflow-hidden sm:rounded-r-2xl">
-
-          {/* Background Layer
-          <div
-            className="absolute inset-0 bg-cover bg-center blur-sm scale-110 "
-            style={{
-              backgroundImage:
-                "url('https://img.freepik.com/free-photo/book-with-green-board-background_1150-3837.jpg?semt=ais_hybrid&w=740&q=80')",
-            }}
-          /> */}
-
-          {/* Overlay */}
-          {/* <div className="absolute inset-0 bg-white/20" /> */}
-
-          {/* Content */}
-          <div className="relative z-10 p-1">
-            <div className="rounded-2xl bg-white/10  shadow-lg p-4 sm:p-6">
-              {children}
-            </div>
+        {/* Main */}
+        <main className="flex-1 p-4 sm:p-6 lg:p-8">
+          <div className="bg-white rounded-2xl shadow-md min-h-full p-4 sm:p-6">
+            {children}
           </div>
         </main>
       </div>
@@ -168,13 +147,31 @@ function App() {
         />
 
         <Route
-        path="/attendance"
-        element={
-          <ProtectedRoute allowedRoles={["teacher"]}>
-            <AttendancePage/>
-          </ProtectedRoute>
-        }
-      />  
+          path="/attendance"
+          element={
+            <ProtectedRoute allowedRoles={["teacher"]}>
+              <AttendancePage />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/settings"
+          element={
+            <ProtectedRoute allowedRoles={["teacher", "student"]}>
+              <Settings />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/notifications"
+          element={
+            <ProtectedRoute allowedRoles={["teacher", "student"]}>
+              <Notification />
+            </ProtectedRoute>
+          }
+        />
       </Routes>
     </AppLayout>
   );

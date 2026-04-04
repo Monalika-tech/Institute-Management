@@ -1,42 +1,60 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import {
   FaChalkboardTeacher,
-  FaUser,
   FaUserEdit,
   FaEdit,
   FaPlus,
   FaBars,
-  FaUserGraduate,
   FaUsers,
-  FaEye,
   FaBell,
   FaCog,
+  FaAngleDoubleLeft,
+  FaAngleDoubleRight,
 } from "react-icons/fa";
-
 import { useAuth } from "../context/AuthContext";
 
 const Slidebar = () => {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isMobileOpen, setIsMobileOpen] = useState(false);
+  const [isCollapsed, setIsCollapsed] = useState(false);
+
   const location = useLocation();
   const navigate = useNavigate();
   const { role } = useAuth();
 
-  let menuItems = []; // ✅ declare once
+  // ✅ Close sidebar on route change
+  useEffect(() => {
+    setIsMobileOpen(false);
+  }, [location.pathname]);
+
+  // ✅ Prevent background scroll when sidebar open
+  useEffect(() => {
+    document.body.style.overflow = isMobileOpen ? "hidden" : "auto";
+  }, [isMobileOpen]);
+
+  let menuItems = [];
 
   if (role === "teacher") {
     menuItems = [
-      {name : "Attendance", path : "/attendance", icon : <FaChalkboardTeacher />},
+      {
+        name: "Attendance",
+        path: "/attendance",
+        icon: <FaChalkboardTeacher />,
+      },
       { name: "Edit Profile", path: "/editProfile", icon: <FaUserEdit /> },
-      { name: "ADD Student", path: "/addStudent", icon: <FaPlus /> },
-      { name: "Edit Student", path: "/students", icon: <FaEdit /> },
+      { name: "Add Student", path: "/addStudent", icon: <FaPlus /> },
+      {
+        name: "Edit Student",
+        path: "/students",
+        icon: <FaEdit />,
+        special: true,
+      },
       { name: "Add Class", path: "/addClass", icon: <FaPlus /> },
-      { name: "Edit Class", path: "/editClass/:_id", icon: <FaEdit /> },
-      { name: "Schedule classes", path: "/new", icon: <FaUsers /> },
-      { name: "Notifications", path: "/users", icon: <FaBell /> },
-      { name: "Settings", path: "/users", icon: <FaCog /> },
+      { name: "Schedule Classes", path: "/new", icon: <FaUsers /> },
+      { name: "Notifications", path: "/notifications", icon: <FaBell /> },
+      { name: "Settings", path: "/settings  ", icon: <FaCog /> },
     ];
-  } else if (role === "student") {
+  } else {
     menuItems = [
       {
         name: "My Classes",
@@ -45,82 +63,89 @@ const Slidebar = () => {
       },
       {
         name: "Notifications",
-        path: "/student/notifications",
+        path: "/notifications",
         icon: <FaBell />,
       },
-      {
-        name: "Settings",
-        path: "/student/settings",
-        icon: <FaCog />,
-      },
+      { name: "Settings", path: "/settings", icon: <FaCog /> },
     ];
   }
 
-  // const menuItems = [
-  //   { name: "Edit Profile", path: "/editProfile", icon: <FaUserEdit /> },
-  //   { name: "ADD Student", path: "/addStudent", icon: <FaPlus /> },
-  //   { name: "Edit Student", path: "/students", icon: <FaEdit /> },
-  //   { name: "Add Class", path: "/addClass", icon: <FaPlus /> },
-  //   { name: "Edit Class", path: "/editClass/:_id", icon: <FaEdit /> },
-  //   { name: "Schedule classes", path: "/new", icon: <FaUsers /> },
-  //   { name: "Notifications", path: "/users", icon: <FaBell /> },
-  //   { name: "Settings", path: "/users", icon: <FaCog /> },
-  // ];
-  const toggleSlidebar = () => {
-    setIsOpen(!isOpen);
-  };
+  const toggleMobile = () => setIsMobileOpen((prev) => !prev);
+  const toggleCollapse = () => setIsCollapsed((prev) => !prev);
+
   return (
-    <div className="p-4 sm:p-2 flex flex-row m-2 sm:m-0">
-      {/* button to open-close the slide bar on small screens */}
-      <div className="sm:hidden absolute top-2 left-4 z-10">
-        <button onClick={toggleSlidebar}>
-          <FaBars />
-        </button>
-      </div>
-      {isOpen && (
+    <div className="flex">
+      {/* Mobile Hamburger */}
+      <button
+        className="sm:hidden fixed top-4 left-4 z-[120] bg-white shadow-md p-2 rounded-md"
+        onClick={toggleMobile}
+      >
+        <FaBars />
+      </button>
+
+      {/* Overlay */}
+      {isMobileOpen && (
         <div
-          className="fixed inset-0 bg-black/10 z-20 sm:hidden"
-          onClick={toggleSlidebar}
+          className="fixed inset-0 bg-white/30 backdrop-blur z-[100] sm:hidden"
+          onClick={toggleMobile}
         />
       )}
-      {/* button to perform action  */}
 
+      {/* Sidebar */}
       <div
         className={`
-  fixed z-30 top-0 left-0 h-full w-64 flex flex-row sm:flex-col bg-white sm:bg-white/30 rounded-sm sm:rounded-l-xl shadow-xl transition-transform duration-300
-  ${isOpen ? "translate-x-0" : "-translate-x-full"}
-  sm:translate-x-0 sm:static sm:block
-`}
+    fixed top-0 left-0 h-full bg-blue-900/90 border-t border-white  backdrop-blur-xl shadow-lg z-[110]
+    transition-all duration-300 ease-in-out
+
+    ${isCollapsed ? "w-20" : "w-64"}
+    ${isMobileOpen ? "translate-x-0" : "-translate-x-full"}
+    sm:translate-x-0 sm:static
+  `}
       >
-        {menuItems.map((item, index) => {
-          const isActive = location.pathname.startsWith(item.path);
+        {/* Header */}
+        <div className="flex items-center justify-between p-4 ">
+          {!isCollapsed && (
+            <span className="text-2xl font-semibold text-gray-900">
+              Dashboard
+            </span>
+          )}
 
-          const handleClick = (e) => {
-            if (item.name === "Edit Student") {
-              e.preventDefault();
+          <button onClick={toggleCollapse} className="hidden sm:block">
+            {isCollapsed ? <FaAngleDoubleRight /> : <FaAngleDoubleLeft />}
+          </button>
+        </div>
 
-              navigate("/students", {
-                state: { message: "Select a student to edit" },
-              });
-            } else {
-              setIsOpen(false);
+        {/* Menu */}
+        <div className="flex flex-col p-2 gap-1">
+          {menuItems.map((item, index) => {
+            const isActive = location.pathname.startsWith(item.path);
+
+            return (
+              <Link
+                key={index}
+                to={item.path}
+                className={`
+            flex items-center gap-4 px-3 py-3 rounded-lg
+            transition-all duration-200 relative
+
+            ${
+              isActive
+                ? "bg-blue-50 text-blue-700 font-medium"
+                : "text-gray-800 hover:bg-gray-200"
             }
-          };
+          `}
+              >
+                {/* Active Indicator */}
+                {isActive && (
+                  <div className="absolute left-0 top-2 bottom-2 w-1 bg-blue-600 rounded-r" />
+                )}
 
-          return (
-            <Link
-              key={index}
-              to={item.path}
-              onClick={handleClick}
-              className={`flex items-center gap-3 p-2 rounded transition-all
-        ${isActive ? "bg-blue-800/50 text-black" : "hover:bg-gray-100"}
-      `}
-            >
-              {item.icon}
-              <span className="hidden sm:inline">{item.name}</span>
-            </Link>
-          );
-        })}
+                <span className="text-lg">{item.icon}</span>
+                {!isCollapsed && <span>{item.name}</span>}
+              </Link>
+            );
+          })}
+        </div>
       </div>
     </div>
   );
