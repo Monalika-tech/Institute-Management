@@ -24,7 +24,7 @@ const notificationSchema = new mongoose.Schema(
         createdBy: {
             type: mongoose.Schema.Types.ObjectId,
             ref: "Teacher",
-            required: true,
+            
         },
     },
     { timestamps: true }

@@ -16,7 +16,11 @@ require("dotenv").config();
 const server = express();
 
 // Enable CORS
-server.use(cors());
+server.use(cors({
+    origin: '*', // Allow all origins (you can specify specific origins if needed)
+    methods: ['GET', 'POST', 'PUT', 'DELETE'], // Allowed HTTP methods
+    allowedHeaders: ['Content-Type', 'Authorization'] // Allowed headers
+}));
 
 
 // Define Port

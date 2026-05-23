@@ -1,254 +1,47 @@
-const Student = require("../models/studentModel");
+const studentService = require("../services/studentService");
+const { handleController } = require("../utils/handleController");
 
-const bcrypt = require('bcryptjs');
+const registerStudent = handleController(async (req, res) => {
+    const result = await studentService.registerStudent(req.body, req.user._id);
+    res.status(200).json(result);
+});
 
-const jwt = require('jsonwebtoken');
-const Classes = require("../models/classModel");
-//controllers for student
+const LoginStudent = handleController(async (req, res) => {
+    const result = await studentService.loginStudent(req.body);
+    res.status(200).json(result);
+});
 
-//register or create  or addstudent used in registration form
-const registerStudent = async (req, res) => {
-    try {
-        const { name, email, password, classID, parentName, phone_no, address, school, monthlyFee } = req.body;
-        const existingstudent = await Student.findOne({ email, classID });
+const deleteStudent = handleController(async (req, res) => {
+    const result = await studentService.deleteStudent(req.params._id);
+    res.status(200).json(result);
+});
 
-        if (existingstudent) {
-            console.log("Student already exists!");
-            return res.status(400).json({ message: "Student already exists in this class!" });
-        }
-        const salt = await bcrypt.genSalt(10);
-        const hashedPassword = await bcrypt.hash(password, salt);
+const updateStudent = handleController(async (req, res) => {
+    const result = await studentService.updateStudent(req.params._id, req.body);
+    res.status(200).json(result);
+});
 
-        const cls = await Classes.findOne({ _id: classID, teacherID: req.user._id });
+const getStudentById = handleController(async (req, res) => {
+    const result = await studentService.getStudentById(req.params._id);
+    res.status(200).json(result);
+});
 
-        if (!cls) return res.status(403).json({ message: "Invalid class access" })
+const getAllStudents = handleController(async (req, res) => {
+    const result = await studentService.getAllStudents(req.user._id);
+    res.status(200).json(result);
+});
 
-        const newstudent = new Student({
-            name,
-            email,
-            password: hashedPassword,
-            classID,
-            parentName,
-            phone_no,
-            address,
-            school,
-            monthlyFee
-        });
-        await newstudent.save();
+const getStudentByClass = handleController(async (req, res) => {
+    const result = await studentService.getStudentByClass(req.user._id, req.params._id);
+    res.status(200).json(result);
+});
 
-        console.log("Student registered successfully!", newstudent);
-
-        res.status(200).json({
-            message: "Student registered successfully!",
-            student: {
-                _id: newstudent._id,
-                name: newstudent.name,
-                email: newstudent.email,
-                password: newstudent.password,
-                classID: newstudent.classID,
-                parentName: newstudent.parentName,
-                phone_no: newstudent.phone_no,
-                address: newstudent.address,
-                school: newstudent.school,
-                monthlyFee: newstudent.monthlyFee
-            }
-        })
-
-    } catch (error) {
-
-        res.status(500).json({
-            message: "Server Error", error: error.message
-        });
-    }
-}
-// cretae a proper login contoroller this is not ready and remember to add a token with role student 
-const LoginStudent = async (req, res) => {
-    //login student
-    try {
-        const { email, password } = req.body;
-
-        const student = await Student.findOne({ email });
-        if (!student) {
-
-            return res.status(401).json({ message: "Invalid credentials" });
-        }
-
-        console.log("Student found:", student);
-        console.log("Comparing password:", { inputPassword: password, storedHashedPassword: student.password });
-        const isMatch = await bcrypt.compare(password, student.password);
-        console.log('Password match ?', isMatch);
-        if (!isMatch) {
-            return res.status(401).json({
-                message: "Invalid credentials"
-            });
-        }
-
-
-        const token = jwt.sign(
-            {
-                id: student._id,
-                role: "student"
-            },
-            process.env.JWT_SECRET,
-            { expiresIn: "1d" }
-        );
-        res.status(200).json({
-            message: "student login succesfull",
-            token,
-            role: "student",
-            userId: student._id,
-            student: student
-        })
-
-    } catch (error) {
-        res.status(500).json({
-            message: "Server Error", error: error.message
-        });
-    }
+module.exports = {
+    registerStudent,
+    getAllStudents,
+    getStudentById,
+    updateStudent,
+    deleteStudent,
+    LoginStudent,
+    getStudentByClass,
 };
-
-//delete student while deleting the student record
-const deleteStudent = async (req, res) => {
-    try {
-        console.log("requesting parameters : ", req.params);
-        const { _id } = req.params;
-
-        if (!_id) {
-            return res.status(400).json({ message: "Student ID is required" });
-        }
-
-        const exist = await Student.findById(_id);
-        if (!exist) {
-            return res.status(404).json({ message: "Student not found" });
-        }
-
-        await Student.deleteOne({ _id });
-
-        console.log("Student deleted successfully", exist);
-        res.status(200).json({ message: "Student deleted successfully", student: exist });
-
-    } catch (error) {
-        console.log("Error deleting student:", error);
-        res.status(500).json({ message: "Server Error", error: error.message });
-    }
-}
-
-//update student while editing student details
-const updateStudent = async (req, res) => {
-    try {
-        const { _id } = req.params;
-        const { name, email, password, classID, parentName, phone_no, address, school, monthlyFee } = req.body;
-
-        const existingStudent = await Student.findOne({ _id });
-
-        if (!existingStudent) {
-            return res.status(404).json({ message: "Student not found" });
-        }
-
-
-        existingStudent.name = name || existingStudent.name;
-        existingStudent.email = email || existingStudent.email;
-        // existingStudent.password = password || existingStudent.password;
-        existingStudent.classID = classID || existingStudent.classID;
-        existingStudent.parentName = parentName || existingStudent.parentName;
-        existingStudent.phone_no = phone_no || existingStudent.phone_no;
-        existingStudent.address = address || existingStudent.address;
-        existingStudent.school = school || existingStudent.school;
-        existingStudent.monthlyFee = monthlyFee || existingStudent.monthlyFee;
-
-        if (password) {
-            const salt = await bcrypt.genSalt(10);
-            existingStudent.password = await bcrypt.hash(password, salt);
-        }
-        await existingStudent.save();
-
-        return res.status(200).json({
-            message: "Student updated successfully",
-            student: existingStudent,
-        });
-
-    } catch (error) {
-        res.status(500).json({
-            message: "Server Error", error: error.message
-        });
-    }
-
-};
-
-//get single student to see student profile
-const getStudentById = async (req, res) => {
-    try {
-
-        const { _id } = req.params;
-        console.log("Fetching student with ID:", _id);
-        const student = await Student.findById(_id)
-            .populate("classID", "classLevel batchTime");
-        if (!student) {
-            return res.status(404).json({ message: "Student not found" });
-        }
-        return res.status(200).json({
-            message: "Student retrieved successfully",
-            student,
-        });
-    } catch (error) {
-        res.status(500).json({
-            message: "Server Error", error: error.message
-        });
-    }
-};
-//get all students 
-const getAllStudents = async (req, res) => {
-    try {
-
-        const logTeacherID = req.user._id;
-
-        const classes = await Classes.find({ teacherID: logTeacherID }).select("_id");
-        console.log("Classes found for teacher:", classes);
-
-        const classIds = classes.map(c => c._id);
-
-        const students = await Student.find({ classID: { $in: classIds } })
-            .populate("classID", "classLevel batchTime");
-
-
-        res.status(200).json({
-            message: "Students retrieved successfully",
-            students,
-        });
-
-    } catch (error) {
-
-        res.status(500).json({
-            message: "Server Error", error: error.message
-        });
-    }
-};
-
-
-const getStudentByClass = async (req, res) => {
-    try {
-        const logTeacherID = req.user._id;
-        const classId = req.params._id;
-
-        const classData = await Classes.findOne({
-            _id: classId,
-            teacherID: logTeacherID
-        });
-
-        if (!classData) {
-            return res.status(403).json({ message: "Not your class!!" })
-        }
-
-        const students = await Student.find({ classID: classId })
-            .populate("classID", "classLevel batchTime");
-
-        res.status(200).json({ students });
-    } catch (error) {
-        res.status(500).json({
-            message: "ServerError", error: error.message
-        });
-
-    }
-}
-
-module.exports = { registerStudent, getAllStudents, getStudentById, updateStudent, deleteStudent, LoginStudent, getStudentByClass };

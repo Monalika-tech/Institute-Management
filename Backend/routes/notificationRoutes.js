@@ -2,12 +2,14 @@ const express = require("express");
 const router = express.Router();
 const {
     createNotification,
-    getNotifications,
+    getNotifications, getUnreadCount,
+    markAsRead,
 } = require("../controllers/notificationController");
 
-const { protect, authorize } = require("../middleware/authMiddleware");
-
+const protect = require('../middleware/AuthMiddleware');
+const authorize = require('../middleware/authorisedMiddleware');
 router.post("/", protect, authorize("teacher"), createNotification);
 router.get("/", protect, getNotifications);
-
+router.get("/unread-count", protect, authorize("student"), getUnreadCount);
+router.post("/:id/mark-read", protect, authorize("student"), markAsRead);
 module.exports = router;

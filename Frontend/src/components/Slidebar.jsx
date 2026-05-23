@@ -105,7 +105,7 @@ const Slidebar = () => {
         {/* Header */}
         <div className="flex items-center justify-between p-4 ">
           {!isCollapsed && (
-            <span className="text-2xl font-semibold text-gray-900">
+            <span className="text-2xl font-semibold text-white">
               Dashboard
             </span>
           )}
@@ -131,7 +131,7 @@ const Slidebar = () => {
             ${
               isActive
                 ? "bg-blue-50 text-blue-700 font-medium"
-                : "text-gray-800 hover:bg-gray-200"
+                : "text-white hover:bg-gray-200"
             }
           `}
               >

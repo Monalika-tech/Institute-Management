@@ -1,91 +1,41 @@
-const attendance = require("../models/attendanceModel");
+const attendanceService = require("../services/attendanceService");
+const { handleController } = require("../utils/handleController");
 
-// mark attendance for a class on a specific date
-const markAttendance = async (req, res) => {
-    try {
-        const { classId, teacherId, date, records } = req.body;
+const markAttendance = handleController(async (req, res) => {
+    const result = await attendanceService.markAttendance(req.body);
+    res.status(result.statusCode).json(result.body);
+}, {
+    serverErrorBody: (message) => ({
+        message: "Error marking attendance",
+        error: message,
+    }),
+});
 
-        const existingRecord = await attendance.findOne({ classId, date });
+const getAttendanceByClassAndDate = handleController(async (req, res) => {
+    const result = await attendanceService.getAttendanceByClassAndDate(req.query);
+    res.status(200).json(result);
+}, {
+    serverErrorBody: (message) => ({
+        message: "Error fetching attendance record",
+        error: message,
+    }),
+});
 
-        if (existingRecord) {
-            return res.status(400).json({
-                message: "Attendance already marked for this class on this date",
-            });
-        }
-        const newAttendance = new attendance({
-            classId,
-            teacherId,
-            date,
-            records
-        });
-        await newAttendance.save();
+const updateAttendance = handleController(async (req, res) => {
+    const updated = await attendanceService.updateAttendance(req.params.id, req.body);
+    res.json(updated);
+}, {
+    serverErrorBody: (message) => ({ error: message }),
+});
 
-        res.status(201).json({
-            message: "Attendance marked successfully",
-            data: newAttendance
-        });
-    } catch (error) {
-        res.status(500).json({
-            message: "Error marking attendance",
-            error: error.message
-        });
-    }
-};
-
-const getAttendanceByClassAndDate = async (req, res) => {
-    try {
-        const { classId, date } = req.query;
-        const attendanceRecord = await attendance.findOne({ classId, date })
-            .populate("records.studentId", "name");
-
-        res.status(200).json({
-            message: "Attendance record fetched",
-            data: attendanceRecord
-        });
-    } catch (error) {
-        res.status(500).json({
-            message: "Error fetching attendance record",
-            error: error.message
-        });
-    }
-};
-
-const updateAttendance = async (req, res) => {
-    try {
-        const { id } = req.params;
-        const { records } = req.body;
-
-        const updated = await Attendance.findByIdAndUpdate(
-            id,
-            { records },
-            { new: true }
-        );
-
-        res.json(updated);
-    } catch (err) {
-        res.status(500).json({ error: err.message });
-    }
-};
-const getStudentAttendanceStats = async (req, res) => {
-    const { studentId } = req.params;
-
-    const data = await attendance.aggregate([
-        { $unwind: "$records" },
-        { $match: { "records.studentId": mongoose.Types.ObjectId(studentId) } },
-        {
-            $group: {
-                _id: "$records.status",
-                count: { $sum: 1 },
-            },
-        },
-    ]);
-
+const getStudentAttendanceStats = handleController(async (req, res) => {
+    const data = await attendanceService.getStudentAttendanceStats(req.params.studentId);
     res.json(data);
-};
+});
 
 module.exports = {
     markAttendance,
     getAttendanceByClassAndDate,
     updateAttendance,
-    getStudentAttendanceStats
+    getStudentAttendanceStats,
 };

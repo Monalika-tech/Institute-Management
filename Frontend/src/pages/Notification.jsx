@@ -19,6 +19,21 @@ export function TeacherPanel() {
     expiresAt: "",
     createdBy: "",
   });
+  // get the notifications created by you and show them in a list with the option to delete them (bonus: add edit functionality)
+  const [notifications, setNotifications] = useState([]);
+  useEffect(() => {
+    const fetchNotifications = async () => {
+      try {
+        const res = await getNotifications();
+        setNotifications(res);
+      } catch (err) {
+        console.error(err);
+      }
+    };
+
+    fetchNotifications();
+  }, []);
+
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -36,6 +51,20 @@ export function TeacherPanel() {
 
   return (
     <div className="p-4">
+      <h2 className="text-xl font-bold mb-4">Notifications</h2>
+      <div>
+        {notifications.map((n) => (
+          <div key={n._id} className="border rounded-lg p-3 mb-2">
+            <div className="flex justify-between">
+              <h3 className="font-semibold">{n.title}</h3>
+              <span className="text-sm">{n.priority}</span>
+            </div>
+            <p>{n.message}</p>
+          </div>
+        ))}
+
+      </div>
+
       <h2 className="text-xl font-bold mb-4">Create Notification</h2>
       <form onSubmit={handleSubmit} className="space-y-3">
         <input
@@ -120,6 +149,9 @@ export function StudentPanel() {
     fetchNotifications();
     fetchUnread();
   }, []);
+
+  console.log("notifications ", notifications);
+  console.log("unread count ", unreadCount);
 
   return (
     <div className="p-4">
