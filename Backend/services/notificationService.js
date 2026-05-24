@@ -26,7 +26,7 @@ const createNotification = async (data, user) => {
 
     let students;
     if (type === "class") {
-        students = await Student.find({ classId });
+        students = await Student.find({ classID: classId });
     } else {
         students = await Student.find();
     }
@@ -51,6 +51,9 @@ const getNotifications = async (user) => {
 
     if (role === "student") {
         const student = await Student.findById(userId);
+        if (!student) {
+            return [];
+        }
         const now = new Date();
 
         const data = await Notification.find({

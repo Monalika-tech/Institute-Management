@@ -14,9 +14,9 @@ const teacherValidator = [
 
     (req, res, next) => {
         const results = validationResult(req);
-        error = results.errors;
+        const errors = results.errors;
 
-        let err = error.map((error) => error.msg);
+        const err = errors.map((e) => e.msg);
         if (err.length > 0) {
             return res.status(400).json({ errors: err });
         }

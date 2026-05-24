@@ -11,11 +11,11 @@ const router = express.Router();
 router.post("/", markAttendance);
 // route to get attendance record for a class on a specific date (query: classId, date)
 router.get("/", getAttendanceByClassAndDate);
+// must be registered before /:classId/:date so "student" is not captured as classId
+router.get("/student/:studentId", getStudentAttendanceStats);
 // legacy path-param route
 router.get("/:classId/:date", getAttendanceByClassAndDate);
 // route to update attendance record by id
 router.put("/:id", updateAttendance);
-// route to get attendance stats for a student
-router.get("/student/:studentId", getStudentAttendanceStats);
 
 module.exports = router;

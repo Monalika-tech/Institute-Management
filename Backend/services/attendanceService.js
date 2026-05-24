@@ -50,6 +50,9 @@ const updateAttendance = async (id, { records }) => {
 };
 
 const getStudentAttendanceStats = async (studentId) => {
+    if (!mongoose.Types.ObjectId.isValid(studentId)) {
+        throw new HttpError(400, { error: "Invalid student ID" });
+    }
     return Attendance.aggregate([
         { $unwind: "$records" },
         { $match: { "records.studentId": new mongoose.Types.ObjectId(studentId) } },
