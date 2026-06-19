@@ -3,10 +3,10 @@ const { LoginTeacher, RegisterTeacher, GetTeacherById, updateTeacher } = require
 const router = express.Router();
 
 
-const teacherValidator = require('../middleware/vadidators/teachValidationMiddleware');
+const teacherValidator = require('../middleware/validators/teachValidationMiddleware');
 const protect = require('../middleware/AuthMiddleware');
-const authorize = require('../middleware/authorisedMiddleware');
-const teacherOwnership = require('../middleware/ownership/TeacherOwnership Middleware');
+const authorize = require('../middleware/AuthorisedMiddleware');
+const teacherOwnership = require('../middleware/ownership/TeacherOwnershipMiddleware');
 
 
 console.log("In teacher routes");

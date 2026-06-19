@@ -7,7 +7,7 @@ const {
 } = require("../controllers/notificationController");
 
 const protect = require('../middleware/AuthMiddleware');
-const authorize = require('../middleware/authorisedMiddleware');
+const authorize = require('../middleware/AuthorisedMiddleware');
 router.post("/", protect, authorize("teacher"), createNotification);
 router.get("/", protect, getNotifications);
 router.get("/unread-count", protect, authorize("student"), getUnreadCount);

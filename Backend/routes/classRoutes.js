@@ -1,7 +1,7 @@
 const express = require('express');
 const { createClass, updateClass, getclassById, getAllClasses, deleteClass } = require('../controllers/classController');
 const protect = require('../middleware/AuthMiddleware');
-const authorize = require('../middleware/authorisedMiddleware');
+const authorize = require('../middleware/AuthorisedMiddleware');
 const classOwnership = require('../middleware/ownership/ClassOwnershipMiddleware');
 
 

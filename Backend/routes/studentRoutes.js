@@ -1,8 +1,8 @@
 const express = require('express');
 const { registerStudent, getAllStudents, getStudentById, updateStudent, deleteStudent, LoginStudent, getStudentByClass } = require('../controllers/studentController');
-const studValidator = require('../middleware/vadidators/studValidationMiddleware');
+const studValidator = require('../middleware/validators/studValidationMiddleware');
 const protect = require('../middleware/AuthMiddleware');
-const authorize = require('../middleware/authorisedMiddleware');
+const authorize = require('../middleware/AuthorisedMiddleware');
 const ownership = require('../middleware/ownership/OwnershipMiddleware');
 
 const router = express.Router();

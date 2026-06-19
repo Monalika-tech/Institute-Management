@@ -1,7 +1,7 @@
 const express = require("express");
 const { markAttendance, getAttendanceByClassAndDate, updateAttendance, getStudentAttendanceStats } = require("../controllers/attendanceController");
 // const protect = require("../middleware/AuthMiddleware");
-// const authorize = require("../middleware/authorisedMiddleware");
+// const authorize = require("../middleware/AuthorisedMiddleware");
 // const classOwnership = require("../middleware/ownership/ClassOwnershipMiddleware");
 
 
