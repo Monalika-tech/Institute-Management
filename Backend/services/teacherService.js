@@ -1,7 +1,10 @@
 const Teacher = require("../models/teacherModel");
 const { HttpError } = require("./errors");
 const { hashPassword, comparePassword } = require("./passwordService");
-const { signAuthToken } = require("./tokenService");
+const {
+    signAccessToken,
+    signRefreshToken
+} = require("../utils/token");
 
 const registerTeacher = async (data) => {
     const { name, email, password, experiencedYears, qualification, phone_no, address } = data;
@@ -48,24 +51,28 @@ const loginTeacher = async ({ email, password }) => {
         throw new HttpError(401, { message: "Invalid credentials" });
     }
 
-    const token = signAuthToken({ id: teacher._id, role: "teacher" });
+    const accessToken = signAccessToken({ id: teacher._id, role: "teacher" });
+    const refreshToken = signRefreshToken({ id: teacher._id, role: "teacher" });
+    console.log("Generated Access Token:", accessToken); // Debugging log
+    console.log("Generated Refresh Token:", refreshToken); // Debugging log
 
     return {
         statusCode: 200,
+        accessToken: accessToken,
+        refreshToken: refreshToken,
         body: {
             message: "Login Successful!",
-            token,
             role: "teacher",
             userId: teacher._id,
-            teacher: {
-                _id: teacher._id,
-                name: teacher.name,
-                email: teacher.email,
-                phone_no: teacher.phone_no,
-                address: teacher.address,
-                qualification: teacher.qualification,
-                experiencedYears: teacher.experiencedYears,
-            },
+            // teacher: {
+            //     _id: teacher._id,
+            //     name: teacher.name,
+            //     email: teacher.email,
+            //     phone_no: teacher.phone_no,
+            //     address: teacher.address,
+            //     qualification: teacher.qualification,
+            //     experiencedYears: teacher.experiencedYears,
+            // },
         },
     };
 };

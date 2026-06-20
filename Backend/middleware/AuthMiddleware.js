@@ -3,19 +3,8 @@ console.log("In Authentication Middleware");
 const protect = (req, res, next) => {
 
     try {
-        let token;
-
-        console.log("AuthMiddleware: Checking for token in headers", req.headers.authorization);
-
-        if (
-            req.headers.authorization &&
-            req.headers.authorization.startsWith("Bearer")
-
-        ) {
-            token = req.headers.authorization.split(" ")[1];
-        }else {
-            return res.status(401).json({ message: "Not authorized, no token" });
-        }
+        const token =
+            req.cookies.accessToken;
 
         if (!token) {
             return res.status(401).json({ message: "Not authorized, no token" });
@@ -24,11 +13,13 @@ const protect = (req, res, next) => {
 
         const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
-        console.log("Decoded token:", decoded);
-        req.user = { _id: decoded.id, role: decoded.role };
+        req.user = {
+            _id: decoded.id,
+            role: decoded.role
+        };
         next();
     } catch (error) {
-        res.status(401).json({ message: "Not authorized, token failed" , error : error.message});
+        res.status(401).json({ message: "Not authorized, token failed", error: error.message });
     }
 };
 
