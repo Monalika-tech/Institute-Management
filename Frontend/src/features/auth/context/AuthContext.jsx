@@ -4,30 +4,44 @@ import api from "@/lib/api/client";
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
-  const [token, setToken] = useState(localStorage.getItem("token"));
-  const [role, setRole] = useState(localStorage.getItem("role"));
-  const [userId, setUserId] = useState(localStorage.getItem("userId"));
+  // const [token, setToken] = useState(localStorage.getItem("token"));
+  const [role, setRole] = useState();
+  const [userId, setUserId] = useState();
   const [loading, setLoading] = useState(true);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [user, setUser] = useState(null);
 
-  useEffect(() => {
-    if (token && role && userId) {
-      localStorage.setItem("token", token);
-      localStorage.setItem("role", role);
-      localStorage.setItem("userId", userId);
-    } else {
-      localStorage.removeItem("token");
-      localStorage.removeItem("role");
-      localStorage.removeItem("userId");
+  const fetchMe = async () => {
+    try {
+      const res = await api.get("/auth/me");
+
+      setRole(res.data.role);
+      setUserId(res.data.userId);
+      setUser(res.data.user);
+
+      setIsAuthenticated(true);
+    } catch {
+      setIsAuthenticated(false);
     }
+
     setLoading(false);
-  }, [token, role, userId]);
+  };
+
+  // cookies are used to store the token, so we don't need to manage it in state
+  useEffect(() => {
+    fetchMe();
+  }, []);
 
   const loginTeacher = async (email, password) => {
     try {
       const res = await api.post("/teachers/login", { email, password });
-      setToken(res.data.token);
+      console.log("Login Response:", res.data); // Debugging log
+
       setRole(res.data.role);
       setUserId(res.data.userId);
+      setUser(res.data.user);
+      setIsAuthenticated(true);
+
       return { success: true, userId: res.data.userId, role: res.data.role };
     } catch (error) {
       return {
@@ -40,9 +54,12 @@ export const AuthProvider = ({ children }) => {
   const loginStudent = async (email, password) => {
     try {
       const res = await api.post("/students/login", { email, password });
-      setToken(res.data.token);
+
       setRole(res.data.role);
       setUserId(res.data.userId);
+      setUser(res.data.user);
+      setIsAuthenticated(true);
+
       return { success: true, userId: res.data.userId, role: res.data.role };
     } catch (error) {
       return {
@@ -52,23 +69,26 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  const logout = () => {
-    setToken(null);
+  const logout = async () => {
+    await api.post("/auth/logout");
+
     setRole(null);
     setUserId(null);
+    setUser(null);
+    setIsAuthenticated(false);
   };
 
   return (
     <AuthContext.Provider
       value={{
-        token,
         role,
         userId,
+        user,
+        loading,
+        isAuthenticated,
         loginTeacher,
         loginStudent,
         logout,
-        isAuthenticated: !!token,
-        loading,
       }}
     >
       {children}
