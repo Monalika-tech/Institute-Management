@@ -1,22 +1,20 @@
 const { handleController } = require("../utils/handleController");
-const cookieOptions = require("../config/cookieOptions");
+const cookieOptions = require("../config/cookieOption");
 const Teacher = require("../models/teacherModel");
 const Student = require("../models/studentModel");
 const jwt = require("jsonwebtoken");
 const { signAccessToken } = require("../utils/token");
 
+
 const getMe =
     async (req, res) => {
-
         let user;
 
         if (req.user.role === "teacher") {
-
             user =
                 await Teacher.findById(
                     req.user._id
                 ).select("-password");
-
         }
         else {
             user =
@@ -81,3 +79,9 @@ const logout =
             message: "Logout Successful"
         });
     };
+
+module.exports = {
+    getMe,
+    refreshToken,
+    logout
+};

@@ -1,5 +1,5 @@
 const Classes = require("../models/classModel");
-const { HttpError } = require("./errors");
+const { HttpError } = require("../utils/errors");
 
 const createClass = async (data, teacherId) => {
     const { classLevel, batchTime } = data;

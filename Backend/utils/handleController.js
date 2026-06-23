@@ -1,4 +1,4 @@
-const { HttpError } = require("../services/errors");
+const { HttpError } = require("./errors");
 
 const handleController = (handler, options = {}) => {
     const { serverErrorBody = (message) => ({ message: "Server Error", error: message }) } = options;

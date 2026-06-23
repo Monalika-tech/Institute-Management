@@ -1,6 +1,6 @@
 const teacherService = require("../services/teacherService");
 const { handleController } = require("../utils/handleController");
-const cookieOptions = require("../config/cookieOptions");
+const cookieOptions = require("../config/cookieOption");
 
 const RegisterTeacher = handleController(async (req, res) => {
     const result = await teacherService.registerTeacher(req.body);

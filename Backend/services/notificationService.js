@@ -1,7 +1,7 @@
 const Notification = require("../models/notificationModels");
 const Student = require("../models/studentModel");
 const NotificationStatus = require("../models/notificationStatusModel");
-const { HttpError } = require("./errors");
+const { HttpError } = require("../utils/errors");
 
 const priorityOrder = {
     urgent: 3,

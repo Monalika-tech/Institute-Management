@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 const Attendance = require("../models/attendanceModel");
-const { HttpError } = require("./errors");
+const { HttpError } = require("../utils/errors");
 
 const markAttendance = async (data) => {
     const { classId, teacherId, date, records } = data;

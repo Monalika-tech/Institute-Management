@@ -1,6 +1,6 @@
 const Teacher = require("../models/teacherModel");
-const { HttpError } = require("./errors");
-const { hashPassword, comparePassword } = require("./passwordService");
+const { HttpError } = require("../utils/errors");
+const { hashPassword, comparePassword } = require("../utils/passwordService");
 const {
     signAccessToken,
     signRefreshToken

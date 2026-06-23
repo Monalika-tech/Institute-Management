@@ -20,6 +20,9 @@ const server = express();
 // Define Port
 const PORT = process.env.PORT || 1337;
 
+// Connect to Database
+connectDB();
+
 // Enable CORS
 server.use(cors({
     origin: process.env.CLIENT_URL, // specified origin
@@ -27,15 +30,8 @@ server.use(cors({
     methods: ['GET', 'POST', 'PUT', 'DELETE'], // Allowed HTTP methods
 }));
 
-
-
-
 // Middleware to parse JSON requests
 server.use(express.json());
-
-
-// Connect to Database
-connectDB();
 
 server.use(cookieParser());
 

@@ -1,8 +1,8 @@
 const Student = require("../models/studentModel");
 const Classes = require("../models/classModel");
-const { HttpError } = require("./errors");
-const { hashPassword, comparePassword } = require("./passwordService");
-const { signAuthToken } = require("./tokenService");
+const { HttpError } = require("../utils/errors");
+const { hashPassword, comparePassword } = require("../utils/passwordService");
+const { signAuthToken } = require("../utils/token");
 
 const registerStudent = async (data, teacherId) => {
     const { name, email, password, classID, parentName, phone_no, address, school, monthlyFee } = data;
